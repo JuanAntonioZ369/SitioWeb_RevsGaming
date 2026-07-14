@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crear cuenta — RevsGaming</title>
+  <meta name="description" content="Crea tu cuenta en RevsGaming y obtén acceso completo al launcher retro con netplay online." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://revsgaming.com/register.html" />
+  <meta property="og:title" content="Crear cuenta — RevsGaming" />
+  <meta property="og:description" content="Regístrate y obtén acceso completo a RevsGaming." />
+  <meta property="og:image" content="https://revsgaming.com/og-image.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Crear cuenta — RevsGaming" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="https://checkout.culqi.com/js/v4"></script>
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-deep:     #0d1117;
+      --bg-main:     #1b2838;
+      --bg-card:     #16202d;
+      --bg-panel:    #1e2d3d;
+      --green:       #7EC8A0;
+      --green-light: #a8d8b8;
+      --red:         #C47E7E;
+      --accent:      #66c0f4;
+      --text:        #c6d4df;
+      --text-muted:  #8f98a0;
+      --border:      rgba(102,192,244,0.15);
+      --glass:       rgba(22,32,45,0.9);
+    }
+
+    html.light-mode {
+      --bg-deep:   #f0f4f8;
+      --bg-main:   #e2e8f0;
+      --bg-card:   #ffffff;
+      --bg-panel:  #f8fafc;
+      --green:     #2d8a5e;
+      --green-light: #3aab76;
+      --accent:    #1a6fa8;
+      --text:      #1e293b;
+      --text-muted:#64748b;
+      --border:    rgba(0,0,0,0.1);
+      --glass:     rgba(255,255,255,0.9);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background-color: var(--bg-deep);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    button {
+      cursor: pointer;
+      font-family: inherit;
+      border: none;
+      outline: none;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      background: var(--bg-main);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .nav-logo img {
+      height: 32px;
+      width: auto;
+    }
+
+    .nav-logo-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--green);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      color: var(--text);
+      margin-left: auto;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: currentColor;
+      margin: 5px 0;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    @media (max-width: 768px) {
+      .nav-hamburger { display: block; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: var(--bg-main);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px 24px 16px;
+        gap: 2px;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { width: 100%; padding: 10px 12px; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(180deg, var(--bg-main) 0%, var(--bg-deep) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 48px 24px 40px;
+      text-align: center;
+    }
+
+    .hero-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .hero-sub {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    /* ── MAIN CONTENT ── */
+    .main {
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 48px 16px 80px;
+    }
+
+    /* ── FORM CARD ── */
+    .form-card {
+      width: 100%;
+      max-width: 480px;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 36px 32px;
+    }
+
+    @media (max-width: 540px) {
+      .form-card {
+        padding: 28px 20px;
+        border-radius: 12px;
+      }
+    }
+
+    /* ── STEP INDICATOR ── */
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 28px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+      transition: color 0.3s;
+    }
+
+    .step-item.active {
+      color: var(--green);
+    }
+
+    .step-item.done {
+      color: var(--green);
+      opacity: 0.6;
+    }
+
+    .step-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid currentColor;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      flex-shrink: 0;
+    }
+
+    .step-item.active .step-num {
+      background: var(--green);
+      border-color: var(--green);
+      color: #0d1117;
+    }
+
+    .step-item.done .step-num {
+      background: var(--green);
+      border-color: var(--green);
+      color: #0d1117;
+    }
+
+    .step-arrow {
+      color: var(--border);
+      font-size: 0.75rem;
+      margin: 0 2px;
+    }
+
+    /* ── FORM PANELS ── */
+    .form-panel {
+      display: none;
+    }
+
+    .form-panel.active {
+      display: block;
+    }
+
+    .form-panel-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .form-panel-sub {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    /* ── INPUTS ── */
+    .field {
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      letter-spacing: 0.01em;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .field input {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .field input:focus {
+      border-color: var(--accent);
+      background: rgba(102,192,244,0.04);
+    }
+
+    .field input::placeholder {
+      color: rgba(143,152,160,0.5);
+    }
+
+    .field input.has-toggle {
+      padding-right: 44px;
+    }
+
+    .field input.error-input {
+      border-color: var(--red);
+    }
+
+    .toggle-btn {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      padding: 4px;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s;
+    }
+
+    .toggle-btn:hover {
+      color: var(--text);
+    }
+
+    .toggle-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* ── ERROR MESSAGES ── */
+    .field-error {
+      display: none;
+      color: var(--red);
+      font-size: 0.78rem;
+      margin-top: 5px;
+      line-height: 1.4;
+    }
+
+    .field-error.visible {
+      display: block;
+    }
+
+    .form-error {
+      display: none;
+      background: rgba(196,126,126,0.1);
+      border: 1px solid rgba(196,126,126,0.3);
+      border-radius: 8px;
+      padding: 12px 14px;
+      color: var(--red);
+      font-size: 0.83rem;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .form-error.visible {
+      display: block;
+    }
+
+    /* ── BUTTONS ── */
+    .btn-primary {
+      width: 100%;
+      padding: 13px 20px;
+      background: linear-gradient(135deg, var(--green), #5aad82);
+      color: #0d1117;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 0.92rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      letter-spacing: 0.01em;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Loading spinner */
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(13,17,23,0.3);
+      border-top-color: #0d1117;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+      flex-shrink: 0;
+    }
+
+    .btn-primary.loading .spinner {
+      display: block;
+    }
+
+    .btn-primary.loading .btn-label {
+      opacity: 0.7;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 20px 0;
+    }
+
+    /* ── FOOTER LINKS ── */
+    .form-footer-links {
+      text-align: center;
+      margin-top: 16px;
+    }
+
+    .form-footer-links a {
+      color: var(--accent);
+      font-size: 0.83rem;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .form-footer-links a:hover {
+      color: var(--green-light);
+      text-decoration: underline;
+    }
+
+    .form-footer-note {
+      text-align: center;
+      margin-top: 12px;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+
+    /* ── PASO 2 — PAYMENT ── */
+    .account-badge {
+      background: rgba(126,200,160,0.1);
+      border: 1px solid rgba(126,200,160,0.25);
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .account-badge-icon {
+      width: 20px;
+      height: 20px;
+      background: var(--green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .account-badge-icon svg {
+      width: 12px;
+      height: 12px;
+      color: #0d1117;
+    }
+
+    .account-badge-text {
+      font-size: 0.83rem;
+      color: var(--green-light);
+      line-height: 1.4;
+    }
+
+    .account-badge-email {
+      font-weight: 600;
+      color: var(--green);
+    }
+
+    /* ── PRICE CARD ── */
+    .price-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 18px;
+      margin-bottom: 20px;
+    }
+
+    .price-card-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .price-card-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #fff;
+    }
+
+    .price-card-amount {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--green);
+    }
+
+    .price-card-period {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .price-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .price-features li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.83rem;
+      color: var(--text-muted);
+    }
+
+    .price-features li svg {
+      width: 14px;
+      height: 14px;
+      color: var(--green);
+      flex-shrink: 0;
+    }
+
+    /* ── PLAN TABS (register) ── */
+    .reg-plan-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 0;
+    }
+
+    .reg-plan-tab {
+      flex: 1;
+      position: relative;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
+      color: var(--text-muted);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      padding: 9px 12px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .reg-plan-tab strong { color: inherit; }
+
+    .reg-plan-tab:hover:not(.active) {
+      background: rgba(255,255,255,0.07);
+      color: var(--text);
+    }
+
+    .reg-plan-tab.active {
+      background: rgba(255,255,255,0.03);
+      border-color: var(--border);
+      color: var(--green);
+    }
+
+    .reg-plan-badge {
+      background: var(--green);
+      color: #0d1117;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      padding: 2px 5px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .reg-plan-savings {
+      display: none;
+      font-size: 0.76rem;
+      color: var(--green);
+      margin-top: 10px;
+      font-weight: 500;
+    }
+
+    .reg-plan-savings.visible { display: block; }
+
+    /* ── PAYMENT SECURE NOTE ── */
+    .payment-secure {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+
+    .payment-secure svg {
+      display: inline;
+      vertical-align: middle;
+      width: 12px;
+      height: 12px;
+      margin-right: 3px;
+      opacity: 0.7;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg-main);
+      border-top: 1px solid var(--border);
+      padding: 20px 24px;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    footer a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer a:hover {
+      color: var(--accent);
+    }
+
+    footer .footer-sep {
+      margin: 0 8px;
+      opacity: 0.4;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      border-radius: 6px;
+      padding: 6px 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover {
+      color: var(--text);
+      border-color: var(--green);
+      background: rgba(126,200,160,0.08);
+    }
+    html:not(.light-mode) .icon-moon { display: none; }
+    html.light-mode .icon-sun { display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAVBAR ── -->
+  <nav>
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <img
+          src="logoPrimary.png"
+          alt="RevsGaming"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+        />
+        <span class="nav-logo-text" style="display:none;">RevsGaming</span>
+        <span class="nav-logo-text" style="display:none;" id="logo-fallback-text">RevsGaming</span>
+      </a>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Menú">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/changelog/">Changelog</a></li>
+        <li><a href="/docs/">Docs</a></li>
+      </ul>
+      <button id="themeToggle" class="theme-toggle" aria-label="Cambiar tema" title="Cambiar tema">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <p class="hero-label">Acceso completo</p>
+    <h1>Crea tu cuenta</h1>
+    <p class="hero-sub">Regístrate y obtén acceso completo a RevsGaming</p>
+  </section>
+
+  <!-- ── MAIN ── -->
+  <main class="main">
+    <div class="form-card">
+
+      <!-- Step indicator -->
+      <div class="step-indicator" id="step-indicator">
+        <div class="step-item active" id="step-item-1">
+          <div class="step-num">1</div>
+          <span>Cuenta</span>
+        </div>
+        <span class="step-arrow">→</span>
+        <div class="step-item" id="step-item-2">
+          <div class="step-num">2</div>
+          <span>Pago</span>
+        </div>
+      </div>
+
+      <!-- ── PANEL 1: REGISTRO ── -->
+      <div class="form-panel active" id="panel-register">
+        <p class="form-panel-title">Crear cuenta</p>
+        <p class="form-panel-sub">Completa tus datos para continuar</p>
+
+        <div class="form-error" id="register-error"></div>
+
+        <form id="register-form" novalidate>
+
+          <div class="field">
+            <label for="username">Nombre de usuario</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="ej. retrogamer42"
+              autocomplete="username"
+              maxlength="20"
+              required
+            />
+            <p class="field-error" id="username-error"></p>
+          </div>
+
+          <div class="field">
+            <label for="email">Correo electrónico</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="tu@email.com"
+              autocomplete="email"
+              required
+            />
+            <p class="field-error" id="email-error"></p>
+          </div>
+
+          <div class="field">
+            <label for="password">Contraseña</label>
+            <div class="input-wrap">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Mínimo 6 caracteres"
+                autocomplete="new-password"
+                class="has-toggle"
+                required
+              />
+              <button type="button" class="toggle-btn" id="toggle-password" aria-label="Mostrar contraseña">
+                <svg id="eye-icon-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                  <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                </svg>
+                <svg id="eye-off-icon-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display:none;">
+                  <path d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>
+                </svg>
+              </button>
+            </div>
+            <p class="field-error" id="password-error"></p>
+          </div>
+
+          <div class="field">
+            <label for="confirm-password">Confirmar contraseña</label>
+            <div class="input-wrap">
+              <input
+                type="password"
+                id="confirm-password"
+                name="confirm-password"
+                placeholder="Repite tu contraseña"
+                autocomplete="new-password"
+                class="has-toggle"
+                required
+              />
+              <button type="button" class="toggle-btn" id="toggle-confirm" aria-label="Mostrar contraseña">
+                <svg id="eye-icon-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                  <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                </svg>
+                <svg id="eye-off-icon-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display:none;">
+                  <path d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>
+                </svg>
+              </button>
+            </div>
+            <p class="field-error" id="confirm-error"></p>
+          </div>
+
+          <button type="submit" class="btn-primary" id="register-btn">
+            <div class="spinner"></div>
+            <span class="btn-label">Crear cuenta y continuar al pago →</span>
+          </button>
+        </form>
+
+        <div class="form-footer-links" style="margin-top: 18px;">
+          <a href="#">¿Ya tienes cuenta? Inicia sesión en la app</a>
+        </div>
+
+        <hr class="divider" />
+
+        <p class="form-footer-note">
+          ¿Ya pagaste? La app te redirigirá automáticamente al registrarte.
+        </p>
+      </div>
+
+      <!-- ── PANEL 2: PAGO ── -->
+      <div class="form-panel" id="panel-payment">
+        <p class="form-panel-title">Completa tu pago</p>
+        <p class="form-panel-sub">Un solo paso más para activar tu acceso</p>
+
+        <div class="account-badge" id="account-badge">
+          <div class="account-badge-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+            </svg>
+          </div>
+          <div class="account-badge-text">
+            Cuenta creada para: <span class="account-badge-email" id="badge-email"></span>
+          </div>
+        </div>
+
+        <!-- Selector de plan -->
+        <div class="reg-plan-tabs">
+          <button class="reg-plan-tab" id="reg-tab-monthly" type="button" onclick="regSelectPlan('monthly')">
+            Mensual &nbsp;<strong>S/10</strong>
+          </button>
+          <button class="reg-plan-tab active" id="reg-tab-annual" type="button" onclick="regSelectPlan('annual')">
+            Anual &nbsp;<strong>S/100</strong>
+            <span class="reg-plan-badge">2 meses gratis</span>
+          </button>
+        </div>
+
+        <div class="price-card">
+          <div class="price-card-header">
+            <span class="price-card-name" id="reg-plan-name">Acceso Anual</span>
+            <span class="price-card-amount">
+              S/ <span id="reg-price-number">100</span> <span style="font-size:0.8rem;color:var(--text-muted);">+ IGV</span>
+              <span class="price-card-period" id="reg-price-period">/ año</span>
+            </span>
+          </div>
+          <ul class="price-features">
+            <li>
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
+              Netplay online 2–4 jugadores
+            </li>
+            <li>
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
+              Cloud Saves automáticos
+            </li>
+            <li>
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
+              PS1, NES, SNES, GBA, N64 y más
+            </li>
+            <li>
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
+              Todas las actualizaciones del año
+            </li>
+          </ul>
+          <p class="reg-plan-savings" id="reg-plan-savings">2 meses gratis vs mensual</p>
+        </div>
+
+        <div class="form-error" id="payment-error"></div>
+
+        <button type="button" class="btn-primary" id="pay-btn" onclick="openCulqi()">
+          <div class="spinner"></div>
+          <svg class="btn-label" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="flex-shrink:0;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+          </svg>
+          <span class="btn-label" id="reg-pay-label">Pagar S/ 118.00 anual</span>
+        </button>
+
+        <p class="payment-secure">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+          </svg>
+          Pago procesado de forma segura · SSL · Renueva en un año
+        </p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <span>© 2025 RevsGaming</span>
+    <span class="footer-sep">|</span>
+    <a href="/legal/privacy.html">Política de Privacidad</a>
+    <span class="footer-sep">|</span>
+    <a href="/legal/terms.html">Términos de Uso</a>
+  </footer>
+
+  <script>
+    /* ================================================================
+       CONFIG
+    ================================================================ */
+    const SUPABASE_URL = 'https://kyoyunuwfuujqdomdmlh.supabase.co'
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt5b3l1bnV3ZnV1anFkb21kbWxoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2MTY5MDksImV4cCI6MjA5NzE5MjkwOX0.AJfWxp7rcn9psHFZQpX9qmCw32rsYo9pYiIpxHfIX3I'
+
+    // Reemplazar con pk_live_XXXX en producción
+    const CULQI_PUBLIC_KEY = 'pk_test_XXXXXXXXXXXXXXXX'
+
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+
+    let registeredEmail = ''
+    let registeredUserId = ''
+    let selectedPlan = 'annual'
+    const planAmounts = { monthly: 1180, annual: 11800 }
+
+    function regSelectPlan(plan) {
+      selectedPlan = plan
+      document.getElementById('reg-tab-monthly').classList.toggle('active', plan === 'monthly')
+      document.getElementById('reg-tab-annual').classList.toggle('active', plan === 'annual')
+
+      if (plan === 'annual') {
+        document.getElementById('reg-plan-name').textContent = 'Acceso Anual'
+        document.getElementById('reg-price-number').textContent = '100'
+        document.getElementById('reg-price-period').textContent = '/ año'
+        document.getElementById('reg-plan-savings').classList.add('visible')
+        document.getElementById('reg-pay-label').textContent = 'Pagar S/ 118.00 anual'
+      } else {
+        document.getElementById('reg-plan-name').textContent = 'Acceso Mensual'
+        document.getElementById('reg-price-number').textContent = '10'
+        document.getElementById('reg-price-period').textContent = '/ mes'
+        document.getElementById('reg-plan-savings').classList.remove('visible')
+        document.getElementById('reg-pay-label').textContent = 'Pagar S/ 11.80 mensual'
+      }
+    }
+
+    /* ================================================================
+       NAVBAR
+    ================================================================ */
+    const hamburger = document.getElementById('nav-hamburger')
+    const navLinks = document.getElementById('nav-links')
+
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('open')
+    })
+
+    /* Theme toggle */
+    const themeToggle = document.getElementById('themeToggle')
+    const savedTheme  = localStorage.getItem('revsgaming-theme')
+    if (savedTheme === 'light') document.documentElement.classList.add('light-mode')
+
+    themeToggle.addEventListener('click', () => {
+      const isLight = document.documentElement.classList.toggle('light-mode')
+      localStorage.setItem('revsgaming-theme', isLight ? 'light' : 'dark')
+    })
+
+    /* Logo fallback: si la imagen carga correctamente ocultar el texto fallback,
+       si no carga, mostrar solo el texto */
+    const logoImg = document.querySelector('.nav-logo img')
+    const logoTexts = document.querySelectorAll('.nav-logo-text')
+
+    logoImg.addEventListener('load', () => {
+      logoTexts.forEach(t => t.style.display = 'none')
+    })
+
+    logoImg.addEventListener('error', () => {
+      logoImg.style.display = 'none'
+      logoTexts[0].style.display = 'block'
+    })
+
+    /* ================================================================
+       PASSWORD TOGGLES
+    ================================================================ */
+    function setupToggle(btnId, inputId, eyeId, eyeOffId) {
+      const btn = document.getElementById(btnId)
+      const input = document.getElementById(inputId)
+      const eyeOn = document.getElementById(eyeId)
+      const eyeOff = document.getElementById(eyeOffId)
+
+      btn.addEventListener('click', () => {
+        const isPassword = input.type === 'password'
+        input.type = isPassword ? 'text' : 'password'
+        eyeOn.style.display = isPassword ? 'none' : 'block'
+        eyeOff.style.display = isPassword ? 'block' : 'none'
+        btn.setAttribute('aria-label', isPassword ? 'Ocultar contraseña' : 'Mostrar contraseña')
+      })
+    }
+
+    setupToggle('toggle-password', 'password', 'eye-icon-1', 'eye-off-icon-1')
+    setupToggle('toggle-confirm', 'confirm-password', 'eye-icon-2', 'eye-off-icon-2')
+
+    /* ================================================================
+       HELPERS UI
+    ================================================================ */
+    function showFieldError(fieldId, message) {
+      const el = document.getElementById(fieldId)
+      const input = document.getElementById(fieldId.replace('-error', '').replace('confirm', 'confirm-password'))
+      if (el) {
+        el.textContent = message
+        el.classList.add('visible')
+      }
+      if (input) input.classList.add('error-input')
+    }
+
+    function clearFieldError(fieldId) {
+      const el = document.getElementById(fieldId)
+      const inputId = fieldId.replace('-error', '').replace('confirm', 'confirm-password')
+      const input = document.getElementById(inputId)
+      if (el) {
+        el.textContent = ''
+        el.classList.remove('visible')
+      }
+      if (input) input.classList.remove('error-input')
+    }
+
+    function clearAllErrors() {
+      ;['username-error', 'email-error', 'password-error', 'confirm-error'].forEach(clearFieldError)
+      const formErr = document.getElementById('register-error')
+      formErr.textContent = ''
+      formErr.classList.remove('visible')
+    }
+
+    function showFormError(id, message) {
+      const el = document.getElementById(id)
+      el.textContent = message
+      el.classList.add('visible')
+    }
+
+    function clearFormError(id) {
+      const el = document.getElementById(id)
+      el.textContent = ''
+      el.classList.remove('visible')
+    }
+
+    function setButtonLoading(btnId, loading) {
+      const btn = document.getElementById(btnId)
+      if (loading) {
+        btn.classList.add('loading')
+        btn.disabled = true
+      } else {
+        btn.classList.remove('loading')
+        btn.disabled = false
+      }
+    }
+
+    /* ================================================================
+       VALIDACIONES
+    ================================================================ */
+    const USERNAME_RE = /^[a-zA-Z0-9_-]{3,20}$/
+    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+    function validateRegisterForm(username, email, password, confirm) {
+      let valid = true
+
+      if (!USERNAME_RE.test(username)) {
+        const msg = username.length < 3
+          ? 'El nombre de usuario debe tener al menos 3 caracteres'
+          : username.length > 20
+            ? 'El nombre de usuario no puede superar los 20 caracteres'
+            : 'Solo se permiten letras, números, guiones y guiones bajos'
+        showFieldError('username-error', msg)
+        valid = false
+      }
+
+      if (!EMAIL_RE.test(email)) {
+        showFieldError('email-error', 'Ingresa un correo electrónico válido')
+        valid = false
+      }
+
+      if (password.length < 6) {
+        showFieldError('password-error', 'La contraseña debe tener al menos 6 caracteres')
+        valid = false
+      }
+
+      if (password !== confirm) {
+        showFieldError('confirm-error', 'Las contraseñas no coinciden')
+        valid = false
+      }
+
+      return valid
+    }
+
+    /* ================================================================
+       PASO 1 — REGISTRO
+    ================================================================ */
+    document.getElementById('register-form').addEventListener('submit', handleRegister)
+
+    async function handleRegister(e) {
+      e.preventDefault()
+      clearAllErrors()
+
+      const username = document.getElementById('username').value.trim()
+      const email = document.getElementById('email').value.trim()
+      const password = document.getElementById('password').value
+      const confirm = document.getElementById('confirm-password').value
+
+      if (!validateRegisterForm(username, email, password, confirm)) return
+
+      setButtonLoading('register-btn', true)
+
+      try {
+        // Verificar si el username ya está tomado
+        const { data: existingProfiles, error: profileError } = await supabaseClient
+          .from('profiles')
+          .select('id')
+          .eq('username', username)
+          .limit(1)
+
+        if (profileError) {
+          // Si la tabla no existe o hay un error de permisos, continuar
+          // (el trigger de Supabase manejará la unicidad si está configurado)
+          console.warn('No se pudo verificar username:', profileError.message)
+        } else if (existingProfiles && existingProfiles.length > 0) {
+          showFieldError('username-error', 'Este nombre de usuario ya está tomado')
+          setButtonLoading('register-btn', false)
+          return
+        }
+
+        // Crear cuenta en Supabase Auth
+        const { data, error } = await supabaseClient.auth.signUp({
+          email,
+          password,
+          options: {
+            data: { username }
+          }
+        })
+
+        if (error) {
+          if (error.message.toLowerCase().includes('already registered') ||
+              error.message.toLowerCase().includes('already been registered') ||
+              error.message.toLowerCase().includes('user already exists')) {
+            showFormError('register-error', 'Ya existe una cuenta con este email. Usa la app para iniciar sesión.')
+          } else {
+            showFormError('register-error', error.message || 'Ocurrió un error al crear la cuenta. Intenta de nuevo.')
+          }
+          setButtonLoading('register-btn', false)
+          return
+        }
+
+        registeredEmail = email
+        registeredUserId = data.user?.id || ''
+
+        // Avanzar al paso 2
+        goToPaymentStep()
+
+      } catch (err) {
+        console.error(err)
+        showFormError('register-error', 'Error de conexión. Verifica tu internet e intenta de nuevo.')
+        setButtonLoading('register-btn', false)
+      }
+    }
+
+    /* ================================================================
+       TRANSICIÓN DE PASOS
+    ================================================================ */
+    function goToPaymentStep() {
+      // Actualizar indicador de pasos
+      document.getElementById('step-item-1').classList.remove('active')
+      document.getElementById('step-item-1').classList.add('done')
+      document.getElementById('step-item-2').classList.add('active')
+
+      // Mostrar email en badge
+      document.getElementById('badge-email').textContent = registeredEmail
+
+      // Cambiar paneles
+      document.getElementById('panel-register').classList.remove('active')
+      document.getElementById('panel-payment').classList.add('active')
+
+      setButtonLoading('register-btn', false)
+
+      // Scroll suave al inicio de la card
+      document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+
+    /* ================================================================
+       PASO 2 — PAGO CON CULQI
+    ================================================================ */
+    function openCulqi() {
+      clearFormError('payment-error')
+
+      Culqi.publicKey = CULQI_PUBLIC_KEY
+
+      Culqi.settings({
+        title: 'RevsGaming',
+        currency: 'PEN',
+        description: selectedPlan === 'annual' ? 'Acceso Anual — RevsGaming' : 'Acceso Mensual — RevsGaming',
+        amount: planAmounts[selectedPlan],
+        order: null
+      })
+
+      Culqi.options({
+        lang: 'es',
+        installments: false,
+        customButton: '',
+        style: {
+          logo: window.location.origin + '/logoPrimary.png',
+          maincolor: '#7EC8A0',
+          buttontext: '#0d1117',
+          maintext: '#c6d4df',
+          desctext: '#8f98a0'
+        }
+      })
+
+      Culqi.open()
+    }
+
+    // Callback global de Culqi — se ejecuta cuando el usuario completa el formulario de pago
+    window.culqi = async function () {
+      if (Culqi.token) {
+        const token = Culqi.token
+        Culqi.close()
+        setButtonLoading('pay-btn', true)
+
+        try {
+          const response = await fetch('/api/payment', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              token: token.id,
+              email: registeredEmail,
+              userId: registeredUserId,
+              plan: selectedPlan,
+              currency: 'PEN'
+            })
+          })
+
+          if (response.ok) {
+            window.location.href = '/success.html'
+          } else {
+            const body = await response.json().catch(() => ({}))
+            showFormError('payment-error', body.message || 'El pago no pudo procesarse. Intenta de nuevo.')
+            setButtonLoading('pay-btn', false)
+          }
+        } catch (err) {
+          console.error(err)
+          showFormError('payment-error', 'Error de conexión al procesar el pago. Intenta de nuevo.')
+          setButtonLoading('pay-btn', false)
+        }
+
+      } else if (Culqi.error) {
+        showFormError('payment-error', Culqi.error.user_message || 'Error al procesar el pago.')
+      }
+    }
+  </script>
+
+</body>
+</html>

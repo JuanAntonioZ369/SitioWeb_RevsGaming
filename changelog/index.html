@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://revsgaming.com/changelog/" />
+  <meta property="og:title" content="Changelog — RevsGaming" />
+  <meta property="og:description" content="Historial de versiones de RevsGaming. Mira qué hay de nuevo en cada actualización." />
+  <meta property="og:image" content="https://revsgaming.com/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Changelog — RevsGaming" />
+  <meta name="twitter:description" content="Historial de versiones de RevsGaming." />
+  <meta name="twitter:image" content="https://revsgaming.com/og-image.png" />
+  <title>Changelog — RevsGaming</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-deep: #0d1117;
+      --bg-main: #1b2838;
+      --bg-card: #16202d;
+      --bg-panel: #1e2d3d;
+      --green: #7EC8A0;
+      --green-light: #a8d8b8;
+      --red: #C47E7E;
+      --accent: #66c0f4;
+      --text: #c6d4df;
+      --text-muted: #8f98a0;
+      --border: rgba(102,192,244,0.15);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-deep);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      background: var(--bg-main);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .nav-logo-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--green);
+      letter-spacing: -0.01em;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+    .nav-cta {
+      background: var(--green);
+      color: #0d1117 !important;
+      padding: 7px 16px !important;
+      border-radius: 6px !important;
+      font-weight: 600 !important;
+      font-size: 0.875rem;
+      text-decoration: none;
+      transition: background 0.2s, opacity 0.2s;
+      white-space: nowrap;
+    }
+    .nav-cta:hover { background: var(--green-light) !important; opacity: 1; }
+
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      color: var(--text);
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: currentColor;
+      margin: 5px 0;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    @media (max-width: 768px) {
+      .nav-hamburger { display: block; margin-left: auto; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: var(--bg-main);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px 24px 16px;
+        gap: 2px;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { width: 100%; padding: 10px 12px; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(180deg, var(--bg-main) 0%, var(--bg-deep) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 64px 24px 48px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 20px;
+    }
+    .badge-current {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(126,200,160,0.15);
+      border: 1px solid rgba(126,200,160,0.4);
+      color: var(--green);
+      padding: 6px 16px;
+      border-radius: 100px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .badge-current::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* ── FILTROS ── */
+    .filters-wrap {
+      max-width: 860px;
+      margin: 40px auto 0;
+      padding: 0 24px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 7px 18px;
+      border-radius: 100px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.02em;
+    }
+    .filter-btn:hover { color: var(--text); border-color: rgba(102,192,244,0.35); }
+    .filter-btn.active { background: var(--green); border-color: var(--green); color: #0d1117; }
+    .filter-btn[data-filter="NUEVO"].active { background: var(--green); border-color: var(--green); color: #0d1117; }
+    .filter-btn[data-filter="MEJORA"].active { background: var(--accent); border-color: var(--accent); color: #0d1117; }
+    .filter-btn[data-filter="CORRECCIÓN"].active { background: var(--red); border-color: var(--red); color: #fff; }
+
+    /* ── TIMELINE ── */
+    .timeline-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+      position: relative;
+    }
+    .timeline-line {
+      position: absolute;
+      left: calc(24px + 18px);
+      top: 48px;
+      bottom: 80px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--green) 0%, rgba(126,200,160,0.1) 100%);
+      border-radius: 2px;
+    }
+
+    @media (min-width: 600px) {
+      .timeline-line { left: calc(24px + 22px); }
+    }
+
+    .version-card {
+      position: relative;
+      padding-left: 56px;
+      margin-bottom: 40px;
+    }
+    .version-card:last-child { margin-bottom: 0; }
+
+    .timeline-dot {
+      position: absolute;
+      left: 10px;
+      top: 20px;
+      width: 16px;
+      height: 16px;
+      background: var(--green);
+      border-radius: 50%;
+      border: 3px solid var(--bg-deep);
+      box-shadow: 0 0 0 2px var(--green);
+    }
+    .version-card:not(:first-child) .timeline-dot {
+      background: var(--bg-panel);
+      box-shadow: 0 0 0 2px var(--text-muted);
+    }
+
+    .card-inner {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .card-inner:hover { border-color: rgba(102,192,244,0.3); }
+
+    .card-header {
+      background: var(--bg-panel);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--border);
+    }
+    .version-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--green);
+    }
+    .version-date {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+    }
+    .badge-actual {
+      background: var(--green);
+      color: #0d1117;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 0.7rem;
+      padding: 3px 9px;
+      border-radius: 100px;
+      letter-spacing: 0.05em;
+    }
+
+    .card-body {
+      padding: 18px 20px;
+    }
+    .change-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .change-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      transition: opacity 0.25s;
+    }
+    .change-item.hidden { display: none; }
+
+    .tag {
+      flex-shrink: 0;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 0.68rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.06em;
+      margin-top: 2px;
+    }
+    .tag-nuevo { background: rgba(126,200,160,0.18); color: var(--green); border: 1px solid rgba(126,200,160,0.3); }
+    .tag-mejora { background: rgba(102,192,244,0.15); color: var(--accent); border: 1px solid rgba(102,192,244,0.25); }
+    .tag-corrección { background: rgba(196,126,126,0.15); color: var(--red); border: 1px solid rgba(196,126,126,0.25); }
+
+    /* card oculta si todos sus items están ocultos */
+    .version-card.all-hidden { display: none; }
+
+    /* ── FOOTER ── */
+    footer {
+      margin-top: auto;
+      background: var(--bg-main);
+      border-top: 1px solid var(--border);
+      padding: 28px 24px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer-copy {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+    }
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--accent); }
+
+    @media (max-width: 480px) {
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+      .version-card { padding-left: 44px; }
+      .timeline-line { left: calc(24px + 10px); }
+      .timeline-dot { left: 6px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo">
+        <img src="../logoPrimary.png" height="36" alt="RevsGaming" onerror="this.style.display='none'" />
+        <span class="nav-logo-text">RevsGaming</span>
+      </a>
+      <button class="nav-hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="../index.html#features">Características</a></li>
+        <li><a href="../index.html#consoles">Consolas</a></li>
+        <li><a href="../index.html#download">Descargar</a></li>
+        <li><a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0" target="_blank" rel="noopener" class="nav-cta">Descargar Beta</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Changelog</h1>
+    <p>Historial de versiones de RevsGaming</p>
+    <span class="badge-current">Versión actual: v0.84.0 Beta</span>
+  </section>
+
+  <!-- FILTROS -->
+  <div class="filters-wrap" role="group" aria-label="Filtrar por tipo de cambio">
+    <button class="filter-btn active" data-filter="TODOS">Todos</button>
+    <button class="filter-btn" data-filter="NUEVO">NUEVO</button>
+    <button class="filter-btn" data-filter="MEJORA">MEJORA</button>
+    <button class="filter-btn" data-filter="CORRECCIÓN">CORRECCIÓN</button>
+  </div>
+
+  <!-- TIMELINE -->
+  <main class="timeline-wrap" id="timeline">
+    <div class="timeline-line" aria-hidden="true"></div>
+
+    <!-- v0.84.0 -->
+    <article class="version-card" data-version="0.84.0">
+      <div class="timeline-dot" aria-hidden="true"></div>
+      <div class="card-inner">
+        <div class="card-header">
+          <span class="version-num">v0.84.0</span>
+          <span class="version-date">Junio 2026</span>
+          <span class="badge-actual">ACTUAL</span>
+        </div>
+        <div class="card-body">
+          <ul class="change-list">
+            <li class="change-item" data-type="NUEVO">
+              <span class="tag tag-nuevo">NUEVO</span>
+              <span>Sistema de amigos con presencia en tiempo real (Supabase Realtime)</span>
+            </li>
+            <li class="change-item" data-type="NUEVO">
+              <span class="tag tag-nuevo">NUEVO</span>
+              <span>Cloud saves automáticos con Supabase Storage (.mcr, .mcs, .srm, .sav, .state*)</span>
+            </li>
+            <li class="change-item" data-type="NUEVO">
+              <span class="tag tag-nuevo">NUEVO</span>
+              <span>Descarga automática de BIOS de PS1 desde URL configurable en Supabase</span>
+            </li>
+            <li class="change-item" data-type="NUEVO">
+              <span class="tag tag-nuevo">NUEVO</span>
+              <span>Descarga de cores de RetroArch desde buildbot oficial con extracción ZIP automática</span>
+            </li>
+            <li class="change-item" data-type="NUEVO">
+              <span class="tag tag-nuevo">NUEVO</span>
+              <span>Quick Join numérico para RetroArch (4 jugadores) con sala en Supabase</span>
+            </li>
+            <li class="change-item" data-type="NUEVO">
+              <span class="tag tag-nuevo">NUEVO</span>
+              <span>Quick Join alfanumérico para Mednafen (2 jugadores PS1)</span>
+            </li>
+            <li class="change-item" data-type="NUEVO">
+              <span class="tag tag-nuevo">NUEVO</span>
+              <span>Auto-detección de emulador por tipo de código de sala</span>
+            </li>
+            <li class="change-item" data-type="MEJORA">
+              <span class="tag tag-mejora">MEJORA</span>
+              <span>Netplay configurable desde Supabase sin redesplegar la app</span>
+            </li>
+            <li class="change-item" data-type="MEJORA">
+              <span class="tag tag-mejora">MEJORA</span>
+              <span>Prevención de path traversal en rutas de juegos</span>
+            </li>
+            <li class="change-item" data-type="MEJORA">
+              <span class="tag tag-mejora">MEJORA</span>
+              <span>CSP via onHeadersReceived para mayor seguridad</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- v0.75.0 -->
+    <article class="version-card" data-version="0.75.0">
+      <div class="timeline-dot" aria-hidden="true"></div>
+      <div class="card-inner">
+        <div class="card-header">
+          <span class="version-num">v0.75.0</span>
+          <span class="version-date">Abril 2026</span>
+        </div>
+        <div class="card-body">
+          <ul class="change-list">
+            <li class="change-item" data-type="NUEVO">
+              <span class="tag tag-nuevo">NUEVO</span>
+              <span>Netplay 4 jugadores con RetroArch + servidor MITM en Lima, Perú</span>
+            </li>
+            <li class="change-item" data-type="NUEVO">
+              <span class="tag tag-nuevo">NUEVO</span>
+              <span>Control remoto desde Supabase (beta_open, latest_version, download_url)</span>
+            </li>
+            <li class="change-item" data-type="NUEVO">
+              <span class="tag tag-nuevo">NUEVO</span>
+              <span>Modo invitado — jugar sin cuenta con apodo temporal</span>
+            </li>
+            <li class="change-item" data-type="NUEVO">
+              <span class="tag tag-nuevo">NUEVO</span>
+              <span>Soporte multi-sistema: NES, SNES, GBA, Game Boy, N64, Mega Drive (CORE_MAP)</span>
+            </li>
+            <li class="change-item" data-type="MEJORA">
+              <span class="tag tag-mejora">MEJORA</span>
+              <span>Validación de isTrustedSender() en handlers IPC sensibles</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- v0.60.0 -->
+    <article class="version-card" data-version="0.60.0">
+      <div class="timeline-dot" aria-hidden="true"></div>
+      <div class="card-inner">
+        <div class="card-header">
+          <span class="version-num">v0.60.0</span>
+          <span class="version-date">Febrero 2026</span>
+        </div>
+        <div class="card-body">
+          <ul class="change-list">
+            <li class="change-item" data-type="NUEVO">
+              <span class="tag tag-nuevo">NUEVO</span>
+              <span>Login y registro con email/password via Supabase Auth</span>
+            </li>
+            <li class="change-item" data-type="NUEVO">
+              <span class="tag tag-nuevo">NUEVO</span>
+              <span>Auto-restore del nickname al iniciar en PC nueva</span>
+            </li>
+            <li class="change-item" data-type="NUEVO">
+              <span class="tag tag-nuevo">NUEVO</span>
+              <span>Gate de beta configurable (beta_open en app_config)</span>
+            </li>
+            <li class="change-item" data-type="NUEVO">
+              <span class="tag tag-nuevo">NUEVO</span>
+              <span>Detección de actualizaciones vs latest_version en Supabase</span>
+            </li>
+            <li class="change-item" data-type="NUEVO">
+              <span class="tag tag-nuevo">NUEVO</span>
+              <span>Vista lista y grilla con búsqueda en tiempo real</span>
+            </li>
+            <li class="change-item" data-type="NUEVO">
+              <span class="tag tag-nuevo">NUEVO</span>
+              <span>Selector manual de .cue para juegos fuera de la carpeta</span>
+            </li>
+            <li class="change-item" data-type="MEJORA">
+              <span class="tag tag-mejora">MEJORA</span>
+              <span>Soporte de 3 niveles de carpetas en escaneo de games/</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- v0.40.0 -->
+    <article class="version-card" data-version="0.40.0">
+      <div class="timeline-dot" aria-hidden="true"></div>
+      <div class="card-inner">
+        <div class="card-header">
+          <span class="version-num">v0.40.0</span>
+          <span class="version-date">Noviembre 2025</span>
+        </div>
+        <div class="card-body">
+          <ul class="change-list">
+            <li class="change-item" data-type="NUEVO">
+              <span class="tag tag-nuevo">NUEVO</span>
+              <span>Biblioteca visual de juegos (detección automática por carpetas)</span>
+            </li>
+            <li class="change-item" data-type="NUEVO">
+              <span class="tag tag-nuevo">NUEVO</span>
+              <span>Netplay PS1 2 jugadores via Mednafen + servidor relay</span>
+            </li>
+            <li class="change-item" data-type="NUEVO">
+              <span class="tag tag-nuevo">NUEVO</span>
+              <span>Código de sala de 6 letras para partidas online</span>
+            </li>
+            <li class="change-item" data-type="NUEVO">
+              <span class="tag tag-nuevo">NUEVO</span>
+              <span>Soporte completo de mando (D-Pad, A, B, Start) en toda la app</span>
+            </li>
+            <li class="change-item" data-type="NUEVO">
+              <span class="tag tag-nuevo">NUEVO</span>
+              <span>Launcher de juegos PS1 (.cue) con Mednafen 1.32.1</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-copy">© 2025 RevsGaming — AntonioPCGamer</span>
+      <ul class="footer-links">
+        <li><a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="../legal/privacy.html">Privacidad</a></li>
+        <li><a href="../legal/terms.html">Términos</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    // Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', open);
+    });
+
+    // Filtros
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const allItems   = document.querySelectorAll('.change-item');
+    const allCards   = document.querySelectorAll('.version-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.dataset.filter;
+
+        allItems.forEach(item => {
+          if (filter === 'TODOS' || item.dataset.type === filter) {
+            item.classList.remove('hidden');
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+
+        // Ocultar cards cuyas listas queden todas vacías
+        allCards.forEach(card => {
+          const visible = card.querySelectorAll('.change-item:not(.hidden)');
+          card.classList.toggle('all-hidden', visible.length === 0);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://revsgaming.com/legal/terms.html" />
+  <meta property="og:title" content="Términos de Servicio — RevsGaming" />
+  <meta property="og:description" content="Términos de servicio de RevsGaming." />
+  <meta property="og:image" content="https://revsgaming.com/og-image.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Términos de Servicio — RevsGaming" />
+  <title>Términos de Servicio — RevsGaming</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-deep: #0d1117;
+      --bg-main: #1b2838;
+      --bg-card: #16202d;
+      --bg-panel: #1e2d3d;
+      --green: #7EC8A0;
+      --green-light: #a8d8b8;
+      --red: #C47E7E;
+      --accent: #66c0f4;
+      --text: #c6d4df;
+      --text-muted: #8f98a0;
+      --border: rgba(102,192,244,0.15);
+    }
+
+    html.light-mode {
+      --bg-deep:   #f0f4f8;
+      --bg-main:   #e2e8f0;
+      --bg-card:   #ffffff;
+      --bg-panel:  #f8fafc;
+      --green:     #2d8a5e;
+      --green-light: #3aab76;
+      --accent:    #1a6fa8;
+      --text:      #1e293b;
+      --text-muted:#64748b;
+      --border:    rgba(0,0,0,0.1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-deep);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.7;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      background: var(--bg-main);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .nav-logo-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--green);
+      letter-spacing: -0.01em;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      flex: 1;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 6px 8px;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+    .nav-cta {
+      background: var(--green);
+      color: #0d1117 !important;
+      padding: 7px 12px !important;
+      border-radius: 6px !important;
+      font-weight: 600 !important;
+      font-size: 0.8rem;
+      text-decoration: none;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .nav-cta:hover { background: var(--green-light) !important; }
+
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      color: var(--text);
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: currentColor;
+      margin: 5px 0;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    @media (max-width: 768px) {
+      .nav-hamburger { display: block; margin-left: auto; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: var(--bg-main);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px 24px 16px;
+        gap: 2px;
+        z-index: 200;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { width: 100%; padding: 10px 12px; font-size: 0.875rem; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(180deg, var(--bg-main) 0%, var(--bg-deep) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 56px 24px 40px;
+      text-align: center;
+    }
+    .hero-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+    .hero-date {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* ── LAYOUT ── */
+    .page-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+      flex: 1;
+    }
+
+    /* ── TOC ── */
+    .toc {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 48px;
+      position: relative;
+      z-index: 1;
+    }
+    .toc-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .toc ol {
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .toc li { font-size: 0.9rem; }
+    .toc a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .toc a:hover { color: var(--green-light); text-decoration: underline; }
+
+    /* TOC mobile toggle */
+    .toc-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0;
+      margin-bottom: 0;
+    }
+    .toc-body { display: block; }
+
+    @media (max-width: 767px) {
+      .toc { padding: 18px 20px; }
+      .toc-toggle { display: flex; align-items: center; gap: 6px; width: 100%; justify-content: space-between; }
+      .toc-toggle .toc-arrow { transition: transform 0.25s; display: inline-block; }
+      .toc-toggle.open .toc-arrow { transform: rotate(180deg); }
+      .toc-body { display: none; margin-top: 14px; }
+      .toc-body.open { display: block; }
+      .toc .toc-title { display: none; }
+    }
+
+    /* ── SECCIONES ── */
+    .section {
+      margin-bottom: 44px;
+      scroll-margin-top: 80px;
+    }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 0.78rem;
+      color: var(--accent);
+      background: rgba(102,192,244,0.1);
+      border: 1px solid rgba(102,192,244,0.2);
+      padding: 2px 9px;
+      border-radius: 4px;
+      letter-spacing: 0.03em;
+      flex-shrink: 0;
+    }
+    .section h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.01em;
+    }
+
+    .section p {
+      font-size: 0.93rem;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .section p:last-child { margin-bottom: 0; }
+
+    .section ul, .section ol {
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .section li {
+      font-size: 0.93rem;
+      color: var(--text);
+    }
+    .section li strong { color: #fff; }
+
+    .highlight-box {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--green);
+      border-radius: 0 8px 8px 0;
+      padding: 14px 18px;
+      margin: 14px 0;
+      font-size: 0.9rem;
+    }
+    .highlight-box.accent-blue { border-left-color: var(--accent); }
+    .highlight-box.accent-red  { border-left-color: var(--red); }
+
+    .warning-box {
+      background: rgba(196,126,126,0.08);
+      border: 1px solid rgba(196,126,126,0.25);
+      border-left: 3px solid var(--red);
+      border-radius: 0 8px 8px 0;
+      padding: 14px 18px;
+      margin: 14px 0;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+    .warning-box strong { color: var(--red); }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg-main);
+      border-top: 1px solid var(--border);
+      padding: 28px 24px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer-copy { font-size: 0.83rem; color: var(--text-muted); }
+    .footer-links { display: flex; gap: 20px; list-style: none; }
+    .footer-links a {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--accent); }
+
+    @media (max-width: 480px) {
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      border-radius: 6px;
+      padding: 6px 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover {
+      color: var(--text);
+      border-color: var(--green);
+      background: rgba(126,200,160,0.08);
+    }
+    html:not(.light-mode) .icon-moon { display: none; }
+    html.light-mode .icon-sun { display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo">
+        <img src="../logoPrimary.png" height="36" alt="RevsGaming" onerror="this.style.display='none'" />
+        <span class="nav-logo-text">RevsGaming</span>
+      </a>
+      <button class="nav-hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="../index.html#features">Características</a></li>
+        <li><a href="../index.html#consolas">Consolas</a></li>
+        <li><a href="../index.html#download">Descargar</a></li>
+        <li><a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0" target="_blank" rel="noopener" class="nav-cta">Descargar Beta</a></li>
+      </ul>
+      <button id="themeToggle" class="theme-toggle" aria-label="Cambiar tema" title="Cambiar tema">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-label">Legal</p>
+    <h1>Términos de Servicio</h1>
+    <p class="hero-date">Última actualización: Junio 2026</p>
+  </section>
+
+  <main class="page-wrap">
+
+    <!-- TABLA DE CONTENIDOS -->
+    <nav class="toc" aria-label="Tabla de contenidos">
+      <button class="toc-toggle" id="tocToggle" aria-expanded="false" aria-controls="tocBody">
+        <span>Contenidos</span>
+        <span class="toc-arrow">&#9660;</span>
+      </button>
+      <p class="toc-title" aria-hidden="true">Contenidos</p>
+      <div class="toc-body" id="tocBody">
+        <ol>
+          <li><a href="#aceptacion">Aceptación de los términos</a></li>
+          <li><a href="#uso-permitido">Uso permitido</a></li>
+          <li><a href="#uso-prohibido">Uso prohibido</a></li>
+          <li><a href="#roms-bios">ROMs y BIOS</a></li>
+          <li><a href="#cuentas">Cuentas de usuario</a></li>
+          <li><a href="#disponibilidad">Disponibilidad del servicio</a></li>
+          <li><a href="#limitacion">Limitación de responsabilidad</a></li>
+          <li><a href="#propiedad">Propiedad intelectual</a></li>
+          <li><a href="#cambios">Cambios a estos términos</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ol>
+      </div>
+    </nav>
+
+    <!-- 1 -->
+    <section class="section" id="aceptacion">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2>Aceptación de los términos</h2>
+      </div>
+      <p>Al descargar, instalar o usar RevsGaming ("la aplicación", "el software"), aceptas quedar vinculado por estos Términos de Servicio ("Términos"). Si no estás de acuerdo con alguno de estos términos, no debes usar la aplicación.</p>
+      <p>Estos Términos constituyen el acuerdo completo entre tú y RevsGaming (desarrollado por AntonioPCGamer) con respecto al uso de la aplicación. RevsGaming se reserva el derecho de actualizar estos Términos en cualquier momento.</p>
+      <div class="highlight-box">
+        Al crear una cuenta o usar el modo invitado, confirmas que tienes al menos 13 años de edad o que cuentas con el consentimiento de tu tutor legal si eres menor.
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section class="section" id="uso-permitido">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2>Uso permitido</h2>
+      </div>
+      <p>RevsGaming está diseñado para uso personal, no comercial. Puedes usar la aplicación para:</p>
+      <ul>
+        <li><strong>Jugar tus propias ROMs legales:</strong> juegos que posees en formato físico o de los que tienes derecho legal de uso en formato digital.</li>
+        <li><strong>Usar las funciones de netplay:</strong> conectarte con otros jugadores para partidas multijugador a través de los servidores de RevsGaming, utilizando los emuladores integrados (RetroArch, Mednafen).</li>
+        <li><strong>Sincronizar tus saves:</strong> usar la función Cloud Saves para respaldar y restaurar tus archivos de guardado entre dispositivos.</li>
+        <li><strong>Compartir tu estado de juego:</strong> usar el sistema de amigos y presencia en tiempo real con usuarios de tu confianza.</li>
+      </ul>
+    </section>
+
+    <!-- 3 -->
+    <section class="section" id="uso-prohibido">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2>Uso prohibido</h2>
+      </div>
+      <p>Está estrictamente prohibido usar RevsGaming para:</p>
+      <ul>
+        <li><strong>Distribuir ROMs con copyright:</strong> compartir, distribuir o facilitar la distribución de archivos de juego protegidos por derechos de autor a través de la plataforma o en conexión con ella.</li>
+        <li><strong>Cheating o trampas online:</strong> usar software de trampa, modificar la memoria del juego durante sesiones de netplay, o cualquier práctica que altere el resultado de partidas multijugador de forma no autorizada.</li>
+        <li><strong>Ingeniería inversa de servidores:</strong> realizar ingeniería inversa, descompilar, desensamblar o intentar obtener el código fuente de los servidores MITM de RevsGaming o de la infraestructura de backend.</li>
+        <li><strong>Abusar la infraestructura:</strong> sobrecargar, atacar o interrumpir los servidores de netplay o los servicios de Supabase utilizados por la aplicación.</li>
+        <li><strong>Uso comercial no autorizado:</strong> vender, alquilar, sublicenciar o explotar comercialmente la aplicación o sus funciones sin autorización expresa.</li>
+        <li><strong>Suplantar identidades:</strong> hacerse pasar por otro usuario, por el equipo de RevsGaming o por cualquier otra persona dentro de la plataforma.</li>
+      </ul>
+      <div class="warning-box">
+        <strong>Aviso:</strong> el incumplimiento de estas prohibiciones puede resultar en la suspensión o eliminación permanente de tu cuenta, así como en las acciones legales correspondientes.
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section class="section" id="roms-bios">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <h2>ROMs y BIOS</h2>
+      </div>
+      <p>RevsGaming es un launcher de emuladores. En relación con los archivos de juego y BIOS, debes tener en cuenta lo siguiente:</p>
+      <ul>
+        <li><strong>RevsGaming NO distribuye ROMs:</strong> la aplicación no incluye, descarga ni facilita la obtención de archivos de juego (.cue, .bin, .iso, etc.). El usuario es el único responsable de proporcionar y de la legalidad de los archivos de juego que utiliza.</li>
+        <li><strong>RevsGaming NO distribuye BIOS con copyright:</strong> la BIOS de PS1 que la aplicación puede descargar automáticamente proviene de una URL configurada por el administrador de la plataforma. El administrador es responsable de que dicha URL apunte a un recurso legalmente disponible.</li>
+        <li><strong>Responsabilidad del usuario:</strong> al añadir archivos de juego a tu biblioteca de RevsGaming, confirmas que tienes derecho legal a usar dichos archivos en tu jurisdicción. RevsGaming no verifica ni puede verificar la legalidad de tus archivos.</li>
+        <li><strong>Homebrew y dominio público:</strong> se permite y alienta el uso de RevsGaming con juegos homebrew, demostraciones oficiales gratuitas y juegos de dominio público.</li>
+      </ul>
+      <div class="highlight-box accent-blue">
+        Las leyes sobre copias de respaldo de videojuegos varían según el país. Consulta la legislación vigente en tu jurisdicción antes de hacer copias de juegos físicos.
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section class="section" id="cuentas">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <h2>Cuentas de usuario</h2>
+      </div>
+      <p>Al crear una cuenta en RevsGaming:</p>
+      <ul>
+        <li>Eres responsable de mantener la confidencialidad de tus credenciales (email y contraseña).</li>
+        <li>Eres responsable de toda la actividad que ocurra bajo tu cuenta.</li>
+        <li>Debes notificar cualquier uso no autorizado de tu cuenta lo antes posible via GitHub Issues.</li>
+        <li>No debes compartir tu cuenta con otras personas.</li>
+      </ul>
+      <p>Puedes solicitar la eliminación de tu cuenta en cualquier momento abriendo un Issue en:</p>
+      <div class="highlight-box">
+        <a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/issues" target="_blank" rel="noopener">github.com/JuanAntonioZ369/RetroGamingRevs_2.0/issues</a>
+        <br />La eliminación incluirá tu email, nickname y todos los archivos de save almacenados en Supabase Storage.
+      </div>
+      <p>RevsGaming se reserva el derecho de suspender o eliminar cuentas que incumplan estos Términos, sin previo aviso y sin obligación de reembolso.</p>
+    </section>
+
+    <!-- 6 -->
+    <section class="section" id="disponibilidad">
+      <div class="section-header">
+        <span class="section-num">06</span>
+        <h2>Disponibilidad del servicio</h2>
+      </div>
+      <p>RevsGaming se encuentra actualmente en fase beta. Esto implica:</p>
+      <ul>
+        <li>El acceso a la beta puede abrirse o cerrarse en cualquier momento mediante el parámetro <code>beta_open</code> controlado desde Supabase, sin previo aviso.</li>
+        <li>Las funciones pueden añadirse, modificarse o eliminarse entre versiones sin garantía de compatibilidad con versiones anteriores.</li>
+        <li>Los servidores de netplay y el servidor MITM en Lima, Perú, pueden estar temporalmente no disponibles por mantenimiento u otras razones.</li>
+        <li>No garantizamos disponibilidad ininterrumpida del servicio ni de las funciones online.</li>
+      </ul>
+      <div class="highlight-box accent-red">
+        Durante la fase beta no se garantiza la permanencia de los datos (saves en cloud). Aunque hacemos todo lo posible por preservarlos, recomendamos mantener copias de seguridad locales de tus archivos de guardado importantes.
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section class="section" id="limitacion">
+      <div class="section-header">
+        <span class="section-num">07</span>
+        <h2>Limitación de responsabilidad</h2>
+      </div>
+      <p>RevsGaming se proporciona "tal cual" y "según disponibilidad", sin garantías de ningún tipo, ya sean expresas o implícitas. En la máxima medida permitida por la ley aplicable:</p>
+      <ul>
+        <li>RevsGaming y AntonioPCGamer no serán responsables de ningún daño directo, indirecto, incidental, especial o consecuente derivado del uso o la imposibilidad de uso de la aplicación.</li>
+        <li>No nos hacemos responsables de pérdidas de datos de guardado, aunque implementamos medidas para prevenirlas.</li>
+        <li>No somos responsables del contenido de las ROMs o BIOS que el usuario decide usar con la aplicación.</li>
+        <li>No somos responsables de las acciones de otros usuarios en el sistema de netplay o de amigos.</li>
+      </ul>
+      <div class="warning-box">
+        <strong>Software en beta:</strong> RevsGaming puede contener errores, fallos o comportamientos inesperados. Al usar la beta, aceptas asumir los riesgos asociados al uso de software en desarrollo activo.
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section class="section" id="propiedad">
+      <div class="section-header">
+        <span class="section-num">08</span>
+        <h2>Propiedad intelectual</h2>
+      </div>
+      <p>En relación a la propiedad intelectual involucrada en RevsGaming:</p>
+      <ul>
+        <li><strong>RevsGaming — AntonioPCGamer:</strong> el nombre "RevsGaming", el logotipo, el código fuente de la aplicación Electron (launcher, sistema de amigos, cloud saves, interfaz) son propiedad de AntonioPCGamer. Todos los derechos reservados.</li>
+        <li><strong>RetroArch:</strong> RetroArch es un proyecto de código abierto independiente bajo licencia GPLv3, desarrollado por Libretro. RevsGaming lo utiliza como emulador backend pero no reclama propiedad sobre él. Más información en <a href="https://www.retroarch.com" target="_blank" rel="noopener">retroarch.com</a>.</li>
+        <li><strong>Mednafen:</strong> Mednafen es un emulador de código abierto independiente bajo licencia GPLv2. RevsGaming lo integra para netplay PS1 de 2 jugadores pero no reclama propiedad sobre él. Más información en <a href="https://mednafen.github.io" target="_blank" rel="noopener">mednafen.github.io</a>.</li>
+        <li><strong>Marcas de videojuegos:</strong> los nombres de consolas y juegos mencionados en RevsGaming (PlayStation, Nintendo, SEGA, etc.) son marcas registradas de sus respectivos propietarios. RevsGaming no tiene ninguna afiliación con dichas empresas.</li>
+      </ul>
+      <div class="highlight-box">
+        Si crees que RevsGaming infringe algún derecho de propiedad intelectual de tu titularidad, contáctanos via GitHub Issues para resolver el asunto a la mayor brevedad.
+      </div>
+    </section>
+
+    <!-- 9 -->
+    <section class="section" id="cambios">
+      <div class="section-header">
+        <span class="section-num">09</span>
+        <h2>Cambios a estos términos</h2>
+      </div>
+      <p>RevsGaming puede actualizar estos Términos de Servicio en cualquier momento. Cuando se realicen cambios significativos:</p>
+      <ul>
+        <li>Se actualizará la fecha de "Última actualización" al inicio de este documento.</li>
+        <li>Se mostrará una notificación dentro de la aplicación informando sobre los cambios.</li>
+        <li>Para cambios mayores, se publicará un aviso en el repositorio de GitHub.</li>
+      </ul>
+      <p>El uso continuado de RevsGaming tras la publicación de los Términos actualizados constituye la aceptación de dichos cambios. Si no estás de acuerdo con los nuevos términos, debes dejar de usar la aplicación.</p>
+    </section>
+
+    <!-- 10 -->
+    <section class="section" id="contacto">
+      <div class="section-header">
+        <span class="section-num">10</span>
+        <h2>Contacto</h2>
+      </div>
+      <p>Para cualquier consulta, reporte de abuso, solicitud de eliminación de cuenta o comunicación relacionada con estos Términos de Servicio, contáctanos a través de GitHub Issues:</p>
+      <div class="highlight-box">
+        <a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/issues" target="_blank" rel="noopener">github.com/JuanAntonioZ369/RetroGamingRevs_2.0/issues</a>
+      </div>
+      <p>Intentamos responder a todas las consultas en un plazo razonable. Para reportes de seguridad urgentes, indica "SEGURIDAD" en el título del Issue.</p>
+      <p>También puedes consultar nuestra <a href="privacy.html">Política de Privacidad</a> para información sobre el tratamiento de datos personales.</p>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-copy">© 2025 RevsGaming — AntonioPCGamer</span>
+      <ul class="footer-links">
+        <li><a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="privacy.html">Privacidad</a></li>
+        <li><a href="terms.html">Términos</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    /* Hamburger */
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', String(open));
+    });
+
+    /* Theme toggle */
+    const themeToggle = document.getElementById('themeToggle')
+    const savedTheme  = localStorage.getItem('revsgaming-theme')
+    if (savedTheme === 'light') document.documentElement.classList.add('light-mode')
+
+    themeToggle.addEventListener('click', () => {
+      const isLight = document.documentElement.classList.toggle('light-mode')
+      localStorage.setItem('revsgaming-theme', isLight ? 'light' : 'dark')
+    })
+
+    /* TOC mobile toggle */
+    const tocToggle = document.getElementById('tocToggle');
+    const tocBody   = document.getElementById('tocBody');
+    if (tocToggle && tocBody) {
+      tocToggle.addEventListener('click', () => {
+        const open = tocBody.classList.toggle('open');
+        tocToggle.classList.toggle('open', open);
+        tocToggle.setAttribute('aria-expanded', String(open));
+      });
+    }
+  </script>
+</body>
+</html>

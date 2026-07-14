@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guía de Usuario — RevsGaming</title>
+  <meta name="description" content="Guía completa de RevsGaming: instalación, organización de juegos, netplay online, cloud saves, controles y preguntas frecuentes." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-deep:    #0d1117;
+      --bg-main:    #1b2838;
+      --bg-card:    #16202d;
+      --bg-panel:   #1e2d3d;
+      --green:      #7EC8A0;
+      --green-light:#a8d8b8;
+      --accent:     #66c0f4;
+      --text:       #c6d4df;
+      --text-muted: #8f98a0;
+      --border:     rgba(102,192,244,0.15);
+      --glass:      rgba(22,32,45,0.92);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background-color: var(--bg-deep);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ============================================================
+       NAVBAR
+    ============================================================ */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      padding: 16px 0;
+      transition: background 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease;
+      border-bottom: 1px solid transparent;
+    }
+
+    .navbar.scrolled {
+      background: var(--glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom-color: var(--border);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .navbar .container {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .nav-logo img {
+      height: 36px;
+      width: auto;
+    }
+
+    .nav-logo-fallback {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #ffffff;
+      display: none;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+      margin-left: auto;
+    }
+
+    .nav-links a {
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #ffffff;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .btn-nav-cta {
+      background: var(--green);
+      color: #0d1117;
+      padding: 9px 20px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: background 0.2s, transform 0.15s;
+      white-space: nowrap;
+      flex-shrink: 0;
+      display: inline-block;
+    }
+
+    .btn-nav-cta:hover {
+      background: var(--green-light);
+      transform: translateY(-1px);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      padding: 6px;
+      margin-left: auto;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav-mobile {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      padding: 12px 24px 20px;
+      background: var(--bg-main);
+      border-top: 1px solid var(--border);
+    }
+
+    .nav-mobile.open {
+      display: flex;
+    }
+
+    .nav-mobile a {
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-mobile a:hover {
+      color: #ffffff;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .nav-mobile .btn-nav-cta {
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    /* ============================================================
+       DOCS LAYOUT
+    ============================================================ */
+    .docs-wrapper {
+      display: flex;
+      min-height: 100vh;
+      padding-top: 72px;
+    }
+
+    /* Sidebar */
+    .docs-sidebar {
+      width: 240px;
+      flex-shrink: 0;
+      border-right: 1px solid var(--border);
+      background: var(--bg-main);
+    }
+
+    .docs-sidebar-inner {
+      position: sticky;
+      top: 80px;
+      max-height: calc(100vh - 80px);
+      overflow-y: auto;
+      padding: 32px 0 40px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(102,192,244,0.2) transparent;
+    }
+
+    .docs-sidebar-inner::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .docs-sidebar-inner::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .docs-sidebar-inner::-webkit-scrollbar-thumb {
+      background: rgba(102,192,244,0.2);
+      border-radius: 4px;
+    }
+
+    .sidebar-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      padding: 0 24px;
+      margin-bottom: 12px;
+    }
+
+    .sidebar-nav {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: 0 12px;
+    }
+
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 6px;
+      font-size: 0.855rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .sidebar-nav a:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .sidebar-nav a.active {
+      color: var(--green);
+      background: rgba(126,200,160,0.1);
+      font-weight: 600;
+    }
+
+    .sidebar-nav .nav-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: inherit;
+      opacity: 0.6;
+      min-width: 16px;
+    }
+
+    /* Mobile sidebar toggle */
+    .sidebar-mobile-toggle {
+      display: none;
+      width: 100%;
+      background: var(--bg-panel);
+      border-bottom: 1px solid var(--border);
+      border-top: 1px solid var(--border);
+      padding: 14px 24px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text);
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .sidebar-mobile-toggle::after {
+      content: ' ▼';
+      font-size: 0.75rem;
+      opacity: 0.6;
+    }
+
+    .sidebar-mobile-toggle.open::after {
+      content: ' ▲';
+    }
+
+    /* Main content */
+    .docs-content {
+      flex: 1;
+      min-width: 0;
+      padding: 48px 64px 80px;
+    }
+
+    .docs-content-inner {
+      max-width: 720px;
+    }
+
+    /* ============================================================
+       CONTENT STYLES
+    ============================================================ */
+    .docs-section {
+      padding-top: 16px;
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+      scroll-margin-top: 88px;
+    }
+
+    .docs-section + .docs-section {
+      border-top: 1px solid var(--border);
+      padding-top: 48px;
+      margin-top: 16px;
+    }
+
+    .section-eyebrow {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--green);
+      margin-bottom: 8px;
+    }
+
+    .docs-section h2 {
+      font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .docs-section p {
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    .docs-section p:last-child {
+      margin-bottom: 0;
+    }
+
+    .docs-section ul,
+    .docs-section ol {
+      padding-left: 0;
+      list-style: none;
+      margin-bottom: 16px;
+    }
+
+    .docs-section ul li,
+    .docs-section ol li {
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.7;
+      padding: 5px 0 5px 24px;
+      position: relative;
+    }
+
+    .docs-section ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    .docs-section ol {
+      counter-reset: step-counter;
+    }
+
+    .docs-section ol li {
+      counter-increment: step-counter;
+    }
+
+    .docs-section ol li::before {
+      content: counter(step-counter) '.';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 0.875rem;
+    }
+
+    .docs-section strong {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .docs-section a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s;
+    }
+
+    .docs-section a:hover {
+      color: var(--green-light);
+    }
+
+    /* Blockquote / note */
+    .docs-note {
+      background: rgba(102,192,244,0.06);
+      border: 1px solid rgba(102,192,244,0.2);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      padding: 14px 18px;
+      font-size: 0.875rem;
+      color: var(--text);
+      line-height: 1.65;
+      margin: 20px 0;
+    }
+
+    .docs-note strong {
+      color: var(--accent);
+    }
+
+    /* Subsection heading */
+    .docs-section h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 24px 0 10px;
+    }
+
+    /* Requirements badge */
+    .req-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(126,200,160,0.1);
+      border: 1px solid rgba(126,200,160,0.25);
+      color: var(--green);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    /* Code blocks */
+    .code-block {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 20px;
+      margin: 20px 0;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+      font-size: 0.82rem;
+      line-height: 1.65;
+      color: var(--text);
+      white-space: pre;
+    }
+
+    .code-block .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-lang {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-muted);
+    }
+
+    .btn-copy {
+      background: rgba(102,192,244,0.1);
+      border: 1px solid rgba(102,192,244,0.2);
+      color: var(--accent);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 4px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn-copy:hover {
+      background: rgba(102,192,244,0.18);
+    }
+
+    .btn-copy.copied {
+      background: rgba(126,200,160,0.15);
+      border-color: rgba(126,200,160,0.3);
+      color: var(--green);
+    }
+
+    /* Inline code */
+    code {
+      background: rgba(255,255,255,0.07);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 0.85em;
+      color: var(--accent);
+    }
+
+    /* Table */
+    .docs-table-wrap {
+      overflow-x: auto;
+      margin: 20px 0;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .docs-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+
+    .docs-table th {
+      background: var(--bg-panel);
+      color: var(--text-muted);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 12px 16px;
+      text-align: left;
+    }
+
+    .docs-table td {
+      padding: 12px 16px;
+      border-top: 1px solid var(--border);
+      color: var(--text);
+      vertical-align: top;
+    }
+
+    .docs-table tr:hover td {
+      background: rgba(255,255,255,0.02);
+    }
+
+    .docs-table td:first-child {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      color: #ffffff;
+      white-space: nowrap;
+    }
+
+    /* FAQ */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .faq-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 22px;
+    }
+
+    .faq-q {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .faq-a {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* Steps visual */
+    .steps-visual {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 20px 0;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 16px;
+      position: relative;
+    }
+
+    .step-item:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 17px;
+      top: 36px;
+      bottom: 0;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .step-num {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(102,192,244,0.1);
+      border: 1px solid rgba(102,192,244,0.3);
+      color: var(--accent);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-body {
+      padding: 6px 0 24px;
+    }
+
+    .step-body strong {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .step-body span {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .footer {
+      background: var(--bg-deep);
+      border-top: 1px solid var(--border);
+      padding: 40px 0 32px;
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px 20px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .footer-bottom a {
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .footer-bottom a:hover {
+      color: var(--green-light);
+    }
+
+    .footer-sep {
+      opacity: 0.4;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 900px) {
+      .docs-content {
+        padding: 32px 32px 60px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .nav-links,
+      .btn-nav-cta {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .docs-sidebar {
+        display: none;
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        position: static;
+      }
+
+      .docs-sidebar.open {
+        display: block;
+      }
+
+      .docs-sidebar-inner {
+        position: static;
+        max-height: none;
+        padding: 16px 0 20px;
+      }
+
+      .sidebar-mobile-toggle {
+        display: block;
+      }
+
+      .docs-wrapper {
+        flex-direction: column;
+        padding-top: 0;
+      }
+
+      .docs-content {
+        padding: 28px 20px 60px;
+        margin-top: 72px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .docs-content {
+        padding: 24px 16px 48px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a class="nav-logo" href="../index.html">
+        <img
+          src="../logoPrimary.png"
+          alt="RevsGaming"
+          height="36"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+        />
+        <span class="nav-logo-fallback">RevsGaming</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="../index.html#features">Características</a></li>
+        <li><a href="../index.html#consolas">Consolas</a></li>
+        <li><a href="../index.html#download">Descargar</a></li>
+      </ul>
+
+      <a
+        class="btn-nav-cta"
+        href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0"
+        target="_blank"
+        rel="noopener"
+      >Descargar</a>
+
+      <button class="hamburger" id="hamburger" aria-label="Menú" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <div class="nav-mobile" id="navMobile">
+      <a href="../index.html">Inicio</a>
+      <a href="../index.html#features">Características</a>
+      <a href="../index.html#consolas">Consolas</a>
+      <a href="../index.html#download">Descargar</a>
+      <a
+        class="btn-nav-cta"
+        href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0"
+        target="_blank"
+        rel="noopener"
+        style="text-align:center;"
+      >Descargar</a>
+    </div>
+  </nav>
+
+  <!-- SIDEBAR MOBILE TOGGLE (outside nav wrapper) -->
+  <button class="sidebar-mobile-toggle" id="sidebarToggle" aria-expanded="false">
+    Contenidos de la guía
+  </button>
+
+  <div class="docs-wrapper">
+    <!-- SIDEBAR -->
+    <aside class="docs-sidebar" id="docsSidebar">
+      <div class="docs-sidebar-inner">
+        <div class="sidebar-label">Guía de Usuario</div>
+        <ul class="sidebar-nav" id="sidebarNav">
+          <li><a href="#introduccion" class="active"><span class="nav-num">01</span> Introducción</a></li>
+          <li><a href="#instalacion"><span class="nav-num">02</span> Instalación</a></li>
+          <li><a href="#organizar-juegos"><span class="nav-num">03</span> Organizar tus juegos</a></li>
+          <li><a href="#jugar-solo"><span class="nav-num">04</span> Jugar en solitario</a></li>
+          <li><a href="#online-2j"><span class="nav-num">05</span> Online — 2 jugadores (PS1)</a></li>
+          <li><a href="#online-4j"><span class="nav-num">06</span> Online — hasta 4 jugadores</a></li>
+          <li><a href="#amigos"><span class="nav-num">07</span> Sistema de amigos</a></li>
+          <li><a href="#cloud-saves"><span class="nav-num">08</span> Cloud Saves</a></li>
+          <li><a href="#controles"><span class="nav-num">09</span> Controles con mando</a></li>
+          <li><a href="#faq"><span class="nav-num">10</span> Preguntas frecuentes</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="docs-content">
+      <div class="docs-content-inner">
+
+        <!-- 1. INTRODUCCION -->
+        <section class="docs-section" id="introduccion">
+          <div class="section-eyebrow">01</div>
+          <h2>Introducción</h2>
+          <p>
+            RevsGaming es un launcher de juegos retro para Windows. Organiza tu colección automáticamente, lanza los emuladores correctos sin configuración y te conecta con amigos para jugar online.
+          </p>
+          <p>
+            Soporta <strong>PS1</strong> mediante Mednafen, y vía RetroArch: <strong>NES, SNES, GBA, Game Boy, N64, Mega Drive, Arcade, Saturn y PS2</strong>. Los emuladores vienen incluidos en el instalador — no necesitas instalar nada por separado.
+          </p>
+          <div class="docs-note">
+            <strong>Version actual:</strong> v0.84.0 Beta — en desarrollo activo. Algunas funciones pueden cambiar en versiones futuras.
+          </div>
+        </section>
+
+        <!-- 2. INSTALACION -->
+        <section class="docs-section" id="instalacion">
+          <div class="section-eyebrow">02</div>
+          <h2>Instalación</h2>
+
+          <div class="req-badge">
+            Windows 10 / 11 (64-bit)
+          </div>
+
+          <div class="steps-visual">
+            <div class="step-item">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <strong>Descarga el instalador</strong>
+                <span>Baja el archivo <code>.exe</code> desde la <a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0" target="_blank" rel="noopener">página de releases en GitHub</a>.</span>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <strong>Ejecuta el instalador</strong>
+                <span>Elige la carpeta de instalación. Mednafen, RetroArch y todas las dependencias se instalan automáticamente.</span>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <strong>Abre RevsGaming</strong>
+                <span>Usa el acceso directo en el escritorio que crea el instalador.</span>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <strong>Crea una cuenta o entra como invitado</strong>
+                <span>Puedes registrarte para acceder a cloud saves y sistema de amigos, o entrar como invitado con un apodo.</span>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">5</div>
+              <div class="step-body">
+                <strong>BIOS de PS1 automáticas</strong>
+                <span>Si la app detecta que faltan las BIOS de PS1, las descarga automáticamente al primer uso.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. ORGANIZAR JUEGOS -->
+        <section class="docs-section" id="organizar-juegos">
+          <div class="section-eyebrow">03</div>
+          <h2>Organizar tus juegos</h2>
+
+          <p>
+            La carpeta por defecto es <code>games/</code> dentro de la carpeta de instalación. Puedes cambiarla en cualquier momento desde el botón <strong>Carpeta de Juegos</strong> en el sidebar de la app.
+          </p>
+
+          <h3>Estructura recomendada</h3>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">Estructura de carpetas</span>
+              <button class="btn-copy" onclick="copyCode(this)">Copiar</button>
+            </div>
+            <pre>games/
+├── PS1/
+│   └── Crash Bandicoot/
+│       ├── crash.cue
+│       └── crash.bin
+└── NES/
+    └── Super Mario/
+        └── mario.nes</pre>
+          </div>
+
+          <ul>
+            <li>Cada juego debe estar en su propia subcarpeta.</li>
+            <li>Para PS1, el archivo principal es el <code>.cue</code> (que apunta al <code>.bin</code>).</li>
+            <li>Para otros sistemas: <code>.nes</code>, <code>.sfc</code>, <code>.gba</code>, <code>.n64</code>, <code>.md</code>, etc.</li>
+            <li>La app soporta hasta 3 niveles de subcarpetas.</li>
+          </ul>
+        </section>
+
+        <!-- 4. JUGAR SOLO -->
+        <section class="docs-section" id="jugar-solo">
+          <div class="section-eyebrow">04</div>
+          <h2>Jugar en solitario</h2>
+
+          <div class="steps-visual">
+            <div class="step-item">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <strong>Abre tu biblioteca</strong>
+                <span>RevsGaming detecta y muestra todos tus juegos al iniciar.</span>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <strong>Selecciona el juego</strong>
+                <span>Haz clic en él, o presiona <strong>A</strong> con el mando si lo tienes conectado.</span>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <strong>Elige modo Solo</strong>
+                <span>Selecciona <strong>Solo</strong> en la pantalla de modo que aparece.</span>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <strong>El juego inicia</strong>
+                <span>RevsGaming lanza el emulador correcto automáticamente. Si el core de RetroArch no está descargado, lo descarga en ese momento.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-note">
+            Para PS1 se usa <strong>Mednafen</strong>. Para NES, SNES, GBA, N64 y el resto se usa <strong>RetroArch</strong> con el core correspondiente.
+          </div>
+        </section>
+
+        <!-- 5. ONLINE 2J -->
+        <section class="docs-section" id="online-2j">
+          <div class="section-eyebrow">05</div>
+          <h2>Jugar online — 2 jugadores (PS1)</h2>
+
+          <p>El netplay para PS1 soporta 2 jugadores simultáneos usando Mednafen.</p>
+
+          <h3>Como anfitrión (host)</h3>
+          <div class="steps-visual">
+            <div class="step-item">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <strong>Crea la sala</strong>
+                <span>Selecciona un juego PS1 → <strong>Online</strong> → <strong>Crear Sala</strong> → elige <strong>2 Jugadores</strong>.</span>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <strong>Obtén el código</strong>
+                <span>Aparece un código de 6 letras (ej: <code>XKMT4R</code>). Compártelo con tu amigo por donde prefieras.</span>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <strong>El juego inicia automáticamente</strong>
+                <span>Cuando tu amigo ingresa el código y se conecta, el juego arranca solo en ambos PCs.</span>
+              </div>
+            </div>
+          </div>
+
+          <h3>Como jugador (guest)</h3>
+          <div class="steps-visual">
+            <div class="step-item">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <strong>Ve a Unirse</strong>
+                <span>En la pantalla de modo online, selecciona <strong>Unirse</strong>.</span>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <strong>Ingresa el código</strong>
+                <span>Escribe el código de 6 letras que te dio el anfitrión. El juego inicia automáticamente.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="docs-note">
+            <strong>Importante:</strong> Ambos jugadores deben tener exactamente la misma ROM — el mismo archivo <code>.cue</code> y <code>.bin</code>. Si los archivos difieren, la sincronización fallará.
+          </div>
+        </section>
+
+        <!-- 6. ONLINE 4J -->
+        <section class="docs-section" id="online-4j">
+          <div class="section-eyebrow">06</div>
+          <h2>Jugar online — hasta 4 jugadores</h2>
+
+          <p>Disponible para NES, SNES, GBA, Mega Drive y otros sistemas vía RetroArch. El servidor MITM está en Lima, Perú, optimizado para Latinoamérica.</p>
+
+          <h3>Como anfitrión (host)</h3>
+          <div class="steps-visual">
+            <div class="step-item">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <strong>Crea la sala</strong>
+                <span>Selecciona un juego → <strong>Online</strong> → <strong>Crear Sala</strong> → elige <strong>4 Jugadores</strong>.</span>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <strong>Comparte el código numérico</strong>
+                <span>Aparece un código numérico. Compártelo con hasta 3 amigos.</span>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <strong>Espera a que todos se unan</strong>
+                <span>El juego inicia cuando todos los jugadores se conectan o cuando decides empezar.</span>
+              </div>
+            </div>
+          </div>
+
+          <h3>Como jugador (guest)</h3>
+          <div class="steps-visual">
+            <div class="step-item">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <strong>Ve a Unirse</strong>
+                <span>Selecciona <strong>Unirse</strong> en la pantalla de modo online.</span>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <strong>Ingresa el código</strong>
+                <span>Escribe el código numérico. El juego inicia automáticamente.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 7. AMIGOS -->
+        <section class="docs-section" id="amigos">
+          <div class="section-eyebrow">07</div>
+          <h2>Sistema de amigos</h2>
+
+          <div class="docs-note">
+            <strong>Requiere cuenta registrada.</strong> El sistema de amigos no está disponible en modo invitado.
+          </div>
+
+          <ul>
+            <li>Busca a un amigo por su nombre de usuario y envíale una solicitud de amistad.</li>
+            <li>Ve en tiempo real quién está online y en qué juego está jugando.</li>
+            <li>Desde la lista de amigos puedes invitarlos directamente a tu sala online.</li>
+            <li>Recibes una notificación cuando un amigo entra a la app.</li>
+          </ul>
+        </section>
+
+        <!-- 8. CLOUD SAVES -->
+        <section class="docs-section" id="cloud-saves">
+          <div class="section-eyebrow">08</div>
+          <h2>Cloud Saves</h2>
+
+          <div class="docs-note">
+            <strong>Requiere cuenta registrada.</strong> Los saves en la nube no están disponibles en modo invitado.
+          </div>
+
+          <ul>
+            <li>Los saves se sincronizan automáticamente al <strong>cerrar un juego</strong>.</li>
+            <li>Al iniciar un juego, se descargan los saves más recientes desde la nube.</li>
+            <li>No es necesaria ninguna acción manual — todo ocurre en segundo plano.</li>
+          </ul>
+
+          <h3>Formatos soportados</h3>
+          <ul>
+            <li><code>.mcr</code>, <code>.mcs</code> — saves de Mednafen (PS1)</li>
+            <li><code>.srm</code>, <code>.sav</code>, <code>.state*</code> — saves y estados de RetroArch</li>
+          </ul>
+
+          <p>Los saves se almacenan en Supabase Storage, cifrados y asociados a tu cuenta de usuario.</p>
+        </section>
+
+        <!-- 9. CONTROLES -->
+        <section class="docs-section" id="controles">
+          <div class="section-eyebrow">09</div>
+          <h2>Controles con mando</h2>
+
+          <p>Puedes navegar toda la interfaz de RevsGaming con un control de Xbox o PlayStation conectado por USB o Bluetooth.</p>
+
+          <div class="docs-table-wrap">
+            <table class="docs-table">
+              <thead>
+                <tr>
+                  <th>Botón</th>
+                  <th>Acción en la app</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>D-Pad / Stick izquierdo</td>
+                  <td>Navegar por la biblioteca y menús</td>
+                </tr>
+                <tr>
+                  <td>A (Cruz)</td>
+                  <td>Confirmar / Abrir juego</td>
+                </tr>
+                <tr>
+                  <td>B (Círculo)</td>
+                  <td>Volver / Cancelar</td>
+                </tr>
+                <tr>
+                  <td>Y (Triángulo)</td>
+                  <td>Cambiar vista lista / grilla</td>
+                </tr>
+                <tr>
+                  <td>Start</td>
+                  <td>Abrir detector de mandos</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>Una vez dentro de un juego, los controles dependen del emulador (Mednafen o RetroArch) y su configuración estándar de botones.</p>
+        </section>
+
+        <!-- 10. FAQ -->
+        <section class="docs-section" id="faq">
+          <div class="section-eyebrow">10</div>
+          <h2>Preguntas frecuentes</h2>
+
+          <div class="faq-list">
+            <div class="faq-item">
+              <div class="faq-q">¿Dónde pongo las BIOS de PS1?</div>
+              <div class="faq-a">No necesitas hacerlo. RevsGaming descarga las BIOS de PS1 automáticamente al primer uso. Si ya las tienes, la app las detecta.</div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-q">¿Qué hago si el core de RetroArch no está?</div>
+              <div class="faq-a">La app lo descarga automáticamente desde buildbot.libretro.com la primera vez que abres un juego que lo necesita. Solo asegúrate de tener conexión a internet.</div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-q">¿Mis saves están seguros?</div>
+              <div class="faq-a">Sí. Los cloud saves se almacenan en Supabase Storage, cifrados y vinculados a tu cuenta de usuario. Solo tú tienes acceso a ellos.</div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-q">¿Puedo cambiar la carpeta de juegos?</div>
+              <div class="faq-a">Sí, desde el botón "Carpeta de Juegos" en el sidebar de la app. Puedes apuntar a cualquier unidad o carpeta en tu PC.</div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-q">¿El modo invitado guarda mis saves?</div>
+              <div class="faq-a">No. Los saves en la nube requieren cuenta registrada. En modo invitado los saves se guardan localmente mientras la sesión esté activa.</div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-q">¿Qué pasa si la beta se cierra?</div>
+              <div class="faq-a">Recibirás una notificación dentro de la app con anticipación. Tus saves en la nube permanecerán seguros.</div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>&copy; 2025 RevsGaming &mdash; AntonioPCGamer</span>
+        <span class="footer-sep">|</span>
+        <a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0" target="_blank" rel="noopener">GitHub</a>
+        <span class="footer-sep">|</span>
+        <a href="../legal/privacy.html">Privacidad</a>
+        <span class="footer-sep">|</span>
+        <a href="../legal/terms.html">Términos</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* Navbar scroll */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    /* Hamburger */
+    const hamburger = document.getElementById('hamburger');
+    const navMobile = document.getElementById('navMobile');
+    hamburger.addEventListener('click', () => {
+      const isOpen = hamburger.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', String(isOpen));
+      navMobile.classList.toggle('open');
+    });
+    navMobile.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        navMobile.classList.remove('open');
+      });
+    });
+
+    /* Sidebar mobile toggle */
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const docsSidebar   = document.getElementById('docsSidebar');
+    sidebarToggle.addEventListener('click', () => {
+      const isOpen = docsSidebar.classList.toggle('open');
+      sidebarToggle.classList.toggle('open', isOpen);
+      sidebarToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    /* Active sidebar link on scroll (IntersectionObserver) */
+    const sections = document.querySelectorAll('.docs-section');
+    const navLinks = document.querySelectorAll('.sidebar-nav a');
+
+    const observerOpts = {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+          });
+        }
+      });
+    }, observerOpts);
+
+    sections.forEach(s => sectionObserver.observe(s));
+
+    /* Copy code button */
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'Copiado';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copiar';
+          btn.classList.remove('copied');
+        }, 2000);
+      }).catch(() => {
+        btn.textContent = 'Error';
+        setTimeout(() => { btn.textContent = 'Copiar'; }, 1500);
+      });
+    }
+  </script>
+</body>
+</html>

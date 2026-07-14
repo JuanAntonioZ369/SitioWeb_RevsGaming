@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://revsgaming.com/legal/privacy.html" />
+  <meta property="og:title" content="Política de Privacidad — RevsGaming" />
+  <meta property="og:description" content="Política de privacidad de RevsGaming. Cómo manejamos tus datos." />
+  <meta property="og:image" content="https://revsgaming.com/og-image.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Política de Privacidad — RevsGaming" />
+  <title>Política de Privacidad — RevsGaming</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-deep: #0d1117;
+      --bg-main: #1b2838;
+      --bg-card: #16202d;
+      --bg-panel: #1e2d3d;
+      --green: #7EC8A0;
+      --green-light: #a8d8b8;
+      --red: #C47E7E;
+      --accent: #66c0f4;
+      --text: #c6d4df;
+      --text-muted: #8f98a0;
+      --border: rgba(102,192,244,0.15);
+    }
+
+    html.light-mode {
+      --bg-deep:   #f0f4f8;
+      --bg-main:   #e2e8f0;
+      --bg-card:   #ffffff;
+      --bg-panel:  #f8fafc;
+      --green:     #2d8a5e;
+      --green-light: #3aab76;
+      --accent:    #1a6fa8;
+      --text:      #1e293b;
+      --text-muted:#64748b;
+      --border:    rgba(0,0,0,0.1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-deep);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.7;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      background: var(--bg-main);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .nav-logo-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--green);
+      letter-spacing: -0.01em;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      flex: 1;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 6px 8px;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+    .nav-cta {
+      background: var(--green);
+      color: #0d1117 !important;
+      padding: 7px 12px !important;
+      border-radius: 6px !important;
+      font-weight: 600 !important;
+      font-size: 0.8rem;
+      text-decoration: none;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .nav-cta:hover { background: var(--green-light) !important; }
+
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      color: var(--text);
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: currentColor;
+      margin: 5px 0;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    @media (max-width: 768px) {
+      .nav-hamburger { display: block; margin-left: auto; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: var(--bg-main);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px 24px 16px;
+        gap: 2px;
+        z-index: 200;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { width: 100%; padding: 10px 12px; font-size: 0.875rem; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(180deg, var(--bg-main) 0%, var(--bg-deep) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 56px 24px 40px;
+      text-align: center;
+    }
+    .hero-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+    .hero-date {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* ── LAYOUT ── */
+    .page-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+      flex: 1;
+    }
+
+    /* ── TOC ── */
+    .toc {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 48px;
+      position: relative;
+      z-index: 1;
+    }
+    .toc-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .toc ol {
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .toc li { font-size: 0.9rem; }
+    .toc a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .toc a:hover { color: var(--green-light); text-decoration: underline; }
+
+    /* TOC mobile toggle */
+    .toc-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0;
+      margin-bottom: 0;
+    }
+    .toc-body { display: block; }
+
+    @media (max-width: 767px) {
+      .toc { padding: 18px 20px; }
+      .toc-toggle { display: flex; align-items: center; gap: 6px; width: 100%; justify-content: space-between; }
+      .toc-toggle .toc-arrow { transition: transform 0.25s; display: inline-block; }
+      .toc-toggle.open .toc-arrow { transform: rotate(180deg); }
+      .toc-body { display: none; margin-top: 14px; }
+      .toc-body.open { display: block; }
+      .toc .toc-title { display: none; }
+    }
+
+    /* ── SECCIONES ── */
+    .section {
+      margin-bottom: 44px;
+      scroll-margin-top: 80px;
+    }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 0.78rem;
+      color: var(--green);
+      background: rgba(126,200,160,0.12);
+      border: 1px solid rgba(126,200,160,0.25);
+      padding: 2px 9px;
+      border-radius: 4px;
+      letter-spacing: 0.03em;
+      flex-shrink: 0;
+    }
+    .section h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.01em;
+    }
+
+    .section p {
+      font-size: 0.93rem;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .section p:last-child { margin-bottom: 0; }
+
+    .section ul, .section ol {
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .section li {
+      font-size: 0.93rem;
+      color: var(--text);
+    }
+    .section li strong { color: #fff; }
+
+    .highlight-box {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--green);
+      border-radius: 0 8px 8px 0;
+      padding: 14px 18px;
+      margin: 14px 0;
+      font-size: 0.9rem;
+    }
+    .highlight-box.accent-blue { border-left-color: var(--accent); }
+    .highlight-box.accent-red  { border-left-color: var(--red); }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg-main);
+      border-top: 1px solid var(--border);
+      padding: 28px 24px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer-copy { font-size: 0.83rem; color: var(--text-muted); }
+    .footer-links { display: flex; gap: 20px; list-style: none; }
+    .footer-links a {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--accent); }
+
+    @media (max-width: 480px) {
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      border-radius: 6px;
+      padding: 6px 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover {
+      color: var(--text);
+      border-color: var(--green);
+      background: rgba(126,200,160,0.08);
+    }
+    html:not(.light-mode) .icon-moon { display: none; }
+    html.light-mode .icon-sun { display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo">
+        <img src="../logoPrimary.png" height="36" alt="RevsGaming" onerror="this.style.display='none'" />
+        <span class="nav-logo-text">RevsGaming</span>
+      </a>
+      <button class="nav-hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="../index.html#features">Características</a></li>
+        <li><a href="../index.html#consolas">Consolas</a></li>
+        <li><a href="../index.html#download">Descargar</a></li>
+        <li><a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0" target="_blank" rel="noopener" class="nav-cta">Descargar Beta</a></li>
+      </ul>
+      <button id="themeToggle" class="theme-toggle" aria-label="Cambiar tema" title="Cambiar tema">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-label">Legal</p>
+    <h1>Política de Privacidad</h1>
+    <p class="hero-date">Última actualización: Junio 2026</p>
+  </section>
+
+  <main class="page-wrap">
+
+    <!-- TABLA DE CONTENIDOS -->
+    <nav class="toc" aria-label="Tabla de contenidos">
+      <button class="toc-toggle" id="tocToggle" aria-expanded="false" aria-controls="tocBody">
+        <span>Contenidos</span>
+        <span class="toc-arrow">&#9660;</span>
+      </button>
+      <p class="toc-title" aria-hidden="true">Contenidos</p>
+      <div class="toc-body" id="tocBody">
+        <ol>
+          <li><a href="#datos-recopilados">Datos que recopilamos</a></li>
+          <li><a href="#uso-datos">Para qué usamos tus datos</a></li>
+          <li><a href="#terceros">Servicios de terceros</a></li>
+          <li><a href="#datos-no-recopilados">Datos que NO recopilamos</a></li>
+          <li><a href="#retencion">Retención de datos</a></li>
+          <li><a href="#seguridad">Seguridad</a></li>
+          <li><a href="#modo-invitado">Modo invitado</a></li>
+          <li><a href="#tus-derechos">Tus derechos</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ol>
+      </div>
+    </nav>
+
+    <!-- 1 -->
+    <section class="section" id="datos-recopilados">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2>Datos que recopilamos</h2>
+      </div>
+      <p>Cuando usas RevsGaming, podemos recopilar los siguientes tipos de información:</p>
+      <ul>
+        <li><strong>Dirección de correo electrónico:</strong> proporcionada al crear una cuenta. Se usa exclusivamente para autenticación via Supabase Auth.</li>
+        <li><strong>Nickname / apodo:</strong> el nombre de usuario que eliges al registrarte o en cualquier momento posterior. Es visible para otros usuarios en el sistema de amigos.</li>
+        <li><strong>Dirección IP:</strong> registrada de forma transitoria durante las conexiones de netplay para establecer sesiones entre jugadores a través del servidor MITM en Lima, Perú. No la almacenamos de forma permanente.</li>
+        <li><strong>Saves y estados de juego:</strong> archivos de guardado (.mcr, .mcs, .srm, .sav, .state*) que sincronizas voluntariamente mediante la función Cloud Saves. Se almacenan en Supabase Storage bajo tu cuenta.</li>
+        <li><strong>Datos de sesión:</strong> token de autenticación generado por Supabase Auth, almacenado localmente en tu dispositivo para mantener la sesión activa entre reinicios de la app.</li>
+        <li><strong>Estado de presencia:</strong> cuando el sistema de amigos está activo, se comparte en tiempo real si estás conectado o en qué juego te encuentras. Esto se transmite via Supabase Realtime y no se almacena de forma permanente.</li>
+      </ul>
+    </section>
+
+    <!-- 2 -->
+    <section class="section" id="uso-datos">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2>Para qué usamos tus datos</h2>
+      </div>
+      <p>Usamos la información recopilada únicamente para las siguientes finalidades:</p>
+      <ul>
+        <li><strong>Autenticación:</strong> verificar tu identidad al iniciar sesión y proteger el acceso a tu cuenta.</li>
+        <li><strong>Sincronización de saves:</strong> subir y restaurar tus archivos de guardado entre distintos dispositivos o tras reinstalar la app.</li>
+        <li><strong>Sistema de amigos:</strong> mostrar tu nickname y estado de presencia a los usuarios que hayas agregado como amigos.</li>
+        <li><strong>Conexión netplay:</strong> usar tu IP de forma transitoria para establecer la conexión entre los jugadores de una sala. El emulador gestiona esta conexión directamente.</li>
+        <li><strong>Control de acceso a la beta:</strong> verificar si la beta está abierta (campo <code>beta_open</code> en Supabase) y notificarte si hay una versión más reciente disponible.</li>
+      </ul>
+      <div class="highlight-box">
+        No vendemos, cedemos ni compartimos tus datos personales con terceros con fines publicitarios o comerciales.
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section class="section" id="terceros">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2>Servicios de terceros</h2>
+      </div>
+      <p>RevsGaming utiliza los siguientes servicios de terceros para operar:</p>
+      <ul>
+        <li>
+          <strong>Supabase</strong> — plataforma de base de datos, autenticación y almacenamiento.
+          Tu email, nickname y archivos de save se almacenan en la infraestructura de Supabase.
+          Supabase procesa estos datos de acuerdo con su propia política de privacidad:
+          <a href="https://supabase.com/privacy" target="_blank" rel="noopener">supabase.com/privacy</a>.
+        </li>
+      </ul>
+      <div class="highlight-box accent-blue">
+        Supabase almacena datos en servidores de AWS. Al usar RevsGaming aceptas también las condiciones de Supabase en lo relativo al tratamiento de tus datos.
+      </div>
+      <p>No integramos servicios de analítica de terceros (Google Analytics, Mixpanel, etc.) ni redes publicitarias.</p>
+    </section>
+
+    <!-- 4 -->
+    <section class="section" id="datos-no-recopilados">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <h2>Datos que NO recopilamos</h2>
+      </div>
+      <ul>
+        <li><strong>Datos de pago:</strong> RevsGaming puede ofrecer en el futuro funciones de pago procesadas por Culqi. En ese caso, los datos de tarjeta o método de pago son procesados directamente por Culqi y nunca pasan por nuestros servidores ni los almacenamos.</li>
+        <li><strong>Historial de ROMs o juegos:</strong> no registramos qué juegos lanzas, cuánto tiempo juegas ni ninguna estadística de uso de tu biblioteca.</li>
+        <li><strong>Contenido de los archivos de juego:</strong> los archivos .cue, .bin u otros formatos de ROM que añades a tu biblioteca no son inspeccionados, analizados ni enviados a ningún servidor.</li>
+        <li><strong>Datos biométricos:</strong> no recopilamos ningún tipo de dato biométrico.</li>
+      </ul>
+    </section>
+
+    <!-- 5 -->
+    <section class="section" id="retencion">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <h2>Retención de datos</h2>
+      </div>
+      <p>Tus datos personales se conservan mientras tu cuenta esté activa en RevsGaming. Esto incluye tu email, nickname y los archivos de save almacenados en Supabase Storage.</p>
+      <p>Si deseas eliminar tu cuenta y todos los datos asociados, puedes solicitarlo abriendo un Issue en GitHub:</p>
+      <div class="highlight-box">
+        <a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/issues" target="_blank" rel="noopener">github.com/JuanAntonioZ369/RetroGamingRevs_2.0/issues</a>
+        <br />Indica tu nickname y el email de tu cuenta. Procesaremos la solicitud en un plazo razonable.
+      </div>
+      <p>Los datos de presencia en tiempo real (estado online/offline) no se almacenan de forma permanente y se eliminan automáticamente al cerrar sesión.</p>
+    </section>
+
+    <!-- 6 -->
+    <section class="section" id="seguridad">
+      <div class="section-header">
+        <span class="section-num">06</span>
+        <h2>Seguridad</h2>
+      </div>
+      <p>Implementamos medidas técnicas para proteger tus datos:</p>
+      <ul>
+        <li><strong>Content Security Policy (CSP):</strong> aplicada via <code>onHeadersReceived</code> en la app Electron para prevenir inyecciones de código.</li>
+        <li><strong>Validación de rutas:</strong> prevención de path traversal en el acceso a archivos de juego, evitando que código malicioso acceda a archivos fuera de las carpetas permitidas.</li>
+        <li><strong>Validación IPC:</strong> los manejadores de mensajes entre procesos verifican <code>isTrustedSender()</code> para aceptar solo comunicaciones legítimas.</li>
+        <li><strong>Comunicación cifrada:</strong> toda comunicación con Supabase se realiza sobre HTTPS/TLS.</li>
+        <li><strong>Tokens locales:</strong> el token de sesión se almacena localmente en tu dispositivo y no se comparte con terceros.</li>
+      </ul>
+      <div class="highlight-box accent-blue">
+        RevsGaming es software en fase beta. Aunque tomamos medidas de seguridad razonables, no podemos garantizar seguridad absoluta. Si descubres una vulnerabilidad, por favor repórtala via GitHub Issues.
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section class="section" id="modo-invitado">
+      <div class="section-header">
+        <span class="section-num">07</span>
+        <h2>Modo invitado</h2>
+      </div>
+      <p>RevsGaming ofrece un modo invitado que permite usar la app sin crear una cuenta. En este modo:</p>
+      <ul>
+        <li>No se recopila ni almacena ningún dato personal de forma permanente.</li>
+        <li>Se usa un apodo temporal elegido por el usuario, que no se guarda en ningún servidor.</li>
+        <li>Las funciones de Cloud Saves y sistema de amigos no están disponibles.</li>
+        <li>Al cerrar la app, el apodo temporal se descarta.</li>
+      </ul>
+    </section>
+
+    <!-- 8 -->
+    <section class="section" id="tus-derechos">
+      <div class="section-header">
+        <span class="section-num">08</span>
+        <h2>Tus derechos</h2>
+      </div>
+      <p>En relación a tus datos personales tienes derecho a:</p>
+      <ul>
+        <li><strong>Acceso:</strong> solicitar información sobre qué datos tenemos almacenados sobre ti.</li>
+        <li><strong>Rectificación:</strong> corregir tu nickname o email desde los ajustes de la app.</li>
+        <li><strong>Eliminación:</strong> solicitar la eliminación de tu cuenta y todos los datos asociados via GitHub Issues.</li>
+        <li><strong>Portabilidad:</strong> tus saves se almacenan en formatos estándar (.mcr, .srm, .sav, .state) que puedes descargar y usar con cualquier emulador compatible.</li>
+      </ul>
+    </section>
+
+    <!-- 9 -->
+    <section class="section" id="contacto">
+      <div class="section-header">
+        <span class="section-num">09</span>
+        <h2>Contacto</h2>
+      </div>
+      <p>Para cualquier consulta, solicitud o reporte relacionado con esta política de privacidad, contáctanos a través de GitHub Issues:</p>
+      <div class="highlight-box">
+        <a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/issues" target="_blank" rel="noopener">github.com/JuanAntonioZ369/RetroGamingRevs_2.0/issues</a>
+      </div>
+      <p>Esta política puede actualizarse ocasionalmente. Los cambios significativos se notificarán dentro de la app. La fecha de "Última actualización" al inicio de este documento refleja la versión vigente.</p>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-copy">© 2025 RevsGaming — AntonioPCGamer</span>
+      <ul class="footer-links">
+        <li><a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="privacy.html">Privacidad</a></li>
+        <li><a href="terms.html">Términos</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    /* Hamburger */
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', String(open));
+    });
+
+    /* Theme toggle */
+    const themeToggle = document.getElementById('themeToggle')
+    const savedTheme  = localStorage.getItem('revsgaming-theme')
+    if (savedTheme === 'light') document.documentElement.classList.add('light-mode')
+
+    themeToggle.addEventListener('click', () => {
+      const isLight = document.documentElement.classList.toggle('light-mode')
+      localStorage.setItem('revsgaming-theme', isLight ? 'light' : 'dark')
+    })
+
+    /* TOC mobile toggle */
+    const tocToggle = document.getElementById('tocToggle');
+    const tocBody   = document.getElementById('tocBody');
+    if (tocToggle && tocBody) {
+      tocToggle.addEventListener('click', () => {
+        const open = tocBody.classList.toggle('open');
+        tocToggle.classList.toggle('open', open);
+        tocToggle.setAttribute('aria-expanded', String(open));
+      });
+    }
+  </script>
+</body>
+</html>

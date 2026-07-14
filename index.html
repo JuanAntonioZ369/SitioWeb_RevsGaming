@@ -1,0 +1,3123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RevsGaming — Revive los clásicos. Juega online con tus amigos.</title>
+  <meta name="description" content="RevsGaming es un launcher de juegos retro para Windows con netplay online, biblioteca automática, cloud saves y soporte para PS1, NES, SNES, GBA, N64 y más." />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://revsgaming.com/" />
+  <meta property="og:title" content="RevsGaming — Launcher retro con netplay online" />
+  <meta property="og:description" content="Organiza tu colección retro y juega PS1, NES, SNES, N64 y más en línea con amigos. Sin configurar emuladores." />
+  <meta property="og:image" content="https://revsgaming.com/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="es_PE" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="RevsGaming — Launcher retro con netplay online" />
+  <meta name="twitter:description" content="Organiza tu colección retro y juega PS1, NES, SNES, N64 y más en línea con amigos." />
+  <meta name="twitter:image" content="https://revsgaming.com/og-image.png" />
+  <!-- SEO adicional -->
+  <meta name="keywords" content="launcher retro, emulador PS1, netplay online, juegos retro Peru, NES SNES N64 GBA online, cloud saves, RevsGaming" />
+  <meta name="author" content="AntonioPCGamer" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://revsgaming.com/" />
+  <!-- JSON-LD — SoftwareApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "RevsGaming",
+    "operatingSystem": "Windows",
+    "applicationCategory": "GameApplication",
+    "description": "Launcher de juegos retro para Windows con netplay online 2–4 jugadores, cloud saves automáticos y soporte para PS1, NES, SNES, GBA, N64 y más.",
+    "url": "https://revsgaming.com",
+    "downloadUrl": "https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0",
+    "softwareVersion": "0.84.0",
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "Plan Mensual",
+        "price": "11.80",
+        "priceCurrency": "PEN",
+        "description": "Acceso mensual a RevsGaming (incluye IGV)"
+      },
+      {
+        "@type": "Offer",
+        "name": "Plan Anual",
+        "price": "118.00",
+        "priceCurrency": "PEN",
+        "description": "Acceso anual a RevsGaming (incluye IGV) — 2 meses gratis"
+      }
+    ],
+    "author": {
+      "@type": "Person",
+      "name": "AntonioPCGamer"
+    },
+    "featureList": [
+      "Netplay online 2–4 jugadores",
+      "Cloud Saves automáticos",
+      "Soporte PS1, NES, SNES, GBA, N64",
+      "Sistema de amigos en tiempo real",
+      "Join a partidas multijugador"
+    ],
+    "inLanguage": "es-PE"
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://checkout.culqi.com/js/v4"></script>
+
+  <style>
+    /* ============================================================
+       RESET & VARIABLES
+    ============================================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-deep:     #0d1117;
+      --bg-main:     #1b2838;
+      --bg-card:     #16202d;
+      --bg-panel:    #1e2d3d;
+      --green:       #7EC8A0;
+      --green-light: #a8d8b8;
+      --red:         #C47E7E;
+      --accent:      #66c0f4;
+      --text:        #c6d4df;
+      --text-muted:  #8f98a0;
+      --border:      rgba(102,192,244,0.15);
+      --glass:       rgba(22,32,45,0.85);
+    }
+
+    html.light-mode {
+      --bg-deep:   #f0f4f8;
+      --bg-main:   #e2e8f0;
+      --bg-card:   #ffffff;
+      --bg-panel:  #f8fafc;
+      --green:     #2d8a5e;
+      --green-light: #3aab76;
+      --accent:    #1a6fa8;
+      --text:      #1e293b;
+      --text-muted:#64748b;
+      --border:    rgba(0,0,0,0.1);
+      --glass:     rgba(255,255,255,0.85);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background-color: var(--bg-deep);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ============================================================
+       UTILITIES
+    ============================================================ */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* scroll-margin-top para que el navbar no tape el contenido */
+    section[id] {
+      scroll-margin-top: 80px;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #ffffff 40%, var(--green-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-bottom: 48px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(126,200,160,0.12);
+      border: 1px solid rgba(126,200,160,0.3);
+      color: var(--green);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 6px 14px;
+      border-radius: 20px;
+    }
+
+    .badge .dot {
+      width: 7px;
+      height: 7px;
+      background: var(--red);
+      border-radius: 50%;
+      animation: pulse-dot 1.6s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    /* Fade-in on scroll */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Hero entry animation */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(36px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Pulse glow para botón Culqi */
+    @keyframes pulse-glow {
+      0%, 100% {
+        box-shadow: 0 0 0 0 rgba(126,200,160,0);
+      }
+      50% {
+        box-shadow: 0 0 0 10px rgba(126,200,160,0.18), 0 8px 32px rgba(126,200,160,0.25);
+      }
+    }
+
+    /* Gradiente animado para borde support */
+    @keyframes border-rotate {
+      0%   { --angle: 0deg; }
+      100% { --angle: 360deg; }
+    }
+
+    @property --angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
+
+    /* ============================================================
+       NAVBAR
+    ============================================================ */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 14px 0;
+      transition: background 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      border-bottom: 1px solid transparent;
+    }
+
+    .navbar.scrolled {
+      background: var(--glass);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(102,192,244,0.18);
+      box-shadow: 0 1px 40px rgba(0,0,0,0.45), 0 0 0 0.5px rgba(102,192,244,0.08);
+    }
+
+    .navbar .container {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .nav-logo img {
+      height: 44px;
+      width: auto;
+      filter: drop-shadow(0 0 8px rgba(126,200,160,0.25));
+    }
+
+    .nav-logo-fallback {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #ffffff;
+      display: none;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+      margin-left: auto;
+    }
+
+    .nav-links a {
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #ffffff;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .btn-nav-cta {
+      background: var(--green);
+      color: #0d1117;
+      padding: 9px 20px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: background 0.2s, transform 0.15s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .btn-nav-cta:hover {
+      background: var(--green-light);
+      transform: translateY(-1px);
+    }
+
+    .btn-nav-register {
+      background: transparent;
+      color: var(--green);
+      border: 1px solid var(--green);
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+    .btn-nav-register:hover {
+      background: var(--green);
+      color: #0d1117;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      border-radius: 6px;
+      padding: 6px 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover {
+      color: var(--text);
+      border-color: var(--green);
+      background: rgba(126,200,160,0.08);
+    }
+    html:not(.light-mode) .icon-moon { display: none; }
+    html.light-mode .icon-sun { display: none; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      padding: 6px;
+      margin-left: auto;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav-mobile {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      padding: 12px 24px 20px;
+      background: var(--bg-main);
+      border-top: 1px solid var(--border);
+    }
+
+    .nav-mobile.open {
+      display: flex;
+    }
+
+    .nav-mobile a {
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-mobile a:hover {
+      color: #ffffff;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .nav-mobile .btn-nav-cta {
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    .hero {
+      min-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 90px 24px 60px;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% 20%, rgba(126,200,160,0.1) 0%, transparent 65%),
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(102,192,244,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 80% 50%, rgba(126,200,160,0.04) 0%, transparent 60%),
+        linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-main) 100%);
+    }
+
+    /* Grid pattern overlay */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(102,192,244,0.08) 1px, transparent 1px);
+      background-size: 30px 30px;
+      pointer-events: none;
+    }
+
+    /* Bottom fade */
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 160px;
+      background: linear-gradient(to bottom, transparent, var(--bg-deep));
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 820px;
+    }
+
+    .hero-badge {
+      margin-bottom: 28px;
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 6vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.12;
+      margin-bottom: 24px;
+      letter-spacing: -0.03em;
+      animation: fadeInUp 0.75s ease both;
+      animation-delay: 0.1s;
+    }
+
+    .hero-title .line1 {
+      color: #ffffff;
+      display: block;
+    }
+
+    .hero-title .line2 {
+      display: block;
+      background: linear-gradient(90deg, var(--green) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      color: var(--text-muted);
+      max-width: 560px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+      animation: fadeInUp 0.75s ease both;
+      animation-delay: 0.25s;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+
+    .btn-primary {
+      position: relative;
+      overflow: hidden;
+      background: var(--green);
+      color: #0d1117;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: 8px;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      animation: shimmer 2.4s ease infinite;
+    }
+
+    @keyframes shimmer {
+      0%   { left: -100%; }
+      60%  { left: 140%; }
+      100% { left: 140%; }
+    }
+
+    .btn-primary:hover {
+      background: var(--green-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(126,200,160,0.35);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 13px 28px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(102,192,244,0.5);
+      color: #ffffff;
+      background: rgba(102,192,244,0.06);
+    }
+
+    .hero-stats {
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: var(--text-muted);
+      font-size: 0.825rem;
+      font-weight: 500;
+    }
+
+    .hero-stat {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: rgba(22,32,45,0.7);
+      border: 1px solid rgba(126,200,160,0.18);
+      border-radius: 8px;
+      backdrop-filter: blur(8px);
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .hero-stat:hover {
+      border-color: rgba(126,200,160,0.4);
+      background: rgba(126,200,160,0.06);
+    }
+
+    .hero-stat svg {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      color: var(--green);
+    }
+
+    /* ============================================================
+       SHOWCASE
+    ============================================================ */
+    .showcase {
+      padding: 72px 0;
+      background: var(--bg-deep);
+    }
+
+    .showcase-main {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 14px;
+      border: 1px solid rgba(102,192,244,0.15);
+      position: relative;
+      box-shadow:
+        0 32px 80px rgba(0,0,0,0.6),
+        0 0 0 1px rgba(102,192,244,0.1),
+        0 0 60px rgba(0,0,0,0.4);
+    }
+
+    .showcase-panel {
+      display: none;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .showcase-panel.active {
+      display: block;
+    }
+
+    .showcase-panel-1 {
+      background: linear-gradient(135deg, #0d1117 0%, #1a2540 50%, #0f1d2e 100%);
+    }
+
+    .showcase-panel-2 {
+      background: linear-gradient(135deg, #0d1117 0%, #1d2a1a 50%, #0f1e16 100%);
+    }
+
+    .showcase-panel-3 {
+      background: linear-gradient(135deg, #0d1117 0%, #1d1a2a 50%, #14101e 100%);
+    }
+
+    /* Screenshot image fills panel */
+    .showcase-img {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      border-radius: 10px;
+    }
+
+    /* Caption overlay at bottom */
+    .showcase-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(13,17,23,0.96) 60%);
+      padding: 48px 28px 22px;
+      text-align: left;
+      z-index: 1;
+      border-radius: 0 0 10px 10px;
+    }
+
+    .showcase-caption-title {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .showcase-caption-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Badge tags inside caption */
+    .showcase-caption-badges {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .showcase-badge {
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-family: 'Space Grotesk', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .showcase-badge-green {
+      background: rgba(126,200,160,0.18);
+      color: var(--green);
+      border: 1px solid rgba(126,200,160,0.35);
+    }
+
+    .showcase-badge-blue {
+      background: rgba(102,192,244,0.15);
+      color: var(--accent);
+      border: 1px solid rgba(102,192,244,0.3);
+    }
+
+    .showcase-badge-red {
+      background: rgba(196,126,126,0.15);
+      color: var(--red);
+      border: 1px solid rgba(196,126,126,0.3);
+    }
+
+    .showcase-thumbs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .showcase-thumb {
+      aspect-ratio: 16/9;
+      border-radius: 8px;
+      border: 2px solid var(--border);
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s, filter 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 8px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .showcase-thumb:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 0 16px rgba(102,192,244,0.12);
+      filter: brightness(1.1);
+    }
+
+    .showcase-thumb.active {
+      border-color: var(--green);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3), 0 0 12px rgba(126,200,160,0.2);
+      filter: brightness(1.08);
+    }
+
+    .thumb-1 { background: linear-gradient(135deg, #0d1117, #1a2540); }
+    .thumb-2 { background: linear-gradient(135deg, #0d1117, #1d2a1a); }
+    .thumb-3 { background: linear-gradient(135deg, #0d1117, #1d1a2a); }
+
+    .showcase-thumb-icon { font-size: 1.5rem; }
+
+    .showcase-thumb-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .showcase-thumb.active .showcase-thumb-label {
+      color: var(--green);
+    }
+
+    /* ============================================================
+       FEATURES — CAROUSEL
+    ============================================================ */
+    .features {
+      padding: 72px 0;
+      background: var(--bg-main);
+    }
+
+    /* Outer wrapper clips overflow */
+    .features-carousel-wrap {
+      position: relative;
+    }
+
+    .features-carousel-viewport {
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    /* The track holds all cards side by side */
+    .features-track {
+      display: flex;
+      align-items: stretch;
+      gap: 20px;
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+    }
+
+    /* Each card occupies 1/3 of the viewport width minus gaps */
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--green);
+      border-radius: 12px;
+      padding: 28px 24px;
+      transition: box-shadow 0.2s, border-color 0.2s;
+      /* width set via JS / CSS var */
+      flex: 0 0 calc((100% - 40px) / 3);
+      min-width: 0;
+    }
+
+    .feature-card:hover {
+      box-shadow:
+        0 0 24px rgba(126,200,160,0.15),
+        0 8px 32px rgba(0,0,0,0.35);
+      border-color: rgba(102,192,244,0.35);
+      border-left-color: var(--green-light);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(102,192,244,0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+      color: var(--accent);
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+
+    .feature-card:hover .feature-icon {
+      background: rgba(102,192,244,0.16);
+      box-shadow: 0 0 16px rgba(102,192,244,0.15);
+    }
+
+    .feature-icon svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .feature-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .feature-desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* Arrow buttons */
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      cursor: pointer;
+      z-index: 2;
+      transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+
+    .carousel-btn:hover {
+      background: rgba(126,200,160,0.12);
+      border-color: var(--green);
+      color: var(--green);
+      transform: translateY(-50%) scale(1.08);
+    }
+
+    .carousel-btn-prev { left: -22px; }
+    .carousel-btn-next { right: -22px; }
+
+    .carousel-btn svg {
+      width: 18px;
+      height: 18px;
+      pointer-events: none;
+    }
+
+    /* Dots */
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 28px;
+    }
+
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.25s, transform 0.25s;
+    }
+
+    .carousel-dot.active {
+      background: var(--green);
+      transform: scale(1.3);
+    }
+
+    /* Tablet: 2 cards */
+    @media (max-width: 1024px) and (min-width: 641px) {
+      .feature-card {
+        flex: 0 0 calc((100% - 20px) / 2);
+      }
+    }
+
+    /* Mobile: 1 card */
+    @media (max-width: 640px) {
+      .feature-card {
+        flex: 0 0 100%;
+      }
+      .carousel-btn-prev { left: -12px; }
+      .carousel-btn-next { right: -12px; }
+    }
+
+    /* ============================================================
+       CONSOLAS
+    ============================================================ */
+    .consolas {
+      padding: 72px 0;
+      background: var(--bg-deep);
+    }
+
+    .consolas-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .consola-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text);
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .consola-badge:hover {
+      border-color: rgba(102,192,244,0.4);
+      color: #ffffff;
+    }
+
+    .consola-badge.featured {
+      background: rgba(126,200,160,0.1);
+      border-color: rgba(126,200,160,0.4);
+      color: var(--green);
+      font-size: 1rem;
+      padding: 12px 24px;
+    }
+
+    .consola-badge.featured .consola-star {
+      color: var(--green);
+    }
+
+    .consolas-note {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 20px;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ============================================================
+       NETPLAY
+    ============================================================ */
+    .netplay {
+      padding: 72px 0;
+      background: var(--bg-main);
+    }
+
+    .netplay-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .netplay-col {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+    }
+
+    .netplay-col-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .netplay-col-title .players-badge {
+      background: rgba(126,200,160,0.12);
+      border: 1px solid rgba(126,200,160,0.3);
+      color: var(--green);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    .netplay-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .netplay-step {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .netplay-step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(102,192,244,0.12);
+      border: 1px solid rgba(102,192,244,0.3);
+      color: var(--accent);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .netplay-step-text {
+      font-size: 0.9rem;
+      color: var(--text);
+      padding-top: 4px;
+      line-height: 1.5;
+    }
+
+    .netplay-step-text strong {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .netplay-note {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 32px;
+      padding: 14px 20px;
+      background: rgba(102,192,244,0.04);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    /* ============================================================
+       INSTALL
+    ============================================================ */
+    .install {
+      padding: 72px 0;
+      background: var(--bg-deep);
+    }
+
+    .install-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .install-step {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 28px;
+      text-align: center;
+      position: relative;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .install-step:hover {
+      border-color: rgba(102,192,244,0.3);
+      transform: translateY(-3px);
+    }
+
+    .install-step-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: rgba(102,192,244,0.2);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .install-step-icon {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+
+    .install-step-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .install-step-desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Connector between steps */
+    .install-steps .install-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: -13px;
+      transform: translateY(-50%);
+      width: 2px;
+      height: 40px;
+      background: var(--border);
+    }
+
+    /* ============================================================
+       CULQI / SUPPORT
+    ============================================================ */
+    .support {
+      padding: 60px 0;
+      background: var(--bg-main);
+      position: relative;
+    }
+
+    /* Grid pattern muy tenue de fondo */
+    .support::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(102,192,244,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(102,192,244,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    /* Borde con gradiente animado */
+    .support-inner {
+      background: var(--bg-panel);
+      border-radius: 16px;
+      padding: 40px 32px;
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      /* Gradiente animado verde → azul → rojo muy sutil */
+      background-clip: padding-box;
+      border: 1px solid transparent;
+      background-image: linear-gradient(var(--bg-panel), var(--bg-panel));
+      background-origin: border-box;
+      box-shadow:
+        0 0 0 1px rgba(126,200,160,0.25),
+        inset 0 0 0 1px rgba(126,200,160,0.08),
+        0 24px 64px rgba(0,0,0,0.5),
+        0 0 80px rgba(126,200,160,0.06);
+    }
+
+    /* Borde animado via pseudo */
+    .support-inner::after {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 17px;
+      background: linear-gradient(
+        var(--angle, 0deg),
+        rgba(126,200,160,0.5),
+        rgba(102,192,244,0.4),
+        rgba(196,126,126,0.3),
+        rgba(126,200,160,0.5)
+      );
+      animation: border-rotate 6s linear infinite;
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      padding: 1px;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    .support-inner::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(126,200,160,0.1) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .support-emoji {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+    }
+
+    .support-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 14px;
+    }
+
+    .support-desc {
+      font-size: 0.925rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 32px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btn-culqi {
+      background: linear-gradient(135deg, var(--green) 0%, #5aad82 100%);
+      color: #0d1117;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 15px 36px;
+      border-radius: 8px;
+      transition: transform 0.15s, box-shadow 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      animation: pulse-glow 2.8s ease-in-out infinite;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-culqi:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(126,200,160,0.45);
+      animation: none;
+    }
+
+    .support-emoji,
+    .support-title,
+    .support-desc,
+    .price-card,
+    .btn-culqi,
+    .support-fine {
+      position: relative;
+      z-index: 1;
+    }
+
+    .support-fine {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Bloque de precio ── */
+    .price-card {
+      background: rgba(126,200,160,0.06);
+      border: 1px solid rgba(126,200,160,0.22);
+      border-radius: 12px;
+      padding: 20px 28px;
+      margin: 24px auto;
+      max-width: 340px;
+    }
+    .price-amount {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 4px;
+      margin-bottom: 14px;
+    }
+    .price-currency {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--green);
+    }
+    .price-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1;
+    }
+    .price-period { font-size: 0.9rem; color: var(--text-muted); }
+    .price-includes { display: flex; flex-direction: column; gap: 6px; text-align: left; }
+    .price-check { font-size: 0.82rem; color: var(--text-muted); padding-left: 4px; }
+    .price-check::before { content: '✓  '; color: var(--green); font-weight: 700; }
+
+    /* ── Plan selector ── */
+    .plan-selector { position: relative; z-index: 1; }
+
+    .plan-tabs {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 0;
+    }
+
+    .plan-tab {
+      position: relative;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 8px 8px 0 0;
+      color: var(--text-muted);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border-bottom: none;
+    }
+
+    .plan-tab strong { color: inherit; }
+
+    .plan-tab:hover:not(.active) {
+      background: rgba(255,255,255,0.07);
+      color: var(--text);
+    }
+
+    .plan-tab.active {
+      background: rgba(126,200,160,0.06);
+      border-color: rgba(126,200,160,0.22);
+      color: var(--green);
+      border-bottom-color: rgba(126,200,160,0.06);
+    }
+
+    .plan-tab-badge {
+      background: var(--green);
+      color: #0d1117;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .plan-savings {
+      display: none;
+      font-size: 0.78rem;
+      color: var(--green);
+      text-align: center;
+      margin-top: 10px;
+      font-weight: 500;
+    }
+
+    .plan-savings.visible { display: block; }
+
+    /* ============================================================
+       DOWNLOAD CTA
+    ============================================================ */
+    .download-cta {
+      padding: 72px 0;
+      background: var(--bg-panel);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .download-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(102,192,244,0.05) 1px, transparent 1px);
+      background-size: 30px 30px;
+      pointer-events: none;
+    }
+
+    .download-cta-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .download-cta-badge {
+      display: inline-block;
+      background: rgba(102,192,244,0.1);
+      border: 1px solid rgba(102,192,244,0.3);
+      color: var(--accent);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .download-cta-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 36px;
+    }
+
+    .download-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--green);
+      color: #0d1117;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      padding: 16px 36px;
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      margin-bottom: 28px;
+    }
+
+    .download-cta-btn::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      animation: shimmer 2.4s ease infinite;
+    }
+
+    .download-cta-btn:hover {
+      background: var(--green-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(126,200,160,0.4);
+    }
+
+    .download-reqs {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      font-size: 0.825rem;
+      color: var(--text-muted);
+    }
+
+    .download-req {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .download-req::before {
+      content: '✓';
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    .download-source {
+      font-size: 0.875rem;
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s;
+    }
+
+    .download-source:hover {
+      color: var(--green-light);
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .footer {
+      background: var(--bg-deep);
+      border-top: none;
+      padding: 0 0 32px;
+      position: relative;
+    }
+
+    .footer::before {
+      content: '';
+      display: block;
+      height: 1px;
+      background: linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(102,192,244,0.2) 25%,
+        rgba(126,200,160,0.28) 50%,
+        rgba(102,192,244,0.2) 75%,
+        transparent 100%
+      );
+      margin-bottom: 60px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .footer-brand-logo img {
+      height: 30px;
+      width: auto;
+    }
+
+    .footer-brand-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .footer-brand-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .footer-col-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      font-size: 0.875rem;
+      color: var(--text);
+      transition: color 0.2s;
+      position: relative;
+      display: inline-block;
+    }
+
+    .footer-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.25s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    .footer-links a:hover::after {
+      width: 100%;
+    }
+
+    .footer-links .coming-soon {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .footer-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(102,192,244,0.25) 30%,
+        rgba(126,200,160,0.3) 50%,
+        rgba(102,192,244,0.25) 70%,
+        transparent 100%
+      );
+      margin-bottom: 24px;
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* ============================================================
+       AMBIENT ORBS
+    ============================================================ */
+    /* Barra de progreso de scroll */
+    #scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--green) 0%, var(--accent) 60%, var(--green-light) 100%);
+      z-index: 10001;
+      transform-origin: left center;
+      transition: width 0.08s linear;
+      box-shadow: 0 0 8px rgba(126,200,160,0.5), 0 0 2px rgba(102,192,244,0.4);
+      pointer-events: none;
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.12;
+      filter: blur(80px);
+      will-change: transform;
+    }
+
+    .orb-1 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--green), transparent);
+      top: -200px;
+      left: -200px;
+      animation: orb-float 10s ease-in-out infinite;
+    }
+
+    .orb-2 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, var(--accent), transparent);
+      top: 40%;
+      right: -150px;
+      animation: orb-float 8s ease-in-out infinite reverse;
+    }
+
+    .orb-3 {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, var(--red), transparent);
+      bottom: 10%;
+      left: 20%;
+      animation: orb-float 6s ease-in-out infinite;
+    }
+
+    @keyframes orb-float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-30px); }
+    }
+
+    /* ============================================================
+       CUSTOM CURSOR
+    ============================================================ */
+    @media (hover: hover) and (pointer: fine) {
+      body { cursor: none; }
+
+      a, button { cursor: none; }
+
+      #cursor-dot {
+        position: fixed;
+        top: 0; left: 0;
+        width: 6px;
+        height: 6px;
+        background: var(--green);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 99999;
+        transform: translate(-50%, -50%);
+        transition: transform 0.08s ease, background 0.2s ease;
+        will-change: transform;
+      }
+
+      #cursor-ring {
+        position: fixed;
+        top: 0; left: 0;
+        width: 32px;
+        height: 32px;
+        border: 1.5px solid rgba(126,200,160,0.6);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 99998;
+        transform: translate(-50%, -50%);
+        transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease;
+        will-change: transform;
+      }
+
+      #cursor-ring.hovered {
+        width: 48px;
+        height: 48px;
+        border-color: var(--accent);
+      }
+    }
+
+    /* ============================================================
+       HERO STARS
+    ============================================================ */
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: #ffffff;
+      border-radius: 50%;
+      pointer-events: none;
+      will-change: opacity, transform;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; transform: scale(0.5); }
+      50%       { opacity: 1; transform: scale(1); }
+    }
+
+    /* ============================================================
+       CUSTOM SCROLLBAR
+    ============================================================ */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg-deep); }
+    ::-webkit-scrollbar-thumb { background: var(--green); border-radius: 3px; }
+    ::selection { background: rgba(126,200,160,0.3); color: #fff; }
+
+    /* ============================================================
+       LOADING SCREEN
+    ============================================================ */
+    #loading-screen {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-deep);
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      transition: opacity 0.5s ease;
+    }
+
+    #loading-screen.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loading-logo {
+      height: 64px;
+      width: auto;
+      filter: drop-shadow(0 0 16px rgba(126,200,160,0.4));
+    }
+
+    .loading-logo-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.03em;
+    }
+
+    .loading-ring {
+      width: 48px;
+      height: 48px;
+      border: 2px solid rgba(126,200,160,0.15);
+      border-top-color: var(--green);
+      border-radius: 50%;
+      animation: rune-spin 0.9s linear infinite;
+      will-change: transform;
+    }
+
+    @keyframes rune-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ============================================================
+       FEATURE CARD SPOTLIGHT
+    ============================================================ */
+    .feature-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card .card-spotlight {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: 12px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      background: radial-gradient(circle 180px at var(--mx, 50%) var(--my, 50%), rgba(102,192,244,0.08), transparent 70%);
+    }
+
+    .feature-card:hover .card-spotlight {
+      opacity: 1;
+    }
+
+    /* ============================================================
+       TYPEWRITER CURSOR
+    ============================================================ */
+    .typewriter-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background: var(--accent);
+      margin-left: 2px;
+      vertical-align: text-bottom;
+      animation: blink-cursor 0.75s step-end infinite;
+    }
+
+    @keyframes blink-cursor {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 1024px) {
+      .showcase-main { aspect-ratio: auto; min-height: 340px; max-height: 420px; }
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 80px 20px 48px; min-height: auto; }
+    }
+
+    @media (max-width: 900px) {
+      .netplay-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .install-steps {
+        grid-template-columns: 1fr;
+      }
+
+      .install-steps .install-step::after {
+        display: none;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links,
+      .btn-nav-cta {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .hero {
+        padding: 80px 20px 48px;
+        min-height: auto;
+      }
+
+      .hero-title {
+        font-size: 2.2rem;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .hero-buttons .btn-primary,
+      .hero-buttons .btn-secondary {
+        width: 100%;
+        max-width: 320px;
+        text-align: center;
+      }
+
+      .hero-stats {
+        flex-direction: column;
+        gap: 8px;
+        align-items: stretch;
+      }
+
+      .hero-stat {
+        justify-content: center;
+        padding: 10px 16px;
+      }
+
+      .showcase-main { min-height: 260px; max-height: 320px; }
+
+      /* Showcase thumbnails: horizontal scroll on mobile */
+      .showcase-thumbs {
+        display: flex;
+        overflow-x: auto;
+        gap: 10px;
+        padding-bottom: 6px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .showcase-thumb {
+        flex: 0 0 160px;
+        scroll-snap-align: start;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .footer-links {
+        align-items: center;
+      }
+
+      .support-inner {
+        padding: 28px 20px;
+      }
+
+      .download-cta-btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .download-reqs {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SCROLL PROGRESS BAR -->
+  <div id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- LOADING SCREEN -->
+  <div id="loading-screen" aria-hidden="true">
+    <img
+      class="loading-logo"
+      src="logoPrimary.png"
+      alt="RevsGaming"
+      onerror="this.style.display='none'; document.getElementById('loading-logo-text').style.display='block';"
+    />
+    <span id="loading-logo-text" class="loading-logo-text" style="display:none;">RevsGaming</span>
+    <div class="loading-ring"></div>
+  </div>
+
+  <!-- AMBIENT ORBS -->
+  <div class="orb orb-1" aria-hidden="true"></div>
+  <div class="orb orb-2" aria-hidden="true"></div>
+  <div class="orb orb-3" aria-hidden="true"></div>
+
+  <!-- CUSTOM CURSOR (populated by JS) -->
+  <div id="cursor-dot" aria-hidden="true"></div>
+  <div id="cursor-ring" aria-hidden="true"></div>
+
+  <!-- ============================================================
+       NAVBAR
+  ============================================================ -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a class="nav-logo" href="/">
+        <img
+          src="logoPrimary.png"
+          alt="RevsGaming"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+        />
+        <span class="nav-logo-fallback">RevsGaming</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#features">Características</a></li>
+        <li><a href="#consolas">Consolas</a></li>
+        <li><a href="#netplay">Multijugador</a></li>
+        <li><a href="/changelog/">Changelog</a></li>
+      </ul>
+
+      <button id="themeToggle" class="theme-toggle" aria-label="Cambiar tema" title="Cambiar tema">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+
+      <a href="/register" class="btn-nav-register">Registrarse</a>
+
+      <a
+        class="btn-nav-cta"
+        href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0"
+        target="_blank"
+        rel="noopener"
+      >Descargar Beta</a>
+
+      <button class="hamburger" id="hamburger" aria-label="Menú" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <div class="nav-mobile" id="navMobile">
+      <a href="#features">Características</a>
+      <a href="#consolas">Consolas</a>
+      <a href="#netplay">Multijugador</a>
+      <a href="/changelog/">Changelog</a>
+      <a href="/register" class="btn-nav-register" style="text-align:center;">Registrarse</a>
+      <a
+        class="btn-nav-cta"
+        href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0"
+        target="_blank"
+        rel="noopener"
+        style="text-align:center;"
+      >Descargar Beta</a>
+      <div style="display:flex;justify-content:center;margin-top:4px;">
+        <button id="themeToggleMobile" class="theme-toggle" aria-label="Cambiar tema" title="Cambiar tema">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section class="hero" id="hero">
+    <div id="hero-stars" aria-hidden="true"></div>
+    <div class="hero-content">
+      <div class="hero-badge fade-in">
+        <span class="badge">
+          <span class="dot"></span>
+          LIVE &nbsp;·&nbsp; v0.84.0 Beta
+        </span>
+      </div>
+
+      <h1 class="hero-title fade-in">
+        <span class="line1">Revive los clásicos.</span>
+        <span class="line2">Juega online con tus amigos.</span>
+      </h1>
+
+      <p class="hero-subtitle fade-in">
+        <span id="hero-typewriter"></span><span class="typewriter-cursor" id="typewriter-cursor"></span>
+      </p>
+
+      <div class="hero-buttons fade-in">
+        <a
+          class="btn-primary"
+          href="#download"
+        >
+          &#11015; Descargar Beta
+        </a>
+        <a class="btn-secondary" href="#features">
+          Ver características &#8595;
+        </a>
+      </div>
+
+      <div class="hero-stats fade-in">
+        <div class="hero-stat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+          </svg>
+          PS1 + 9 sistemas
+        </div>
+        <div class="hero-stat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          2 y 4 jugadores online
+        </div>
+        <div class="hero-stat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>
+          </svg>
+          Cloud Saves
+        </div>
+        <div class="hero-stat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          Beta v0.84.0
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SHOWCASE
+  ============================================================ -->
+  <section class="showcase" id="showcase">
+    <div class="container">
+      <div class="section-header fade-in">
+        <h2 class="section-title">Así se ve RevsGaming</h2>
+        <p class="section-subtitle">Una interfaz pensada para que llegues a tus juegos en segundos</p>
+      </div>
+
+      <!-- Main panel -->
+      <div class="showcase-main fade-in" id="showcaseMain">
+        <!-- Panel 1: Biblioteca -->
+        <div class="showcase-panel showcase-panel-1 active" id="panel1">
+          <img src="screenshot1.png" alt="Biblioteca de Juegos en RevsGaming" class="showcase-img" />
+          <div class="showcase-caption">
+            <div class="showcase-caption-badges">
+              <span class="showcase-badge showcase-badge-blue">Biblioteca</span>
+              <span class="showcase-badge showcase-badge-green">Auto-detección</span>
+            </div>
+            <span class="showcase-caption-title">Biblioteca de Juegos</span>
+            <span class="showcase-caption-desc">Detecta tus ROMs automáticamente. Vista lista/grilla, búsqueda y filtro por sistema.</span>
+          </div>
+        </div>
+
+        <!-- Panel 2: Lobby -->
+        <div class="showcase-panel showcase-panel-2" id="panel2">
+          <img src="screenshot2.png" alt="Lobby Multijugador en RevsGaming" class="showcase-img" />
+          <div class="showcase-caption">
+            <div class="showcase-caption-badges">
+              <span class="showcase-badge showcase-badge-green">Netplay</span>
+              <span class="showcase-badge showcase-badge-blue">2–4 jugadores</span>
+            </div>
+            <span class="showcase-caption-title">Lobby Multijugador</span>
+            <span class="showcase-caption-desc">Crea una sala con un código de 6 letras para PS1, o hasta 4 jugadores con RetroArch. Sin configuración.</span>
+          </div>
+        </div>
+
+        <!-- Panel 3: Amigos + Join (2 en 1) -->
+        <div class="showcase-panel showcase-panel-3" id="panel3">
+          <img src="screenshot3.png" alt="Sistema de Amigos y Join en RevsGaming" class="showcase-img" />
+          <div class="showcase-caption">
+            <div class="showcase-caption-badges">
+              <span class="showcase-badge showcase-badge-green">Amigos Online</span>
+              <span class="showcase-badge showcase-badge-red">Join &amp; Invitar</span>
+            </div>
+            <span class="showcase-caption-title">Amigos &amp; Unirse a Partidas</span>
+            <span class="showcase-caption-desc">Ve quién está online en tiempo real e invítalos directamente. Únete a partidas activas con un clic desde tu lista de amigos.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Thumbnails -->
+      <div class="showcase-thumbs fade-in">
+        <button class="showcase-thumb thumb-1 active" onclick="switchPanel(1, this)" aria-label="Ver biblioteca de juegos">
+          <div class="showcase-thumb-icon">&#127918;</div>
+          <div class="showcase-thumb-label">Biblioteca de Juegos</div>
+        </button>
+        <button class="showcase-thumb thumb-2" onclick="switchPanel(2, this)" aria-label="Ver lobby multijugador">
+          <div class="showcase-thumb-icon">&#127760;</div>
+          <div class="showcase-thumb-label">Lobby Multijugador</div>
+        </button>
+        <button class="showcase-thumb thumb-3" onclick="switchPanel(3, this)" aria-label="Ver amigos y join en partidas">
+          <div class="showcase-thumb-icon">&#128101;</div>
+          <div class="showcase-thumb-label">Amigos &amp; Join</div>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FEATURES
+  ============================================================ -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="section-header fade-in">
+        <h2 class="section-title">Todo lo que necesitas para jugar retro</h2>
+        <p class="section-subtitle">Sin configurar emuladores. Sin buscar BIOS. Directo al juego.</p>
+      </div>
+
+      <div class="features-carousel-wrap fade-in" id="featuresCarousel">
+        <!-- Prev arrow -->
+        <button class="carousel-btn carousel-btn-prev" id="carouselPrev" aria-label="Anterior">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+
+        <!-- Viewport (overflow hidden) -->
+        <div class="features-carousel-viewport">
+          <div class="features-track" id="featuresTrack">
+
+            <!-- Card 1 -->
+            <div class="feature-card">
+              <div class="card-spotlight" aria-hidden="true"></div>
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+                </svg>
+              </div>
+              <div class="feature-title">Biblioteca automática</div>
+              <div class="feature-desc">Apunta a cualquier carpeta con tus juegos y RevsGaming los detecta, organiza y muestra con portadas. Vista lista o grilla con búsqueda instantánea.</div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="feature-card">
+              <div class="card-spotlight" aria-hidden="true"></div>
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+              </div>
+              <div class="feature-title">Netplay PS1 — 2 jugadores</div>
+              <div class="feature-desc">Crea una sala y obtén un código de 6 letras. Tu amigo lo ingresa y el juego inicia solo. Funciona vía Mednafen, el emulador más preciso para PS1.</div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="feature-card">
+              <div class="card-spotlight" aria-hidden="true"></div>
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+              <div class="feature-title">Netplay hasta 4 jugadores</div>
+              <div class="feature-desc">Usando RetroArch y nuestro servidor MITM propio en Lima, Perú, puedes jugar con hasta 4 amigos en la mayoría de sistemas clásicos.</div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="feature-card">
+              <div class="card-spotlight" aria-hidden="true"></div>
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </div>
+              <div class="feature-title">Sistema de amigos</div>
+              <div class="feature-desc">Ve quién está online, qué juego están jugando e invítalos directamente a tu sala. Todo en tiempo real gracias a Supabase Realtime.</div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="feature-card">
+              <div class="card-spotlight" aria-hidden="true"></div>
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>
+                </svg>
+              </div>
+              <div class="feature-title">Cloud Saves</div>
+              <div class="feature-desc">Tus partidas guardadas se sincronizan automáticamente en la nube con Supabase Storage. Nunca pierdas tu progreso aunque formatees tu PC.</div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="feature-card">
+              <div class="card-spotlight" aria-hidden="true"></div>
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/>
+                </svg>
+              </div>
+              <div class="feature-title">Mando, invitado y BIOS auto</div>
+              <div class="feature-desc">Navega toda la app con tu control. Juega sin cuenta en modo invitado con un apodo. Las BIOS de PS1 se descargan automáticamente al instalar.</div>
+            </div>
+
+          </div><!-- /features-track -->
+        </div><!-- /features-carousel-viewport -->
+
+        <!-- Next arrow -->
+        <button class="carousel-btn carousel-btn-next" id="carouselNext" aria-label="Siguiente">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </button>
+
+        <!-- Dots -->
+        <div class="carousel-dots" id="carouselDots" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CONSOLAS
+  ============================================================ -->
+  <section class="consolas" id="consolas">
+    <div class="container">
+      <div class="section-header fade-in">
+        <h2 class="section-title">Consolas soportadas</h2>
+        <p class="section-subtitle">Multi-sistema desde el primer día</p>
+      </div>
+
+      <div class="consolas-grid fade-in">
+        <span class="consola-badge featured">
+          &#127918; PlayStation 1
+        </span>
+        <span class="consola-badge">NES</span>
+        <span class="consola-badge">SNES</span>
+        <span class="consola-badge">Game Boy Advance</span>
+        <span class="consola-badge">Game Boy / GBC</span>
+        <span class="consola-badge">Nintendo 64</span>
+        <span class="consola-badge">Mega Drive</span>
+        <span class="consola-badge">Arcade / Neo Geo</span>
+        <span class="consola-badge">Saturn</span>
+        <span class="consola-badge">PlayStation 2</span>
+      </div>
+
+      <p class="consolas-note fade-in">
+        NES, SNES, GBA, N64, Mega Drive, Arcade, Saturn y PS2 requieren descargar el core desde la app. PS1 viene incluido.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       NETPLAY
+  ============================================================ -->
+  <section class="netplay" id="netplay">
+    <div class="container">
+      <div class="section-header fade-in">
+        <h2 class="section-title">Cómo funciona el netplay</h2>
+        <p class="section-subtitle">Dos modos según tus necesidades</p>
+      </div>
+
+      <div class="netplay-grid fade-in">
+        <!-- Col izq: PS1 2P -->
+        <div class="netplay-col">
+          <div class="netplay-col-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/>
+            </svg>
+            Netplay PS1
+            <span class="players-badge">2 jugadores</span>
+          </div>
+          <div class="netplay-steps">
+            <div class="netplay-step">
+              <div class="netplay-step-num">1</div>
+              <div class="netplay-step-text"><strong>Crea sala</strong> — obtienes un código de 6 letras único</div>
+            </div>
+            <div class="netplay-step">
+              <div class="netplay-step-num">2</div>
+              <div class="netplay-step-text"><strong>Comparte el código</strong> con tu amigo por donde prefieras</div>
+            </div>
+            <div class="netplay-step">
+              <div class="netplay-step-num">3</div>
+              <div class="netplay-step-text"><strong>Tu amigo lo ingresa</strong> → el juego inicia solo en ambas PCs</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Col der: RetroArch 4P -->
+        <div class="netplay-col">
+          <div class="netplay-col-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            Netplay RetroArch
+            <span class="players-badge">hasta 4 jugadores</span>
+          </div>
+          <div class="netplay-steps">
+            <div class="netplay-step">
+              <div class="netplay-step-num">1</div>
+              <div class="netplay-step-text"><strong>Crea sala RetroArch</strong> → obtienes un código numérico</div>
+            </div>
+            <div class="netplay-step">
+              <div class="netplay-step-num">2</div>
+              <div class="netplay-step-text"><strong>Comparte con hasta 3 amigos</strong> — todos ingresan el mismo código</div>
+            </div>
+            <div class="netplay-step">
+              <div class="netplay-step-num">3</div>
+              <div class="netplay-step-text"><strong>Todos se unen</strong> → partida online con hasta 4 personas</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="netplay-note fade-in">
+        Servidor propio en Lima, Peru — optimizado para Latinoamerica
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       INSTALL
+  ============================================================ -->
+  <section class="install" id="install">
+    <div class="container">
+      <div class="section-header fade-in">
+        <h2 class="section-title">Instala en 3 pasos</h2>
+        <p class="section-subtitle">Listo para jugar en menos de 5 minutos</p>
+      </div>
+
+      <div class="install-steps">
+        <div class="install-step fade-in">
+          <div class="install-step-num">01</div>
+          <div class="install-step-icon">&#11015;&#65039;</div>
+          <div class="install-step-title">Descarga el instalador</div>
+          <div class="install-step-desc">Baja el archivo <code style="background:rgba(255,255,255,0.07);padding:2px 6px;border-radius:4px;font-size:0.8em;">.exe</code> desde la release de GitHub. Pesa alrededor de 150 MB.</div>
+        </div>
+
+        <div class="install-step fade-in">
+          <div class="install-step-num">02</div>
+          <div class="install-step-icon">&#128196;</div>
+          <div class="install-step-title">Instala con 1 click</div>
+          <div class="install-step-desc">Ejecuta el instalador y sigue los pasos. Mednafen, RetroArch y las dependencias se instalan automáticamente — no necesitas buscar nada.</div>
+        </div>
+
+        <div class="install-step fade-in">
+          <div class="install-step-num">03</div>
+          <div class="install-step-icon">&#127918;</div>
+          <div class="install-step-title">Agrega tus juegos</div>
+          <div class="install-step-desc">Coloca tus ROMs en cualquier carpeta y apunta RevsGaming a esa carpeta. Los juegos aparecen solos — listos para jugar.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CULQI / SUPPORT
+  ============================================================ -->
+  <!-- Nota para el desarrollador:
+       Para procesar pagos reales necesitas un backend que:
+       1. Reciba culqi.token.id generado por el checkout
+       2. Haga el cargo mediante la API de Culqi con tu clave privada
+       3. Maneje errores y confirmaciones
+
+       Documentación: https://docs.culqi.com/
+  -->
+  <section class="support" id="support">
+    <div class="container">
+      <div class="support-inner fade-in">
+        <div class="support-emoji">&#127918;</div>
+        <h2 class="support-title">Accede a RevsGaming</h2>
+        <p class="support-desc">
+          Paga una sola vez y obtén acceso completo a RevsGaming — biblioteca retro, netplay online, cloud saves y todas las funciones.
+        </p>
+
+        <!-- Selector de plan -->
+        <div class="plan-selector" id="planSelector">
+          <div class="plan-tabs">
+            <button class="plan-tab" id="tab-monthly" type="button" onclick="selectPlan('monthly')">
+              Mensual &nbsp;<strong>S/10</strong>
+            </button>
+            <button class="plan-tab active" id="tab-annual" type="button" onclick="selectPlan('annual')">
+              Anual &nbsp;<strong>S/100</strong>
+              <span class="plan-tab-badge">2 meses gratis</span>
+            </button>
+          </div>
+
+          <div class="price-card">
+            <div class="price-amount">
+              <span class="price-currency">S/</span>
+              <span class="price-number" id="priceNumber">100</span>
+              <span style="font-size:1rem;color:var(--text-muted);align-self:flex-end;padding-bottom:6px;" id="priceIgv">&nbsp;<span style="font-size:0.8rem;">+ IGV</span></span>
+              <span class="price-period" id="pricePeriod">/ año</span>
+            </div>
+            <div class="price-includes">
+              <span class="price-check">Netplay online 2–4 jugadores</span>
+              <span class="price-check">Cloud Saves automáticos</span>
+              <span class="price-check">PS1, NES, SNES, GBA, N64 y más</span>
+              <span class="price-check">Todas las actualizaciones del año</span>
+            </div>
+            <div class="plan-savings" id="planSavings">2 meses gratis vs mensual</div>
+          </div>
+        </div>
+
+        <button class="btn-culqi" id="btnCulqi" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+          </svg>
+          <span id="btnCulqiLabel">Pagar S/ 118.00 anual</span>
+        </button>
+
+        <div class="support-fine">
+          Pago seguro vía Culqi &middot; SSL
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       DOWNLOAD CTA
+  ============================================================ -->
+  <section class="download-cta" id="download">
+    <div class="container">
+      <div class="download-cta-content fade-in">
+        <div class="download-cta-badge">v0.84.0 Beta</div>
+        <h2 class="download-cta-title">Descarga RevsGaming</h2>
+
+        <a
+          class="download-cta-btn"
+          href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0"
+          target="_blank"
+          rel="noopener"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Descargar para Windows
+        </a>
+
+        <div class="download-reqs">
+          <span class="download-req">Windows 10 / 11 de 64 bits</span>
+          <span class="download-req">Mednafen + RetroArch incluidos</span>
+          <span class="download-req">Acceso tras la compra</span>
+        </div>
+
+        <a
+          class="download-source"
+          href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0"
+          target="_blank"
+          rel="noopener"
+        >
+          Ver código fuente en GitHub &#8599;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand -->
+        <div>
+          <div class="footer-brand-logo">
+            <img
+              src="logoPrimary.png"
+              alt="RevsGaming"
+              style="height:30px;"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+            />
+            <span class="footer-brand-name" style="display:none;">RevsGaming</span>
+          </div>
+          <p class="footer-brand-desc">
+            Launcher de juegos retro para Windows con netplay online, biblioteca automatica y cloud saves.
+          </p>
+          <p class="footer-copy">
+            &copy; 2025 RevsGaming &mdash; AntonioPCGamer
+          </p>
+        </div>
+
+        <!-- Recursos -->
+        <div>
+          <div class="footer-col-title">Recursos</div>
+          <ul class="footer-links">
+            <li><a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0" target="_blank" rel="noopener">Descargar</a></li>
+            <li><a href="/changelog/">Changelog</a></li>
+            <li><a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/issues" target="_blank" rel="noopener">Reportar Bug</a></li>
+          </ul>
+        </div>
+
+        <!-- Comunidad -->
+        <div>
+          <div class="footer-col-title">Comunidad</div>
+          <ul class="footer-links">
+            <li><a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+
+        <!-- Legal -->
+        <div>
+          <div class="footer-col-title">Legal</div>
+          <ul class="footer-links">
+            <li><a href="/legal/privacy.html">Politica de Privacidad</a></li>
+            <li><a href="/legal/terms.html">Terminos de Uso</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <hr class="footer-divider" />
+
+      <div class="footer-bottom">
+        <span>Hecho con dedicación para la comunidad retro latinoamericana</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       SCRIPTS
+  ============================================================ -->
+  <script>
+    /* ----------------------------------------------------------
+       NAVBAR scroll effect
+    ---------------------------------------------------------- */
+    const navbar = document.getElementById('navbar');
+    const hamburger = document.getElementById('hamburger');
+    const navMobile = document.getElementById('navMobile');
+
+    /* Scroll progress bar */
+    const scrollProgressBar = document.getElementById('scroll-progress');
+
+    window.addEventListener('scroll', () => {
+      /* Navbar scrolled state */
+      if (window.scrollY > 40) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+
+      /* Progress bar */
+      const scrollTop    = document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const progress     = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+      scrollProgressBar.style.width = progress + '%';
+    }, { passive: true });
+
+    /* Hamburger toggle */
+    hamburger.addEventListener('click', () => {
+      const isOpen = hamburger.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', String(isOpen));
+      navMobile.classList.toggle('open');
+    });
+
+    /* Close mobile nav when clicking a link */
+    navMobile.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        navMobile.classList.remove('open');
+      });
+    });
+
+    /* Theme toggle */
+    const themeToggle = document.getElementById('themeToggle')
+    const themeToggleMobile = document.getElementById('themeToggleMobile')
+    const savedTheme  = localStorage.getItem('revsgaming-theme')
+    if (savedTheme === 'light') document.documentElement.classList.add('light-mode')
+
+    function applyThemeToggle() {
+      const isLight = document.documentElement.classList.toggle('light-mode')
+      localStorage.setItem('revsgaming-theme', isLight ? 'light' : 'dark')
+    }
+
+    themeToggle.addEventListener('click', applyThemeToggle)
+    if (themeToggleMobile) themeToggleMobile.addEventListener('click', applyThemeToggle)
+
+    /* ----------------------------------------------------------
+       SMOOTH SCROLL for nav links
+    ---------------------------------------------------------- */
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    /* ----------------------------------------------------------
+       SHOWCASE panel switcher
+    ---------------------------------------------------------- */
+    function switchPanel(num, btn) {
+      // Hide all panels
+      document.querySelectorAll('.showcase-panel').forEach(p => p.classList.remove('active'));
+      // Deactivate all thumbs
+      document.querySelectorAll('.showcase-thumb').forEach(t => t.classList.remove('active'));
+      // Activate selected
+      document.getElementById('panel' + num).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    /* ----------------------------------------------------------
+       INTERSECTION OBSERVER — fade-in on scroll
+    ---------------------------------------------------------- */
+    const observerOptions = {
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    /* ----------------------------------------------------------
+       PLAN SELECTOR
+    ---------------------------------------------------------- */
+    var selectedPlan = 'annual';
+    var planAmounts = { monthly: 1180, annual: 11800 };
+
+    function selectPlan(plan) {
+      selectedPlan = plan;
+
+      document.getElementById('tab-monthly').classList.toggle('active', plan === 'monthly');
+      document.getElementById('tab-annual').classList.toggle('active', plan === 'annual');
+
+      if (plan === 'annual') {
+        document.getElementById('priceNumber').textContent = '100';
+        document.getElementById('pricePeriod').textContent = '/ año';
+        document.getElementById('planSavings').classList.add('visible');
+        document.getElementById('btnCulqiLabel').textContent = 'Pagar S/ 118.00 anual';
+      } else {
+        document.getElementById('priceNumber').textContent = '10';
+        document.getElementById('pricePeriod').textContent = '/ mes';
+        document.getElementById('planSavings').classList.remove('visible');
+        document.getElementById('btnCulqiLabel').textContent = 'Pagar S/ 11.80 mensual';
+      }
+    }
+
+    /* ----------------------------------------------------------
+       CULQI CHECKOUT
+    ---------------------------------------------------------- */
+    var culqi;
+
+    function showPaymentError(msg) {
+      var errEl = document.getElementById('culqi-error');
+      if (!errEl) {
+        errEl = document.createElement('p');
+        errEl.id = 'culqi-error';
+        errEl.style.cssText = 'color:var(--red);font-size:0.85rem;margin-top:12px;text-align:center;';
+        var btn = document.getElementById('btnCulqi');
+        btn.parentNode.insertBefore(errEl, btn.nextSibling);
+      }
+      errEl.textContent = msg;
+      errEl.style.display = 'block';
+    }
+
+    function hidePaymentError() {
+      var errEl = document.getElementById('culqi-error');
+      if (errEl) errEl.style.display = 'none';
+    }
+
+    function setButtonLoading(loading) {
+      var btn = document.getElementById('btnCulqi');
+      btn.disabled = loading;
+      if (loading) {
+        btn.innerHTML = 'Procesando...';
+      } else {
+        var label = selectedPlan === 'annual' ? 'Pagar S/ 118.00 anual' : 'Pagar S/ 11.80 mensual';
+        btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> <span id="btnCulqiLabel">' + label + '</span>';
+      }
+    }
+
+    function initCulqi() {
+      try {
+        /* REEMPLAZA pk_test_XXXX con tu pk_live_XXXX cuando tengas las credenciales de Culqi */
+        culqi = new Culqi({
+          settings: {
+            title: 'RevsGaming',
+            currency: 'PEN',
+            description: 'RevsGaming — Acceso completo',
+            amount: planAmounts[selectedPlan]
+          }
+        });
+
+        culqi.options({ lang: 'es', installments: false });
+
+        /* Callback que Culqi invoca tras generar el token en el checkout */
+        window.culqi = async function() {
+          if (!Culqi.token) return;
+
+          var token = Culqi.token.id;
+          var email = Culqi.token.email;
+
+          hidePaymentError();
+          setButtonLoading(true);
+
+          try {
+            var response = await fetch('/api/payment', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ token: token, email: email, plan: selectedPlan })
+            });
+
+            var data = await response.json();
+
+            if (!response.ok || !data.success) {
+              showPaymentError(data.error || 'No se pudo procesar el pago. Intenta nuevamente.');
+              setButtonLoading(false);
+              return;
+            }
+
+            /* Pago exitoso — redirigir a página de confirmación */
+            window.location.href = '/success.html';
+
+          } catch (fetchErr) {
+            showPaymentError('Error de conexión. Verifica tu red e intenta nuevamente.');
+            setButtonLoading(false);
+          }
+        };
+
+        document.getElementById('btnCulqi').addEventListener('click', function() {
+          hidePaymentError();
+          culqi.settings({
+            title: 'RevsGaming',
+            currency: 'PEN',
+            description: selectedPlan === 'annual' ? 'RevsGaming — Acceso anual' : 'RevsGaming — Acceso mensual',
+            amount: planAmounts[selectedPlan]
+          });
+          culqi.open();
+        });
+
+      } catch (err) {
+        console.warn('[RevsGaming] Culqi SDK no disponible:', err.message);
+        document.getElementById('btnCulqi').addEventListener('click', function() {
+          showPaymentError('El sistema de pagos no está disponible ahora. Intenta más tarde.');
+        });
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initCulqi);
+    } else {
+      initCulqi();
+    }
+  </script>
+
+  <script>
+    /* ----------------------------------------------------------
+       LOADING SCREEN
+    ---------------------------------------------------------- */
+    (function () {
+      var ls = document.getElementById('loading-screen');
+      if (!ls) return;
+      var delay = 1200;
+      setTimeout(function () {
+        ls.classList.add('fade-out');
+        setTimeout(function () { ls.remove(); }, 520);
+      }, delay);
+    })();
+
+    /* ----------------------------------------------------------
+       CUSTOM CURSOR (desktop only)
+    ---------------------------------------------------------- */
+    (function () {
+      var isTouch = window.matchMedia('(hover: none)').matches;
+      if (isTouch) {
+        var dot = document.getElementById('cursor-dot');
+        var ring = document.getElementById('cursor-ring');
+        if (dot) dot.remove();
+        if (ring) ring.remove();
+        return;
+      }
+
+      var dot  = document.getElementById('cursor-dot');
+      var ring = document.getElementById('cursor-ring');
+      if (!dot || !ring) return;
+
+      var mx = 0, my = 0;
+      var rx = 0, ry = 0;
+
+      document.addEventListener('mousemove', function (e) {
+        mx = e.clientX;
+        my = e.clientY;
+        dot.style.left = mx + 'px';
+        dot.style.top  = my + 'px';
+      }, { passive: true });
+
+      /* Ring follows with lag via RAF lerp */
+      function lerpCursor() {
+        rx += (mx - rx) * 0.12;
+        ry += (my - ry) * 0.12;
+        ring.style.left = rx + 'px';
+        ring.style.top  = ry + 'px';
+        requestAnimationFrame(lerpCursor);
+      }
+      requestAnimationFrame(lerpCursor);
+
+      /* Scale ring on interactive elements */
+      document.querySelectorAll('a, button').forEach(function (el) {
+        el.addEventListener('mouseenter', function () { ring.classList.add('hovered'); });
+        el.addEventListener('mouseleave', function () { ring.classList.remove('hovered'); });
+      });
+    })();
+
+    /* ----------------------------------------------------------
+       HERO STARS
+    ---------------------------------------------------------- */
+    (function () {
+      var container = document.getElementById('hero-stars');
+      if (!container) return;
+
+      var hero = document.getElementById('hero');
+      if (!hero) return;
+
+      /* Make container cover the hero */
+      container.style.cssText = 'position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;';
+
+      var count = 70;
+      var fragment = document.createDocumentFragment();
+
+      for (var i = 0; i < count; i++) {
+        var star = document.createElement('div');
+        star.className = 'star';
+        var top  = Math.random() * 100;
+        var left = Math.random() * 100;
+        var dur  = (2 + Math.random() * 4).toFixed(2);
+        var del  = (Math.random() * 5).toFixed(2);
+        var size = Math.random() < 0.3 ? 3 : 2;
+        star.style.cssText =
+          'top:' + top + '%;' +
+          'left:' + left + '%;' +
+          'width:' + size + 'px;' +
+          'height:' + size + 'px;' +
+          'opacity:0;' +
+          'animation:twinkle ' + dur + 's ' + del + 's ease-in-out infinite;';
+        fragment.appendChild(star);
+      }
+      container.appendChild(fragment);
+    })();
+
+    /* ----------------------------------------------------------
+       TYPEWRITER — hero subtitle
+    ---------------------------------------------------------- */
+    (function () {
+      var el     = document.getElementById('hero-typewriter');
+      var cursor = document.getElementById('typewriter-cursor');
+      if (!el) return;
+
+      var text  = 'RevsGaming organiza tu colección retro y te conecta con amigos — sin configurar emuladores.';
+      var speed = 32;   /* ms per character */
+      var startDelay = 900; /* wait for loading screen to finish */
+      var i = 0;
+
+      setTimeout(function () {
+        var iv = setInterval(function () {
+          i++;
+          el.textContent = text.slice(0, i);
+          if (i >= text.length) {
+            clearInterval(iv);
+            /* Keep cursor blinking after done */
+          }
+        }, speed);
+      }, startDelay);
+    })();
+
+    /* ----------------------------------------------------------
+       FEATURE CARD MOUSE SPOTLIGHT
+    ---------------------------------------------------------- */
+    (function () {
+      document.querySelectorAll('.feature-card').forEach(function (card) {
+        var spotlight = card.querySelector('.card-spotlight');
+        if (!spotlight) return;
+
+        card.addEventListener('mousemove', function (e) {
+          var rect = card.getBoundingClientRect();
+          var x = ((e.clientX - rect.left) / rect.width  * 100).toFixed(1);
+          var y = ((e.clientY - rect.top)  / rect.height * 100).toFixed(1);
+          spotlight.style.setProperty('--mx', x + '%');
+          spotlight.style.setProperty('--my', y + '%');
+        }, { passive: true });
+      });
+    })();
+
+    /* ----------------------------------------------------------
+       FEATURES CAROUSEL
+    ---------------------------------------------------------- */
+    (function () {
+      var track     = document.getElementById('featuresTrack');
+      var btnPrev   = document.getElementById('carouselPrev');
+      var btnNext   = document.getElementById('carouselNext');
+      var dotsWrap  = document.getElementById('carouselDots');
+      var carousel  = document.getElementById('featuresCarousel');
+      if (!track || !btnPrev || !btnNext) return;
+
+      var cards     = Array.from(track.querySelectorAll('.feature-card'));
+      var total     = cards.length;
+      var current   = 0;
+      var autoplay  = null;
+      var paused    = false;
+
+      /* Determine how many cards are visible at current viewport */
+      function visibleCount() {
+        var w = window.innerWidth;
+        if (w <= 640)  return 1;
+        if (w <= 1024) return 2;
+        return 3;
+      }
+
+      /* Max index we can scroll to */
+      function maxIndex() {
+        return Math.max(0, total - visibleCount());
+      }
+
+      /* Build dots */
+      function buildDots() {
+        dotsWrap.innerHTML = '';
+        var steps = maxIndex() + 1;
+        for (var i = 0; i < steps; i++) {
+          var dot = document.createElement('button');
+          dot.className = 'carousel-dot' + (i === current ? ' active' : '');
+          dot.setAttribute('aria-label', 'Ir a slide ' + (i + 1));
+          (function (idx) {
+            dot.addEventListener('click', function () { goTo(idx); });
+          })(i);
+          dotsWrap.appendChild(dot);
+        }
+      }
+
+      function updateDots() {
+        var dots = dotsWrap.querySelectorAll('.carousel-dot');
+        dots.forEach(function (d, i) {
+          d.classList.toggle('active', i === current);
+        });
+      }
+
+      /* Apply the translateX to the track */
+      function applyTransform() {
+        /* Width of one card including the gap (20px) */
+        var viewport  = track.parentElement;
+        var vpWidth   = viewport.offsetWidth;
+        var vc        = visibleCount();
+        var gap       = 20;
+        var cardWidth = (vpWidth - gap * (vc - 1)) / vc;
+        var offset    = current * (cardWidth + gap);
+        track.style.transform = 'translateX(-' + offset + 'px)';
+      }
+
+      function goTo(idx) {
+        current = Math.max(0, Math.min(idx, maxIndex()));
+        applyTransform();
+        updateDots();
+      }
+
+      function next() { goTo(current < maxIndex() ? current + 1 : 0); }
+      function prev() { goTo(current > 0 ? current - 1 : maxIndex()); }
+
+      btnNext.addEventListener('click', function () { next(); resetAutoplay(); });
+      btnPrev.addEventListener('click', function () { prev(); resetAutoplay(); });
+
+      /* Auto-play */
+      function startAutoplay() {
+        autoplay = setInterval(function () {
+          if (!paused) next();
+        }, 4000);
+      }
+
+      function resetAutoplay() {
+        clearInterval(autoplay);
+        startAutoplay();
+      }
+
+      /* Pause on hover */
+      carousel.addEventListener('mouseenter', function () { paused = true; });
+      carousel.addEventListener('mouseleave', function () { paused = false; });
+
+      /* Touch swipe */
+      var touchStartX = 0;
+      carousel.addEventListener('touchstart', function (e) {
+        touchStartX = e.changedTouches[0].clientX;
+      }, { passive: true });
+
+      carousel.addEventListener('touchend', function (e) {
+        var dx = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(dx) > 40) {
+          if (dx < 0) next(); else prev();
+          resetAutoplay();
+        }
+      }, { passive: true });
+
+      /* Recalculate on resize */
+      window.addEventListener('resize', function () {
+        /* Clamp current to new max */
+        if (current > maxIndex()) current = maxIndex();
+        buildDots();
+        applyTransform();
+      }, { passive: true });
+
+      /* Init */
+      buildDots();
+      applyTransform();
+      startAutoplay();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pago exitoso — RevsGaming</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-deep:    #0d1117;
+      --bg-main:    #1b2838;
+      --bg-card:    #16202d;
+      --bg-panel:   #1e2d3d;
+      --green:      #7EC8A0;
+      --green-light:#a8d8b8;
+      --accent:     #66c0f4;
+      --text:       #c6d4df;
+      --text-muted: #8f98a0;
+      --border:     rgba(102,192,244,0.15);
+      --glass:      rgba(22,32,45,0.92);
+    }
+
+    html.light-mode {
+      --bg-deep:   #f0f4f8;
+      --bg-main:   #e2e8f0;
+      --bg-card:   #ffffff;
+      --bg-panel:  #f8fafc;
+      --green:     #2d8a5e;
+      --green-light: #3aab76;
+      --accent:    #1a6fa8;
+      --text:      #1e293b;
+      --text-muted:#64748b;
+      --border:    rgba(0,0,0,0.1);
+      --glass:     rgba(255,255,255,0.92);
+    }
+
+    html {
+      font-size: 16px;
+    }
+
+    body {
+      background-color: var(--bg-deep);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ============================================================
+       NAVBAR
+    ============================================================ */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 16px 0;
+      background: var(--glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .navbar .container {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .nav-logo img {
+      height: 36px;
+      width: auto;
+    }
+
+    .nav-logo-fallback {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #ffffff;
+      display: none;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+      margin-left: auto;
+    }
+
+    .nav-links a {
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #ffffff;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .btn-nav-cta {
+      background: var(--green);
+      color: #0d1117;
+      padding: 9px 20px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: background 0.2s, transform 0.15s;
+      white-space: nowrap;
+      flex-shrink: 0;
+      display: inline-block;
+    }
+
+    .btn-nav-cta:hover {
+      background: var(--green-light);
+      transform: translateY(-1px);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      padding: 6px;
+      cursor: pointer;
+      margin-left: auto;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav-mobile {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      padding: 12px 24px 20px;
+      background: var(--bg-main);
+      border-top: 1px solid var(--border);
+    }
+
+    .nav-mobile.open {
+      display: flex;
+    }
+
+    .nav-mobile a {
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-mobile a:hover {
+      color: #ffffff;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .nav-mobile .btn-nav-cta {
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    /* ============================================================
+       MAIN SUCCESS SECTION
+    ============================================================ */
+    .success-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 24px 80px;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 0%, rgba(126,200,160,0.09) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 20% 80%, rgba(102,192,244,0.04) 0%, transparent 60%),
+        var(--bg-deep);
+    }
+
+    .success-main::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(102,192,244,0.05) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+    }
+
+    .success-card {
+      position: relative;
+      z-index: 1;
+      background: var(--bg-card);
+      border: 1px solid rgba(126,200,160,0.2);
+      border-radius: 20px;
+      padding: 60px 52px;
+      max-width: 560px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 0 60px rgba(126,200,160,0.06), 0 24px 64px rgba(0,0,0,0.4);
+    }
+
+    /* Check SVG animation */
+    .check-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 32px;
+      width: 88px;
+      height: 88px;
+    }
+
+    .check-svg {
+      width: 88px;
+      height: 88px;
+    }
+
+    .check-bg {
+      fill: rgba(126,200,160,0.12);
+      stroke: rgba(126,200,160,0.25);
+      stroke-width: 1.5;
+    }
+
+    .check-circle {
+      fill: none;
+      stroke: var(--green);
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      animation: drawCheck 0.6s ease forwards 0.2s;
+    }
+
+    @keyframes drawCheck {
+      from { stroke-dashoffset: 100; }
+      to   { stroke-dashoffset: 0; }
+    }
+
+    .check-ring {
+      fill: none;
+      stroke: rgba(126,200,160,0.15);
+      stroke-width: 2;
+      stroke-dasharray: 4 6;
+      animation: spinRing 8s linear infinite;
+      transform-origin: 44px 44px;
+    }
+
+    @keyframes spinRing {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .success-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+
+    .success-subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 36px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--green);
+      color: #0d1117;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      padding: 15px 32px;
+      border-radius: 8px;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-download::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      animation: shimmer 2.4s ease infinite;
+    }
+
+    @keyframes shimmer {
+      0%   { left: -100%; }
+      60%  { left: 140%; }
+      100% { left: 140%; }
+    }
+
+    .btn-download:hover {
+      background: var(--green-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(126,200,160,0.35);
+    }
+
+    .success-email-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .success-back {
+      font-size: 0.875rem;
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s;
+      display: inline-block;
+    }
+
+    .success-back:hover {
+      color: var(--green-light);
+    }
+
+    /* Confetti-style background dots */
+    .confetti-dot {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0;
+      animation: floatDot 3s ease-in-out forwards;
+    }
+
+    @keyframes floatDot {
+      0%   { opacity: 0; transform: translateY(0) scale(0); }
+      20%  { opacity: 1; }
+      80%  { opacity: 0.6; }
+      100% { opacity: 0; transform: translateY(-80px) scale(1); }
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .footer {
+      background: var(--bg-deep);
+      border-top: 1px solid var(--border);
+      padding: 28px 0;
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px 20px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .footer-bottom a {
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .footer-bottom a:hover {
+      color: var(--green-light);
+    }
+
+    .footer-sep {
+      opacity: 0.4;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      border-radius: 6px;
+      padding: 6px 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover {
+      color: var(--text);
+      border-color: var(--green);
+      background: rgba(126,200,160,0.08);
+    }
+    html:not(.light-mode) .icon-moon { display: none; }
+    html.light-mode .icon-sun { display: none; }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 640px) {
+      .nav-links,
+      .btn-nav-cta {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .success-card {
+        padding: 40px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a class="nav-logo" href="/">
+        <img
+          src="logoPrimary.png"
+          alt="RevsGaming"
+          height="36"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+        />
+        <span class="nav-logo-fallback">RevsGaming</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="/">Inicio</a></li>
+        <li><a href="index.html#features">Características</a></li>
+        <li><a href="index.html#consolas">Consolas</a></li>
+        <li><a href="index.html#download">Descargar</a></li>
+      </ul>
+
+      <button id="themeToggle" class="theme-toggle" aria-label="Cambiar tema" title="Cambiar tema">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+
+      <a
+        class="btn-nav-cta"
+        href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0"
+        target="_blank"
+        rel="noopener"
+      >Descargar</a>
+
+      <button class="hamburger" id="hamburger" aria-label="Menú" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <div class="nav-mobile" id="navMobile">
+      <a href="/">Inicio</a>
+      <a href="index.html#features">Características</a>
+      <a href="index.html#consolas">Consolas</a>
+      <a href="index.html#download">Descargar</a>
+      <a
+        class="btn-nav-cta"
+        href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0"
+        target="_blank"
+        rel="noopener"
+        style="text-align:center;"
+      >Descargar</a>
+      <div style="display:flex;justify-content:center;margin-top:4px;">
+        <button id="themeToggleMobile" class="theme-toggle" aria-label="Cambiar tema" title="Cambiar tema">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="success-main" id="successMain">
+    <div class="success-card" id="successCard">
+
+      <!-- Animated check -->
+      <div class="check-wrap">
+        <svg class="check-svg" viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Outer dashed ring -->
+          <circle class="check-ring" cx="44" cy="44" r="40" />
+          <!-- Background circle -->
+          <circle class="check-bg" cx="44" cy="44" r="34" />
+          <!-- Checkmark path -->
+          <polyline class="check-circle" points="28,44 39,56 60,32" />
+        </svg>
+      </div>
+
+      <h1 class="success-title">¡Pago exitoso!<br>Bienvenido a RevsGaming</h1>
+
+      <p class="success-subtitle">
+        Tu acceso está activo. Ya puedes descargar e instalar RevsGaming y comenzar a jugar.
+      </p>
+
+      <a
+        class="btn-download"
+        href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0"
+        target="_blank"
+        rel="noopener"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Descargar RevsGaming
+      </a>
+
+      <p class="success-email-note">
+        Revisa tu email para el recibo de Culqi.
+      </p>
+
+      <a class="success-back" href="/">Volver al inicio</a>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>&copy; 2025 RevsGaming &mdash; AntonioPCGamer</span>
+        <span class="footer-sep">|</span>
+        <a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0" target="_blank" rel="noopener">GitHub</a>
+        <span class="footer-sep">|</span>
+        <a href="legal/privacy.html">Privacidad</a>
+        <span class="footer-sep">|</span>
+        <a href="legal/terms.html">Términos</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* Hamburger */
+    const hamburger = document.getElementById('hamburger');
+    const navMobile  = document.getElementById('navMobile');
+    hamburger.addEventListener('click', () => {
+      const isOpen = hamburger.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', String(isOpen));
+      navMobile.classList.toggle('open');
+    });
+
+    /* Theme toggle */
+    const themeToggle = document.getElementById('themeToggle')
+    const themeToggleMobile = document.getElementById('themeToggleMobile')
+    const savedTheme  = localStorage.getItem('revsgaming-theme')
+    if (savedTheme === 'light') document.documentElement.classList.add('light-mode')
+
+    function applyThemeToggle() {
+      const isLight = document.documentElement.classList.toggle('light-mode')
+      localStorage.setItem('revsgaming-theme', isLight ? 'light' : 'dark')
+    }
+
+    themeToggle.addEventListener('click', applyThemeToggle)
+    if (themeToggleMobile) themeToggleMobile.addEventListener('click', applyThemeToggle)
+
+    /* Confetti dots on load */
+    window.addEventListener('load', () => {
+      const main   = document.getElementById('successMain');
+      const colors = ['#7EC8A0', '#66c0f4', '#a8d8b8', 'rgba(126,200,160,0.5)'];
+      const count  = 18;
+
+      for (let i = 0; i < count; i++) {
+        const dot = document.createElement('span');
+        dot.classList.add('confetti-dot');
+        const size = Math.random() * 6 + 4;
+        Object.assign(dot.style, {
+          width:           size + 'px',
+          height:          size + 'px',
+          background:      colors[Math.floor(Math.random() * colors.length)],
+          left:            (Math.random() * 100) + '%',
+          top:             (40 + Math.random() * 50) + '%',
+          animationDelay:  (Math.random() * 0.8) + 's',
+          animationDuration:(2 + Math.random() * 2) + 's'
+        });
+        main.appendChild(dot);
+      }
+    });
+  </script>
+</body>
+</html>

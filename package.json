@@ -1,0 +1,13 @@
+{
+  "name": "gamingrevs-web",
+  "version": "1.0.0",
+  "description": "Sitio web oficial de RevsGaming",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2",
+    "@supabase/supabase-js": "^2.108.2"
+  }
+}

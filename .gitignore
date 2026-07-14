@@ -1,0 +1,28 @@
+# Dependencias
+node_modules/
+
+# Variables de entorno — NUNCA subir al repo
+.env
+.env.local
+.env.production
+
+# Carpetas internas / herramientas
+.claude/
+MejorasAyudas/
+netlify/
+
+# Archivos temporales de Office
+~$*
+*.tmp
+*.log
+
+# Documentos internos
+*.docx
+faltante.txt
+
+# Capturas de pantalla del escritorio (no del sitio)
+Captura de pantalla*.png
+
+# OS
+.DS_Store
+Thumbs.db
