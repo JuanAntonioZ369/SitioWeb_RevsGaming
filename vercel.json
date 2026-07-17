@@ -27,7 +27,6 @@
     { "source": "/register",       "destination": "/register.html" },
     { "source": "/legal/privacy",  "destination": "/legal/privacy.html" },
     { "source": "/legal/terms",    "destination": "/legal/terms.html" },
-    { "source": "/account",        "destination": "/account.html" },
     { "source": "/forgot-password", "destination": "/forgot-password.html" },
     { "source": "/reset-password",  "destination": "/reset-password.html" },
     { "source": "/libro-reclamaciones", "destination": "/libro-reclamaciones.html" }

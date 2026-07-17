@@ -66,6 +66,73 @@
     "inLanguage": "es-PE"
   }
   </script>
+
+  <!-- Organization schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "RevsGaming",
+    "url": "https://revsgaming.com",
+    "logo": "https://revsgaming.com/logoPrimary.png",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer support",
+      "availableLanguage": ["Spanish", "English"]
+    },
+    "taxID": "20613365045",
+    "areaServed": "PE",
+    "foundingDate": "2024"
+  }
+  </script>
+
+  <!-- FAQ schema — helps appear in Google featured snippets -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is RevsGaming?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "RevsGaming is a retro game launcher for Windows with online netplay for 2–4 players, automatic cloud saves, and support for PS1, NES, SNES, GBA, N64 and more consoles."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much does RevsGaming cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "RevsGaming offers a 2-month free trial. After that, plans start at S/11.80/month (including IGV) or S/118.00/year — saving 2 months vs monthly."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does RevsGaming support online multiplayer?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. RevsGaming includes built-in online netplay for 2–4 players using Mednafen (PS1) and RetroArch (multi-system). No port forwarding required."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is there a free trial?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Every new account gets 2 months of free access with no credit card required."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Preload critical resources -->
+  <link rel="preload" href="logoPrimary.png" as="image" />
+  <meta name="theme-color" content="#0d1117" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#f0f4f8" media="(prefers-color-scheme: light)" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -3364,5 +3431,24 @@
     if (langToggleBtn) langToggleBtn.addEventListener('click', onLangToggle);
     if (langToggleMobileBtn) langToggleMobileBtn.addEventListener('click', onLangToggle);
   </script>
+
+  <!-- Structured data breadcrumb -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://revsgaming.com/"
+      }
+    ]
+  }
+  </script>
+  <!-- Link to js files -->
+  <script src="/js/i18n.js"></script>
+  <script src="/js/app-link.js"></script>
 </body>
 </html>

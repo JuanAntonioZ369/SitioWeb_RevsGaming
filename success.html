@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="/js/i18n.js" defer></script>
+  <script src="/js/app-link.js" defer></script>
 
   <style>
     *, *::before, *::after {
@@ -453,6 +455,16 @@
     html:not(.light-mode) .icon-moon { display: none; }
     html.light-mode .icon-sun { display: none; }
 
+    .lang-toggle {
+      background: none; border: 1px solid var(--border);
+      color: var(--text-muted); border-radius: 6px; padding: 5px 10px;
+      cursor: pointer; font-size: 0.8rem; font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      flex-shrink: 0; letter-spacing: 0.05em;
+    }
+    .lang-toggle:hover { color: var(--text); border-color: var(--accent); background: rgba(102,192,244,0.08); }
+
     /* ============================================================
        RESPONSIVE
     ============================================================ */
@@ -501,6 +513,9 @@
         <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
         </svg>
+      </button>
+      <button id="langToggle" class="lang-toggle" aria-label="Switch language" title="Switch language">
+        <span class="lang-label">ES</span>
       </button>
 
       <a
@@ -558,29 +573,28 @@
         </svg>
       </div>
 
-      <h1 class="success-title">¡Pago exitoso!<br>Bienvenido a RevsGaming</h1>
+      <h1 class="success-title" data-i18n="success.title">¡Pago exitoso!<br>Bienvenido a RevsGaming</h1>
 
-      <p class="success-subtitle">
+      <p class="success-subtitle" data-i18n="success.subtitle">
         Tu acceso está activo. Ya puedes descargar e instalar RevsGaming y comenzar a jugar.
       </p>
 
-      <a
+      <button
         class="btn-download"
-        href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0"
-        target="_blank"
-        rel="noopener"
+        onclick="openRevsGamingApp()"
+        style="border:none;cursor:pointer;"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
         </svg>
-        Descargar RevsGaming
-      </a>
+        <span data-i18n="success.btn">Abrir RevsGaming</span>
+      </button>
 
-      <p class="success-email-note">
+      <p class="success-email-note" data-i18n="success.note">
         Revisa tu email para el recibo de Culqi.
       </p>
 
-      <a class="success-back" href="/">Volver al inicio</a>
+      <a class="success-back" href="/" data-i18n="success.back">Volver al inicio</a>
     </div>
   </main>
 
@@ -647,6 +661,16 @@
         main.appendChild(dot);
       }
     });
+
+    if (window.RVGi18n) {
+      window.RVGi18n.register({
+        'success.title': '¡Payment successful!<br>Welcome to RevsGaming',
+        'success.subtitle': 'Your access is active. Download and install RevsGaming to start playing.',
+        'success.btn': 'Open RevsGaming',
+        'success.note': 'Check your email for the Culqi receipt.',
+        'success.back': 'Back to home',
+      })
+    }
   </script>
 </body>
 </html>

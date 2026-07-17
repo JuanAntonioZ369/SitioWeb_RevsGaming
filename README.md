@@ -80,4 +80,4 @@ El launcher de RevsGaming para Windows está en un repositorio separado:
 
 ## Licencia
 
-© 2026 RevsGaming — AntonioPCGamer. Todos los derechos reservados.
+© 2026 RevsGaming. Todos los derechos reservados.

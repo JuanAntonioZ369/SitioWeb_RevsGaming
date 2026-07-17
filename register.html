@@ -18,6 +18,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="https://checkout.culqi.com/js/v4"></script>
+  <script src="/js/i18n.js" defer></script>
+  <script src="/js/app-link.js" defer></script>
 
   <style>
     *, *::before, *::after {
@@ -752,6 +754,16 @@
     html:not(.light-mode) .icon-moon { display: none; }
     html.light-mode .icon-sun { display: none; }
 
+    .lang-toggle {
+      background: none; border: 1px solid var(--border);
+      color: var(--text-muted); border-radius: 6px; padding: 5px 10px;
+      cursor: pointer; font-size: 0.8rem; font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      flex-shrink: 0; letter-spacing: 0.05em;
+    }
+    .lang-toggle:hover { color: var(--text); border-color: var(--accent); background: rgba(102,192,244,0.08); }
+
     .app-login-btn {
       background: none;
       border: none;
@@ -938,14 +950,17 @@
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
         </svg>
       </button>
+      <button id="langToggle" class="lang-toggle" aria-label="Switch language" title="Switch language">
+        <span class="lang-label">ES</span>
+      </button>
     </div>
   </nav>
 
   <!-- ── HERO ── -->
   <section class="hero">
     <p class="hero-label">Acceso completo</p>
-    <h1>Crea tu cuenta</h1>
-    <p class="hero-sub">Regístrate y obtén acceso completo a RevsGaming</p>
+    <h1 data-i18n="reg.title">Crea tu cuenta</h1>
+    <p class="hero-sub" data-i18n="reg.subtitle">Regístrate y obtén acceso completo a RevsGaming</p>
   </section>
 
   <!-- ── MAIN ── -->
@@ -956,12 +971,12 @@
       <div class="step-indicator" id="step-indicator">
         <div class="step-item active" id="step-item-1">
           <div class="step-num">1</div>
-          <span>Cuenta</span>
+          <span data-i18n="reg.step1">Cuenta</span>
         </div>
         <span class="step-arrow">→</span>
         <div class="step-item" id="step-item-2">
           <div class="step-num">2</div>
-          <span>Acceso activo</span>
+          <span data-i18n="reg.step2">Acceso activo</span>
         </div>
       </div>
 
@@ -975,7 +990,7 @@
         <form id="register-form" novalidate>
 
           <div class="field">
-            <label for="username">Nombre de usuario</label>
+            <label for="username" data-i18n="reg.username.label">Nombre de usuario</label>
             <input
               type="text"
               id="username"
@@ -989,7 +1004,7 @@
           </div>
 
           <div class="field">
-            <label for="email">Correo electrónico</label>
+            <label for="email" data-i18n="reg.email.label">Correo electrónico</label>
             <input
               type="email"
               id="email"
@@ -1002,7 +1017,7 @@
           </div>
 
           <div class="field">
-            <label for="password">Contraseña</label>
+            <label for="password" data-i18n="reg.password.label">Contraseña</label>
             <div class="input-wrap">
               <input
                 type="password"
@@ -1027,7 +1042,7 @@
           </div>
 
           <div class="field">
-            <label for="confirm-password">Confirmar contraseña</label>
+            <label for="confirm-password" data-i18n="reg.confirm.label">Confirmar contraseña</label>
             <div class="input-wrap">
               <input
                 type="password"
@@ -1053,12 +1068,12 @@
 
           <button type="submit" class="btn-primary" id="register-btn">
             <div class="spinner"></div>
-            <span class="btn-label">Crear cuenta y continuar al pago →</span>
+            <span class="btn-label" data-i18n="reg.submit">Crear cuenta y continuar al pago →</span>
           </button>
         </form>
 
         <div class="form-footer-links" style="margin-top: 18px;">
-          <button type="button" onclick="openRevsGamingApp()" class="app-login-btn">
+          <button type="button" onclick="openRevsGamingApp()" class="app-login-btn" data-i18n="reg.already">
             ¿Ya tienes cuenta? Abre la app
           </button>
         </div>
@@ -1124,7 +1139,7 @@
 
   <!-- ── FOOTER ── -->
   <footer>
-    <span>© 2025 RevsGaming</span>
+    <span>© 2026 RevsGaming · RUC 20613365045 · RUC 20613365045</span>
     <span class="footer-sep">|</span>
     <a href="/legal/privacy.html">Política de Privacidad</a>
     <span class="footer-sep">|</span>
@@ -1453,64 +1468,6 @@
       Culqi.open()
     }
 
-    /* ================================================================
-       DEEP LINK — Abrir app RevsGaming
-    ================================================================ */
-    function openRevsGamingApp() {
-      var appLink = 'revsgaming://login'
-      window.location.href = appLink
-
-      setTimeout(function () {
-        showAppNotInstalledMsg()
-      }, 2500)
-    }
-
-    function showAppNotInstalledMsg() {
-      var existing = document.getElementById('app-not-installed-toast')
-      if (existing) existing.remove()
-
-      var toast = document.createElement('div')
-      toast.id = 'app-not-installed-toast'
-      toast.style.cssText = [
-        'position:fixed',
-        'bottom:32px',
-        'left:50%',
-        'transform:translateX(-50%)',
-        'background:var(--bg-card)',
-        'border:1px solid var(--border)',
-        'padding:16px 24px',
-        'border-radius:12px',
-        'z-index:9999',
-        'box-shadow:0 8px 32px rgba(0,0,0,0.3)',
-        'text-align:center',
-        'font-family:\'Inter\',sans-serif',
-        'color:var(--text)',
-        'max-width:320px',
-        'width:calc(100% - 48px)'
-      ].join(';')
-
-      toast.innerHTML = [
-        '<p style="margin-bottom:12px;font-size:0.9rem;">¿No tienes RevsGaming instalado?</p>',
-        '<a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0"',
-        '   target="_blank" rel="noopener"',
-        '   style="background:var(--green);color:#0d1117;padding:8px 20px;border-radius:6px;',
-        '          font-weight:600;text-decoration:none;font-family:\'Space Grotesk\',sans-serif;',
-        '          display:inline-block;">',
-        '  Descargar ahora',
-        '</a>',
-        '<button onclick="document.getElementById(\'app-not-installed-toast\').remove()"',
-        '        style="display:block;margin:10px auto 0;background:none;border:none;',
-        '               color:var(--text-muted);cursor:pointer;font-size:0.8rem;">',
-        '  Cerrar',
-        '</button>'
-      ].join('')
-
-      document.body.appendChild(toast)
-      setTimeout(function () {
-        if (toast.parentElement) toast.remove()
-      }, 8000)
-    }
-
     // Callback global de Culqi — se ejecuta cuando el usuario completa el formulario de pago
     window.culqi = async function () {
       if (Culqi.token) {
@@ -1549,6 +1506,22 @@
       } else if (Culqi.error) {
         showFormError('payment-error', Culqi.error.user_message || 'Error al procesar el pago.')
       }
+    }
+
+    // Traducciones EN para register.html
+    if (window.RVGi18n) {
+      window.RVGi18n.register({
+        'reg.title': 'Create your account',
+        'reg.subtitle': 'Join RevsGaming and start your 2-month free trial',
+        'reg.step1': 'Account',
+        'reg.step2': 'Access Active',
+        'reg.username.label': 'Username',
+        'reg.email.label': 'Email',
+        'reg.password.label': 'Password',
+        'reg.confirm.label': 'Confirm password',
+        'reg.submit': 'Create account',
+        'reg.already': 'Already have an account? Open the app',
+      })
     }
   </script>
 
