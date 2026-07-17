@@ -1785,6 +1785,77 @@
     ::selection { background: rgba(126,200,160,0.3); color: #fff; }
 
     /* ============================================================
+       LIGHT MODE OVERRIDES
+    ============================================================ */
+    html.light-mode .hero {
+      background:
+        radial-gradient(ellipse 70% 55% at 50% 20%, rgba(45,138,94,0.07) 0%, transparent 65%),
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(26,111,168,0.05) 0%, transparent 70%),
+        var(--bg-deep);
+    }
+    html.light-mode #loading-screen {
+      background: #f0f4f8;
+    }
+    html.light-mode .navbar {
+      background: rgba(255,255,255,0.95);
+      border-bottom-color: rgba(0,0,0,0.08);
+    }
+    html.light-mode .hero-badge .badge {
+      background: rgba(45,138,94,0.1);
+      border-color: rgba(45,138,94,0.2);
+      color: #2d8a5e;
+    }
+    html.light-mode .section-tag {
+      color: #2d8a5e;
+    }
+    html.light-mode .feature-card,
+    html.light-mode .consola-card,
+    html.light-mode .netplay-panel {
+      background: #ffffff;
+      border-color: rgba(0,0,0,0.08);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    html.light-mode .showcase-panel {
+      background: rgba(255,255,255,0.8);
+      border-color: rgba(0,0,0,0.08);
+    }
+    html.light-mode .support-inner {
+      background: linear-gradient(135deg, rgba(45,138,94,0.06) 0%, rgba(26,111,168,0.04) 100%);
+      border-color: rgba(45,138,94,0.15);
+    }
+    html.light-mode .download-cta {
+      background: linear-gradient(160deg, rgba(45,138,94,0.06) 0%, transparent 60%), var(--bg-deep);
+    }
+    html.light-mode .footer {
+      background: #e2e8f0;
+      border-top-color: rgba(0,0,0,0.08);
+    }
+    html.light-mode #scroll-progress {
+      background: linear-gradient(90deg, #2d8a5e, #1a6fa8);
+    }
+    html.light-mode .price-card {
+      background: #ffffff;
+      border-color: rgba(0,0,0,0.08);
+    }
+    html.light-mode .plan-tab.active {
+      background: rgba(45,138,94,0.1);
+    }
+    html.light-mode .hero-title,
+    html.light-mode h1,
+    html.light-mode h2 {
+      color: #0f172a;
+    }
+    html.light-mode .nav-logo-fallback {
+      color: #0f172a;
+    }
+    html.light-mode .hero-title .line1 {
+      color: #0f172a;
+    }
+    html.light-mode .loading-logo-text {
+      color: #0f172a;
+    }
+
+    /* ============================================================
        LOADING SCREEN
     ============================================================ */
     #loading-screen {
@@ -2043,7 +2114,7 @@
         </svg>
       </button>
 
-      <a href="/register" class="btn-nav-register">Registrarse</a>
+      <a href="/register.html" class="btn-nav-register">Registrarse</a>
 
       <a
         class="btn-nav-cta"
@@ -2064,7 +2135,7 @@
       <a href="#consolas">Consolas</a>
       <a href="#netplay">Multijugador</a>
       <a href="/changelog/">Changelog</a>
-      <a href="/register" class="btn-nav-register" style="text-align:center;">Registrarse</a>
+      <a href="/register.html" class="btn-nav-register" style="text-align:center;">Registrarse</a>
       <a
         class="btn-nav-cta"
         href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0"

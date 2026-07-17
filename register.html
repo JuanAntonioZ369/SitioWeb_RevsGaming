@@ -751,6 +751,146 @@
     }
     html:not(.light-mode) .icon-moon { display: none; }
     html.light-mode .icon-sun { display: none; }
+
+    /* ── TRIAL SUCCESS CARD ── */
+    .trial-success-card {
+      text-align: center;
+      padding: 8px 0;
+    }
+    .trial-check {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .trial-title {
+      font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+      font-weight: 700;
+      color: var(--green);
+      margin-bottom: 10px;
+    }
+    .trial-subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    .trial-expiry {
+      display: inline-block;
+      background: rgba(126,200,160,0.08);
+      border: 1px solid rgba(126,200,160,0.2);
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+    .trial-expiry strong {
+      color: var(--green);
+    }
+    .btn-download-trial {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--green);
+      color: #0d1117;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: 8px;
+      margin-bottom: 32px;
+      transition: background 0.2s, transform 0.15s;
+      text-decoration: none;
+    }
+    .btn-download-trial:hover {
+      background: var(--green-light);
+      transform: translateY(-2px);
+    }
+    .trial-upgrade {
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      margin-top: 8px;
+    }
+    .trial-upgrade > p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+    .plan-tabs-mini {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+    .plan-tab {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .plan-tab.active {
+      border-color: var(--green);
+      color: var(--green);
+      background: rgba(126,200,160,0.08);
+    }
+    .badge-rec {
+      font-size: 0.7rem;
+      background: var(--green);
+      color: #0d1117;
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-left: 4px;
+    }
+    .btn-pay-upgrade {
+      width: 100%;
+      background: transparent;
+      border: 1px solid var(--green);
+      color: var(--green);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 12px;
+    }
+    .btn-pay-upgrade:hover {
+      background: var(--green);
+      color: #0d1117;
+    }
+    .trial-skip {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    /* ── LIGHT MODE OVERRIDES ── */
+    html.light-mode .form-card,
+    html.light-mode .login-card {
+      background: #ffffff;
+      border-color: rgba(0,0,0,0.08);
+    }
+    html.light-mode .field input {
+      background: #f8fafc;
+      border-color: rgba(0,0,0,0.12);
+      color: #1e293b;
+    }
+    html.light-mode .field input:focus {
+      border-color: #2d8a5e;
+    }
+    html.light-mode .navbar {
+      background: rgba(255,255,255,0.95);
+      border-bottom-color: rgba(0,0,0,0.08);
+    }
+    html.light-mode .hero h1 {
+      color: #0f172a;
+    }
   </style>
 </head>
 <body>
@@ -808,7 +948,7 @@
         <span class="step-arrow">→</span>
         <div class="step-item" id="step-item-2">
           <div class="step-num">2</div>
-          <span>Pago</span>
+          <span>Acceso activo</span>
         </div>
       </div>
 
@@ -915,86 +1055,53 @@
         </p>
       </div>
 
-      <!-- ── PANEL 2: PAGO ── -->
+      <!-- ── PANEL 2: TRIAL ── -->
       <div class="form-panel" id="panel-payment">
-        <p class="form-panel-title">Completa tu pago</p>
-        <p class="form-panel-sub">Un solo paso más para activar tu acceso</p>
-
-        <div class="account-badge" id="account-badge">
-          <div class="account-badge-icon">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+        <!-- Confirmación del trial -->
+        <div class="trial-success-card">
+          <div class="account-badge" id="account-badge" style="margin-bottom:20px;">
+            <div class="account-badge-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
+            </div>
+            <div class="account-badge-text">
+              Cuenta creada para: <span class="account-badge-email" id="badge-email"></span>
+            </div>
+          </div>
+          <div class="trial-check">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+              <circle cx="24" cy="24" r="22" fill="rgba(126,200,160,0.12)" stroke="rgba(126,200,160,0.3)" stroke-width="1.5"/>
+              <polyline points="14,24 21,31 34,17" stroke="#7EC8A0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
-          <div class="account-badge-text">
-            Cuenta creada para: <span class="account-badge-email" id="badge-email"></span>
+          <h2 class="trial-title">¡2 meses de prueba gratis activados!</h2>
+          <p class="trial-subtitle">Tu acceso comienza ahora. Descarga la app y empieza a jugar.</p>
+          <div class="trial-expiry" id="trial-expiry-info">
+            <!-- Se rellena por JS con la fecha de expiración -->
           </div>
-        </div>
-
-        <!-- Selector de plan -->
-        <div class="reg-plan-tabs">
-          <button class="reg-plan-tab" id="reg-tab-monthly" type="button" onclick="regSelectPlan('monthly')">
-            Mensual &nbsp;<strong>S/10</strong>
-          </button>
-          <button class="reg-plan-tab active" id="reg-tab-annual" type="button" onclick="regSelectPlan('annual')">
-            Anual &nbsp;<strong>S/100</strong>
-            <span class="reg-plan-badge">2 meses gratis</span>
-          </button>
-        </div>
-
-        <div class="price-card">
-          <div class="price-card-header">
-            <span class="price-card-name" id="reg-plan-name">Acceso Anual</span>
-            <span class="price-card-amount">
-              S/ <span id="reg-price-number">100</span> <span style="font-size:0.8rem;color:var(--text-muted);">+ IGV</span>
-              <span class="price-card-period" id="reg-price-period">/ año</span>
-            </span>
+          <a
+            class="btn-download-trial"
+            href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0"
+            target="_blank"
+            rel="noopener"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Descargar RevsGaming — Windows
+          </a>
+          <div class="trial-upgrade">
+            <p>¿Quieres continuar después del trial? Activa tu plan ahora:</p>
+            <div class="plan-tabs-mini">
+              <button id="reg-tab-monthly" class="plan-tab" onclick="regSelectPlan('monthly')">Mensual · S/11.80</button>
+              <button id="reg-tab-annual" class="plan-tab active" onclick="regSelectPlan('annual')">Anual · S/118.00 <span class="badge-rec">2 meses gratis</span></button>
+            </div>
+            <button class="btn-pay-upgrade" id="btnRegPay" onclick="openCulqi()">
+              <span id="reg-pay-label">Activar plan anual — S/ 118.00</span>
+            </button>
+            <p class="trial-skip">O sigue con el trial gratis por ahora. Tu acceso ya está activo.</p>
           </div>
-          <ul class="price-features">
-            <li>
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-              </svg>
-              Netplay online 2–4 jugadores
-            </li>
-            <li>
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-              </svg>
-              Cloud Saves automáticos
-            </li>
-            <li>
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-              </svg>
-              PS1, NES, SNES, GBA, N64 y más
-            </li>
-            <li>
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-              </svg>
-              Todas las actualizaciones del año
-            </li>
-          </ul>
-          <p class="reg-plan-savings" id="reg-plan-savings">2 meses gratis vs mensual</p>
+          <div id="payment-error" class="form-error"></div>
         </div>
-
-        <div class="form-error" id="payment-error"></div>
-
-        <button type="button" class="btn-primary" id="pay-btn" onclick="openCulqi()">
-          <div class="spinner"></div>
-          <svg class="btn-label" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="flex-shrink:0;">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
-          </svg>
-          <span class="btn-label" id="reg-pay-label">Pagar S/ 118.00 anual</span>
-        </button>
-
-        <p class="payment-secure">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-          </svg>
-          Pago procesado de forma segura · SSL · Renueva en un año
-        </p>
       </div>
 
     </div>
@@ -1024,6 +1131,7 @@
     let registeredEmail = ''
     let registeredUserId = ''
     let selectedPlan = 'annual'
+    let trialExpiresAt = ''
     const planAmounts = { monthly: 1180, annual: 11800 }
 
     function regSelectPlan(plan) {
@@ -1031,19 +1139,8 @@
       document.getElementById('reg-tab-monthly').classList.toggle('active', plan === 'monthly')
       document.getElementById('reg-tab-annual').classList.toggle('active', plan === 'annual')
 
-      if (plan === 'annual') {
-        document.getElementById('reg-plan-name').textContent = 'Acceso Anual'
-        document.getElementById('reg-price-number').textContent = '100'
-        document.getElementById('reg-price-period').textContent = '/ año'
-        document.getElementById('reg-plan-savings').classList.add('visible')
-        document.getElementById('reg-pay-label').textContent = 'Pagar S/ 118.00 anual'
-      } else {
-        document.getElementById('reg-plan-name').textContent = 'Acceso Mensual'
-        document.getElementById('reg-price-number').textContent = '10'
-        document.getElementById('reg-price-period').textContent = '/ mes'
-        document.getElementById('reg-plan-savings').classList.remove('visible')
-        document.getElementById('reg-pay-label').textContent = 'Pagar S/ 11.80 mensual'
-      }
+      document.getElementById('reg-pay-label').textContent =
+        plan === 'annual' ? 'Activar plan anual — S/ 118.00' : 'Activar plan mensual — S/ 11.80'
     }
 
     /* ================================================================
@@ -1252,6 +1349,21 @@
         registeredEmail = email
         registeredUserId = data.user?.id || ''
 
+        // Activar trial gratuito
+        try {
+          const trialRes = await fetch('/api/activate-trial', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: data.user.id })
+          })
+          const trialData = await trialRes.json()
+          if (trialData.expiresAt) {
+            trialExpiresAt = trialData.expiresAt
+          }
+        } catch (e) {
+          console.warn('Trial activation failed (non-fatal):', e)
+        }
+
         // Avanzar al paso 2
         goToPaymentStep()
 
@@ -1279,6 +1391,14 @@
       document.getElementById('panel-payment').classList.add('active')
 
       setButtonLoading('register-btn', false)
+
+      // Mostrar fecha de expiración del trial
+      if (trialExpiresAt) {
+        const d = new Date(trialExpiresAt)
+        const fmt = d.toLocaleDateString('es-PE', { day: 'numeric', month: 'long', year: 'numeric' })
+        const el = document.getElementById('trial-expiry-info')
+        if (el) el.innerHTML = `Trial gratuito activo hasta el <strong>${fmt}</strong>`
+      }
 
       // Scroll suave al inicio de la card
       document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -1321,7 +1441,9 @@
       if (Culqi.token) {
         const token = Culqi.token
         Culqi.close()
-        setButtonLoading('pay-btn', true)
+
+        const payBtn = document.getElementById('btnRegPay')
+        if (payBtn) { payBtn.disabled = true; payBtn.style.opacity = '0.6' }
 
         try {
           const response = await fetch('/api/payment', {
@@ -1341,12 +1463,12 @@
           } else {
             const body = await response.json().catch(() => ({}))
             showFormError('payment-error', body.message || 'El pago no pudo procesarse. Intenta de nuevo.')
-            setButtonLoading('pay-btn', false)
+            if (payBtn) { payBtn.disabled = false; payBtn.style.opacity = '' }
           }
         } catch (err) {
           console.error(err)
           showFormError('payment-error', 'Error de conexión al procesar el pago. Intenta de nuevo.')
-          setButtonLoading('pay-btn', false)
+          if (payBtn) { payBtn.disabled = false; payBtn.style.opacity = '' }
         }
 
       } else if (Culqi.error) {

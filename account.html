@@ -758,6 +758,30 @@
       margin-bottom: 16px;
       text-align: center;
     }
+
+    /* ── LIGHT MODE OVERRIDES ── */
+    html.light-mode .form-card,
+    html.light-mode .login-card {
+      background: #ffffff;
+      border-color: rgba(0,0,0,0.08);
+    }
+    html.light-mode input,
+    html.light-mode .field input {
+      background: #f8fafc;
+      border-color: rgba(0,0,0,0.12);
+      color: #1e293b;
+    }
+    html.light-mode input:focus,
+    html.light-mode .field input:focus {
+      border-color: #2d8a5e;
+    }
+    html.light-mode .navbar {
+      background: rgba(255,255,255,0.95);
+      border-bottom-color: rgba(0,0,0,0.08);
+    }
+    html.light-mode h1 {
+      color: #0f172a;
+    }
   </style>
 </head>
 <body>
@@ -867,10 +891,10 @@
           </button>
         </form>
 
-        <a href="/forgot-password" class="forgot-link">¿Olvidaste tu contraseña?</a>
+        <a href="/forgot-password.html" class="forgot-link">¿Olvidaste tu contraseña?</a>
 
         <p class="login-footer" style="margin-top:16px;">
-          ¿No tienes cuenta? <a href="/register">Regístrate aquí</a>
+          ¿No tienes cuenta? <a href="/register.html">Regístrate aquí</a>
         </p>
       </div>
     </div>
