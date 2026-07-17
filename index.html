@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -379,6 +379,26 @@
     }
     html:not(.light-mode) .icon-moon { display: none; }
     html.light-mode .icon-sun { display: none; }
+
+    .lang-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      border-radius: 6px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      flex-shrink: 0;
+      letter-spacing: 0.05em;
+    }
+    .lang-toggle:hover {
+      color: var(--text);
+      border-color: var(--accent);
+      background: rgba(102,192,244,0.08);
+    }
 
     .hamburger {
       display: none;
@@ -2099,9 +2119,9 @@
       </a>
 
       <ul class="nav-links">
-        <li><a href="#features">Características</a></li>
-        <li><a href="#consolas">Consolas</a></li>
-        <li><a href="#netplay">Multijugador</a></li>
+        <li><a href="#features" data-i18n="nav.features">Features</a></li>
+        <li><a href="#consolas" data-i18n="nav.consoles">Consoles</a></li>
+        <li><a href="#netplay" data-i18n="nav.multiplayer">Multiplayer</a></li>
         <li><a href="/changelog/">Changelog</a></li>
       </ul>
 
@@ -2114,14 +2134,19 @@
         </svg>
       </button>
 
-      <a href="/register.html" class="btn-nav-register">Registrarse</a>
+      <button id="langToggle" class="lang-toggle" aria-label="Cambiar idioma" title="Switch language">
+        <span class="lang-label">ES</span>
+      </button>
+
+      <a href="/register.html" class="btn-nav-register" data-i18n="nav.signup">Sign up</a>
 
       <a
         class="btn-nav-cta"
         href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0"
         target="_blank"
         rel="noopener"
-      >Descargar Beta</a>
+        data-i18n="nav.download"
+      >Download Beta</a>
 
       <button class="hamburger" id="hamburger" aria-label="Menú" aria-expanded="false">
         <span></span>
@@ -2131,19 +2156,20 @@
     </div>
 
     <div class="nav-mobile" id="navMobile">
-      <a href="#features">Características</a>
-      <a href="#consolas">Consolas</a>
-      <a href="#netplay">Multijugador</a>
+      <a href="#features" data-i18n="nav.features">Features</a>
+      <a href="#consolas" data-i18n="nav.consoles">Consoles</a>
+      <a href="#netplay" data-i18n="nav.multiplayer">Multiplayer</a>
       <a href="/changelog/">Changelog</a>
-      <a href="/register.html" class="btn-nav-register" style="text-align:center;">Registrarse</a>
+      <a href="/register.html" class="btn-nav-register" style="text-align:center;" data-i18n="nav.signup">Sign up</a>
       <a
         class="btn-nav-cta"
         href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0"
         target="_blank"
         rel="noopener"
         style="text-align:center;"
-      >Descargar Beta</a>
-      <div style="display:flex;justify-content:center;margin-top:4px;">
+        data-i18n="nav.download"
+      >Download Beta</a>
+      <div style="display:flex;justify-content:center;gap:8px;margin-top:4px;">
         <button id="themeToggleMobile" class="theme-toggle" aria-label="Cambiar tema" title="Cambiar tema">
           <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
@@ -2151,6 +2177,9 @@
           <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
           </svg>
+        </button>
+        <button id="langToggleMobile" class="lang-toggle" aria-label="Cambiar idioma" title="Switch language">
+          <span class="lang-label-mobile">ES</span>
         </button>
       </div>
     </div>
@@ -2169,9 +2198,9 @@
         </span>
       </div>
 
-      <h1 class="hero-title fade-in">
-        <span class="line1">Revive los clásicos.</span>
-        <span class="line2">Juega online con tus amigos.</span>
+      <h1 class="hero-title fade-in" data-i18n="hero.title">
+        <span class="line1">Relive the classics.</span>
+        <span class="line2">Play online with friends.</span>
       </h1>
 
       <p class="hero-subtitle fade-in">
@@ -2182,11 +2211,12 @@
         <a
           class="btn-primary"
           href="#download"
+          data-i18n="hero.cta"
         >
-          &#11015; Descargar Beta
+          &#11015; Download Beta
         </a>
-        <a class="btn-secondary" href="#features">
-          Ver características &#8595;
+        <a class="btn-secondary" href="#features" data-i18n="hero.explore">
+          Explore features &#8595;
         </a>
       </div>
 
@@ -2295,8 +2325,8 @@
   <section class="features" id="features">
     <div class="container">
       <div class="section-header fade-in">
-        <h2 class="section-title">Todo lo que necesitas para jugar retro</h2>
-        <p class="section-subtitle">Sin configurar emuladores. Sin buscar BIOS. Directo al juego.</p>
+        <h2 class="section-title" data-i18n="section.features.title">Everything you need to play retro</h2>
+        <p class="section-subtitle" data-i18n="section.features.sub">No emulator setup. No BIOS hunting. Straight to the game.</p>
       </div>
 
       <div class="features-carousel-wrap fade-in" id="featuresCarousel">
@@ -2319,8 +2349,8 @@
                   <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
                 </svg>
               </div>
-              <div class="feature-title">Biblioteca automática</div>
-              <div class="feature-desc">Apunta a cualquier carpeta con tus juegos y RevsGaming los detecta, organiza y muestra con portadas. Vista lista o grilla con búsqueda instantánea.</div>
+              <div class="feature-title" data-i18n="feat.library.title">Auto Game Library</div>
+              <div class="feature-desc" data-i18n="feat.library.desc">Point to any folder with your games and RevsGaming detects, organizes and displays them with cover art. List or grid view with instant search.</div>
             </div>
 
             <!-- Card 2 -->
@@ -2331,8 +2361,8 @@
                   <circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
                 </svg>
               </div>
-              <div class="feature-title">Netplay PS1 — 2 jugadores</div>
-              <div class="feature-desc">Crea una sala y obtén un código de 6 letras. Tu amigo lo ingresa y el juego inicia solo. Funciona vía Mednafen, el emulador más preciso para PS1.</div>
+              <div class="feature-title" data-i18n="feat.netplay2.title">PS1 Netplay — 2 Players</div>
+              <div class="feature-desc" data-i18n="feat.netplay2.desc">Create a room and get a 6-letter code. Your friend enters it and the game launches automatically. Powered by Mednafen, the most accurate PS1 emulator.</div>
             </div>
 
             <!-- Card 3 -->
@@ -2343,8 +2373,8 @@
                   <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
                 </svg>
               </div>
-              <div class="feature-title">Netplay hasta 4 jugadores</div>
-              <div class="feature-desc">Usando RetroArch y nuestro servidor MITM propio en Lima, Perú, puedes jugar con hasta 4 amigos en la mayoría de sistemas clásicos.</div>
+              <div class="feature-title" data-i18n="feat.netplay4.title">Netplay up to 4 Players</div>
+              <div class="feature-desc" data-i18n="feat.netplay4.desc">Using RetroArch and our own MITM server in Lima, Peru, you can play with up to 4 friends on most classic systems.</div>
             </div>
 
             <!-- Card 4 -->
@@ -2355,8 +2385,8 @@
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
                 </svg>
               </div>
-              <div class="feature-title">Sistema de amigos</div>
-              <div class="feature-desc">Ve quién está online, qué juego están jugando e invítalos directamente a tu sala. Todo en tiempo real gracias a Supabase Realtime.</div>
+              <div class="feature-title" data-i18n="feat.friends.title">Friends System</div>
+              <div class="feature-desc" data-i18n="feat.friends.desc">See who is online, what game they are playing, and invite them directly to your room. All in real time thanks to Supabase Realtime.</div>
             </div>
 
             <!-- Card 5 -->
@@ -2367,8 +2397,8 @@
                   <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>
                 </svg>
               </div>
-              <div class="feature-title">Cloud Saves</div>
-              <div class="feature-desc">Tus partidas guardadas se sincronizan automáticamente en la nube con Supabase Storage. Nunca pierdas tu progreso aunque formatees tu PC.</div>
+              <div class="feature-title" data-i18n="feat.cloud.title">Cloud Saves</div>
+              <div class="feature-desc" data-i18n="feat.cloud.desc">Your save files sync automatically to the cloud via Supabase Storage. Never lose your progress even if you reformat your PC.</div>
             </div>
 
             <!-- Card 6 -->
@@ -2379,8 +2409,8 @@
                   <circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/>
                 </svg>
               </div>
-              <div class="feature-title">Mando, invitado y BIOS auto</div>
-              <div class="feature-desc">Navega toda la app con tu control. Juega sin cuenta en modo invitado con un apodo. Las BIOS de PS1 se descargan automáticamente al instalar.</div>
+              <div class="feature-title" data-i18n="feat.controller.title">Controller, Guest &amp; Auto BIOS</div>
+              <div class="feature-desc" data-i18n="feat.controller.desc">Navigate the whole app with your controller. Play without an account in guest mode with a nickname. PS1 BIOS downloads automatically on install.</div>
             </div>
 
           </div><!-- /features-track -->
@@ -2405,8 +2435,8 @@
   <section class="consolas" id="consolas">
     <div class="container">
       <div class="section-header fade-in">
-        <h2 class="section-title">Consolas soportadas</h2>
-        <p class="section-subtitle">Multi-sistema desde el primer día</p>
+        <h2 class="section-title" data-i18n="section.consoles.title">Supported Consoles</h2>
+        <p class="section-subtitle" data-i18n="section.consoles.sub">Multi-system from day one</p>
       </div>
 
       <div class="consolas-grid fade-in">
@@ -2436,8 +2466,8 @@
   <section class="netplay" id="netplay">
     <div class="container">
       <div class="section-header fade-in">
-        <h2 class="section-title">Cómo funciona el netplay</h2>
-        <p class="section-subtitle">Dos modos según tus necesidades</p>
+        <h2 class="section-title" data-i18n="section.netplay.title">How Online Multiplayer Works</h2>
+        <p class="section-subtitle" data-i18n="section.netplay.sub">Two modes to fit your needs</p>
       </div>
 
       <div class="netplay-grid fade-in">
@@ -2504,30 +2534,30 @@
   <section class="install" id="install">
     <div class="container">
       <div class="section-header fade-in">
-        <h2 class="section-title">Instala en 3 pasos</h2>
-        <p class="section-subtitle">Listo para jugar en menos de 5 minutos</p>
+        <h2 class="section-title" data-i18n="section.install.title">Install in 3 Steps</h2>
+        <p class="section-subtitle" data-i18n="section.install.sub">Ready to play in under 5 minutes</p>
       </div>
 
       <div class="install-steps">
         <div class="install-step fade-in">
           <div class="install-step-num">01</div>
           <div class="install-step-icon">&#11015;&#65039;</div>
-          <div class="install-step-title">Descarga el instalador</div>
-          <div class="install-step-desc">Baja el archivo <code style="background:rgba(255,255,255,0.07);padding:2px 6px;border-radius:4px;font-size:0.8em;">.exe</code> desde la release de GitHub. Pesa alrededor de 150 MB.</div>
+          <div class="install-step-title" data-i18n="install.step1.title">Download the installer</div>
+          <div class="install-step-desc" data-i18n="install.step1.desc">Grab the <code style="background:rgba(255,255,255,0.07);padding:2px 6px;border-radius:4px;font-size:0.8em;">.exe</code> file from the GitHub release. Around 150 MB.</div>
         </div>
 
         <div class="install-step fade-in">
           <div class="install-step-num">02</div>
           <div class="install-step-icon">&#128196;</div>
-          <div class="install-step-title">Instala con 1 click</div>
-          <div class="install-step-desc">Ejecuta el instalador y sigue los pasos. Mednafen, RetroArch y las dependencias se instalan automáticamente — no necesitas buscar nada.</div>
+          <div class="install-step-title" data-i18n="install.step2.title">Install with 1 click</div>
+          <div class="install-step-desc" data-i18n="install.step2.desc">Run the installer and follow the steps. Mednafen, RetroArch and all dependencies install automatically — no manual setup needed.</div>
         </div>
 
         <div class="install-step fade-in">
           <div class="install-step-num">03</div>
           <div class="install-step-icon">&#127918;</div>
-          <div class="install-step-title">Agrega tus juegos</div>
-          <div class="install-step-desc">Coloca tus ROMs en cualquier carpeta y apunta RevsGaming a esa carpeta. Los juegos aparecen solos — listos para jugar.</div>
+          <div class="install-step-title" data-i18n="install.step3.title">Add your games</div>
+          <div class="install-step-desc" data-i18n="install.step3.desc">Put your ROMs in any folder and point RevsGaming to it. Games appear automatically — ready to play.</div>
         </div>
       </div>
     </div>
@@ -2548,20 +2578,20 @@
     <div class="container">
       <div class="support-inner fade-in">
         <div class="support-emoji">&#127918;</div>
-        <h2 class="support-title">Accede a RevsGaming</h2>
-        <p class="support-desc">
-          Paga una sola vez y obtén acceso completo a RevsGaming — biblioteca retro, netplay online, cloud saves y todas las funciones.
+        <h2 class="support-title" data-i18n="pricing.title">Access RevsGaming</h2>
+        <p class="support-desc" data-i18n="pricing.desc">
+          Pay once and get full access to RevsGaming — retro library, online netplay, cloud saves and all features.
         </p>
 
         <!-- Selector de plan -->
         <div class="plan-selector" id="planSelector">
           <div class="plan-tabs">
             <button class="plan-tab" id="tab-monthly" type="button" onclick="selectPlan('monthly')">
-              Mensual &nbsp;<strong>S/10</strong>
+              <span data-i18n="price.monthly">Monthly</span> &nbsp;<strong>S/10</strong>
             </button>
             <button class="plan-tab active" id="tab-annual" type="button" onclick="selectPlan('annual')">
-              Anual &nbsp;<strong>S/100</strong>
-              <span class="plan-tab-badge">2 meses gratis</span>
+              <span data-i18n="price.annual">Annual</span> &nbsp;<strong>S/100</strong>
+              <span class="plan-tab-badge" data-i18n="price.free">2 months free</span>
             </button>
           </div>
 
@@ -2570,15 +2600,15 @@
               <span class="price-currency">S/</span>
               <span class="price-number" id="priceNumber">100</span>
               <span style="font-size:1rem;color:var(--text-muted);align-self:flex-end;padding-bottom:6px;" id="priceIgv">&nbsp;<span style="font-size:0.8rem;">+ IGV</span></span>
-              <span class="price-period" id="pricePeriod">/ año</span>
+              <span class="price-period" id="pricePeriod" data-i18n="price.period.annual">/ year</span>
             </div>
             <div class="price-includes">
-              <span class="price-check">Netplay online 2–4 jugadores</span>
-              <span class="price-check">Cloud Saves automáticos</span>
-              <span class="price-check">PS1, NES, SNES, GBA, N64 y más</span>
-              <span class="price-check">Todas las actualizaciones del año</span>
+              <span class="price-check" data-i18n="price.check1">Online netplay 2–4 players</span>
+              <span class="price-check" data-i18n="price.check2">Automatic Cloud Saves</span>
+              <span class="price-check" data-i18n="price.check3">PS1, NES, SNES, GBA, N64 and more</span>
+              <span class="price-check" data-i18n="price.check4">All updates for the year</span>
             </div>
-            <div class="plan-savings" id="planSavings">2 meses gratis vs mensual</div>
+            <div class="plan-savings" id="planSavings" data-i18n="price.savings">2 months free vs monthly</div>
           </div>
         </div>
 
@@ -2586,11 +2616,11 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/>
           </svg>
-          <span id="btnCulqiLabel">Pagar S/ 118.00 anual</span>
+          <span id="btnCulqiLabel" data-i18n="price.pay.annual">Pay S/ 118.00 annually</span>
         </button>
 
-        <div class="support-fine">
-          Pago seguro vía Culqi &middot; SSL
+        <div class="support-fine" data-i18n="pricing.secure">
+          Secure payment via Culqi &middot; SSL
         </div>
       </div>
     </div>
@@ -2603,24 +2633,25 @@
     <div class="container">
       <div class="download-cta-content fade-in">
         <div class="download-cta-badge">v0.84.0 Beta</div>
-        <h2 class="download-cta-title">Descarga RevsGaming</h2>
+        <h2 class="download-cta-title" data-i18n="section.download.title">Download RevsGaming</h2>
 
         <a
           class="download-cta-btn"
           href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0"
           target="_blank"
           rel="noopener"
+          data-i18n="download.btn"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
           </svg>
-          Descargar para Windows
+          Download for Windows
         </a>
 
         <div class="download-reqs">
-          <span class="download-req">Windows 10 / 11 de 64 bits</span>
-          <span class="download-req">Mednafen + RetroArch incluidos</span>
-          <span class="download-req">Acceso tras la compra</span>
+          <span class="download-req" data-i18n="download.req1">Windows 10 / 11 64-bit</span>
+          <span class="download-req" data-i18n="download.req2">Mednafen + RetroArch included</span>
+          <span class="download-req" data-i18n="download.req3">Access after purchase</span>
         </div>
 
         <a
@@ -2628,8 +2659,9 @@
           href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0"
           target="_blank"
           rel="noopener"
+          data-i18n="download.source"
         >
-          Ver código fuente en GitHub &#8599;
+          View source code on GitHub &#8599;
         </a>
       </div>
     </div>
@@ -2652,27 +2684,27 @@
             />
             <span class="footer-brand-name" style="display:none;">RevsGaming</span>
           </div>
-          <p class="footer-brand-desc">
-            Launcher de juegos retro para Windows con netplay online, biblioteca automatica y cloud saves.
+          <p class="footer-brand-desc" data-i18n="footer.brand.desc">
+            Retro game launcher for Windows with online netplay, automatic library and cloud saves.
           </p>
           <p class="footer-copy">
-            &copy; 2025 RevsGaming &mdash; AntonioPCGamer
+            &copy; 2026 RevsGaming &mdash; AntonioPCGamer
           </p>
         </div>
 
-        <!-- Recursos -->
+        <!-- Resources -->
         <div>
-          <div class="footer-col-title">Recursos</div>
+          <div class="footer-col-title" data-i18n="footer.col.resources">Resources</div>
           <ul class="footer-links">
-            <li><a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0" target="_blank" rel="noopener">Descargar</a></li>
+            <li><a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0" target="_blank" rel="noopener" data-i18n="footer.download">Download</a></li>
             <li><a href="/changelog/">Changelog</a></li>
-            <li><a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/issues" target="_blank" rel="noopener">Reportar Bug</a></li>
+            <li><a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/issues" target="_blank" rel="noopener" data-i18n="footer.bugreport">Report Bug</a></li>
           </ul>
         </div>
 
-        <!-- Comunidad -->
+        <!-- Community -->
         <div>
-          <div class="footer-col-title">Comunidad</div>
+          <div class="footer-col-title" data-i18n="footer.col.community">Community</div>
           <ul class="footer-links">
             <li><a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0" target="_blank" rel="noopener">GitHub</a></li>
           </ul>
@@ -2682,8 +2714,8 @@
         <div>
           <div class="footer-col-title">Legal</div>
           <ul class="footer-links">
-            <li><a href="/legal/privacy.html">Politica de Privacidad</a></li>
-            <li><a href="/legal/terms.html">Terminos de Uso</a></li>
+            <li><a href="/legal/privacy.html" data-i18n="footer.privacy">Privacy Policy</a></li>
+            <li><a href="/legal/terms.html" data-i18n="footer.terms">Terms of Use</a></li>
             <li><a href="/libro-reclamaciones.html">Libro de Reclamaciones</a></li>
           </ul>
         </div>
@@ -2692,7 +2724,7 @@
       <hr class="footer-divider" />
 
       <div class="footer-bottom">
-        <span>Hecho con dedicación para la comunidad retro latinoamericana</span>
+        <span data-i18n="footer.bottom">Made with dedication for the Latin American retro community</span>
       </div>
     </div>
   </footer>
@@ -2804,6 +2836,7 @@
     /* ----------------------------------------------------------
        PLAN SELECTOR
     ---------------------------------------------------------- */
+    var currentLang = localStorage.getItem('revsgaming-lang') || 'en';
     var selectedPlan = 'annual';
     var planAmounts = { monthly: 1180, annual: 11800 };
 
@@ -2815,14 +2848,14 @@
 
       if (plan === 'annual') {
         document.getElementById('priceNumber').textContent = '100';
-        document.getElementById('pricePeriod').textContent = '/ año';
+        document.getElementById('pricePeriod').textContent = currentLang === 'es' ? '/ año' : '/ year';
         document.getElementById('planSavings').classList.add('visible');
-        document.getElementById('btnCulqiLabel').textContent = 'Pagar S/ 118.00 anual';
+        document.getElementById('btnCulqiLabel').textContent = currentLang === 'es' ? 'Pagar S/ 118.00 anual' : 'Pay S/ 118.00 annually';
       } else {
         document.getElementById('priceNumber').textContent = '10';
-        document.getElementById('pricePeriod').textContent = '/ mes';
+        document.getElementById('pricePeriod').textContent = currentLang === 'es' ? '/ mes' : '/ month';
         document.getElementById('planSavings').classList.remove('visible');
-        document.getElementById('btnCulqiLabel').textContent = 'Pagar S/ 11.80 mensual';
+        document.getElementById('btnCulqiLabel').textContent = currentLang === 'es' ? 'Pagar S/ 11.80 mensual' : 'Pay S/ 11.80 monthly';
       }
     }
 
@@ -2853,9 +2886,11 @@
       var btn = document.getElementById('btnCulqi');
       btn.disabled = loading;
       if (loading) {
-        btn.innerHTML = 'Procesando...';
+        btn.innerHTML = currentLang === 'es' ? 'Procesando...' : 'Processing...';
       } else {
-        var label = selectedPlan === 'annual' ? 'Pagar S/ 118.00 anual' : 'Pagar S/ 11.80 mensual';
+        var label = selectedPlan === 'annual'
+          ? (currentLang === 'es' ? 'Pagar S/ 118.00 anual' : 'Pay S/ 118.00 annually')
+          : (currentLang === 'es' ? 'Pagar S/ 11.80 mensual' : 'Pay S/ 11.80 monthly');
         btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> <span id="btnCulqiLabel">' + label + '</span>';
       }
     }
@@ -3036,7 +3071,9 @@
       var cursor = document.getElementById('typewriter-cursor');
       if (!el) return;
 
-      var text  = 'RevsGaming organiza tu colección retro y te conecta con amigos — sin configurar emuladores.';
+      var textEn = 'RevsGaming organizes your retro collection and connects you with friends — no emulator setup needed.';
+      var textEs = 'RevsGaming organiza tu colección retro y te conecta con amigos — sin configurar emuladores.';
+      var text  = (localStorage.getItem('revsgaming-lang') === 'es') ? textEs : textEn;
       var speed = 32;   /* ms per character */
       var startDelay = 900; /* wait for loading screen to finish */
       var i = 0;
@@ -3190,6 +3227,142 @@
       applyTransform();
       startAutoplay();
     })();
+  </script>
+
+  <script>
+    /* ── i18n (Language Toggle) ──────────────────────────────────────── */
+    var translations = {
+      es: {
+        // Navbar
+        'nav.features':    'Características',
+        'nav.consoles':    'Consolas',
+        'nav.multiplayer': 'Multijugador',
+        'nav.signup':      'Registrarse',
+        'nav.download':    'Descargar Beta',
+        // Hero
+        'hero.title':      '<span class="line1">Revive los clásicos.</span><span class="line2">Juega online con tus amigos.</span>',
+        'hero.cta':        '&#11015; Descargar Beta',
+        'hero.explore':    'Ver características &#8595;',
+        // Features section
+        'section.features.title': 'Todo lo que necesitas para jugar retro',
+        'section.features.sub':   'Sin configurar emuladores. Sin buscar BIOS. Directo al juego.',
+        'feat.library.title':  'Biblioteca automática',
+        'feat.library.desc':   'Apunta a cualquier carpeta con tus juegos y RevsGaming los detecta, organiza y muestra con portadas. Vista lista o grilla con búsqueda instantánea.',
+        'feat.netplay2.title': 'Netplay PS1 — 2 jugadores',
+        'feat.netplay2.desc':  'Crea una sala y obtén un código de 6 letras. Tu amigo lo ingresa y el juego inicia solo. Funciona vía Mednafen, el emulador más preciso para PS1.',
+        'feat.netplay4.title': 'Netplay hasta 4 jugadores',
+        'feat.netplay4.desc':  'Usando RetroArch y nuestro servidor MITM propio en Lima, Perú, puedes jugar con hasta 4 amigos en la mayoría de sistemas clásicos.',
+        'feat.friends.title':  'Sistema de amigos',
+        'feat.friends.desc':   'Ve quién está online, qué juego están jugando e invítalos directamente a tu sala. Todo en tiempo real gracias a Supabase Realtime.',
+        'feat.cloud.title':    'Cloud Saves',
+        'feat.cloud.desc':     'Tus partidas guardadas se sincronizan automáticamente en la nube con Supabase Storage. Nunca pierdas tu progreso aunque formatees tu PC.',
+        'feat.controller.title': 'Mando, invitado y BIOS auto',
+        'feat.controller.desc':  'Navega toda la app con tu control. Juega sin cuenta en modo invitado con un apodo. Las BIOS de PS1 se descargan automáticamente al instalar.',
+        // Consoles
+        'section.consoles.title': 'Consolas soportadas',
+        'section.consoles.sub':   'Multi-sistema desde el primer día',
+        // Netplay
+        'section.netplay.title': 'Cómo funciona el netplay',
+        'section.netplay.sub':   'Dos modos según tus necesidades',
+        // Install
+        'section.install.title': 'Instala en 3 pasos',
+        'section.install.sub':   'Listo para jugar en menos de 5 minutos',
+        'install.step1.title': 'Descarga el instalador',
+        'install.step1.desc':  'Baja el archivo <code style="background:rgba(255,255,255,0.07);padding:2px 6px;border-radius:4px;font-size:0.8em;">.exe</code> desde la release de GitHub. Pesa alrededor de 150 MB.',
+        'install.step2.title': 'Instala con 1 click',
+        'install.step2.desc':  'Ejecuta el instalador y sigue los pasos. Mednafen, RetroArch y las dependencias se instalan automáticamente — no necesitas buscar nada.',
+        'install.step3.title': 'Agrega tus juegos',
+        'install.step3.desc':  'Coloca tus ROMs en cualquier carpeta y apunta RevsGaming a esa carpeta. Los juegos aparecen solos — listos para jugar.',
+        // Pricing
+        'pricing.title':      'Accede a RevsGaming',
+        'pricing.desc':       'Paga una sola vez y obtén acceso completo a RevsGaming — biblioteca retro, netplay online, cloud saves y todas las funciones.',
+        'price.monthly':      'Mensual',
+        'price.annual':       'Anual',
+        'price.free':         '2 meses gratis',
+        'price.period.annual':'/ año',
+        'price.check1':       'Netplay online 2–4 jugadores',
+        'price.check2':       'Cloud Saves automáticos',
+        'price.check3':       'PS1, NES, SNES, GBA, N64 y más',
+        'price.check4':       'Todas las actualizaciones del año',
+        'price.savings':      '2 meses gratis vs mensual',
+        'price.pay.annual':   'Pagar S/ 118.00 anual',
+        'pricing.secure':     'Pago seguro vía Culqi · SSL',
+        // Download
+        'section.download.title': 'Descarga RevsGaming',
+        'download.btn':    '&#11015; Descargar para Windows',
+        'download.req1':   'Windows 10 / 11 de 64 bits',
+        'download.req2':   'Mednafen + RetroArch incluidos',
+        'download.req3':   'Acceso tras la compra',
+        'download.source': 'Ver código fuente en GitHub &#8599;',
+        // Footer
+        'footer.brand.desc':    'Launcher de juegos retro para Windows con netplay online, biblioteca automática y cloud saves.',
+        'footer.col.resources': 'Recursos',
+        'footer.download':      'Descargar',
+        'footer.bugreport':     'Reportar Bug',
+        'footer.col.community': 'Comunidad',
+        'footer.privacy':       'Política de Privacidad',
+        'footer.terms':         'Términos de Uso',
+        'footer.bottom':        'Hecho con dedicación para la comunidad retro latinoamericana',
+      }
+    };
+
+    var langToggleBtn       = document.getElementById('langToggle');
+    var langToggleMobileBtn = document.getElementById('langToggleMobile');
+    var langLabel           = langToggleBtn && langToggleBtn.querySelector('.lang-label');
+    var langLabelMobile     = langToggleMobileBtn && langToggleMobileBtn.querySelector('.lang-label-mobile');
+
+    /* Save defaults before any translation runs */
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      el.setAttribute('data-i18n-default', el.innerHTML);
+    });
+
+    function updateLangLabels(lang) {
+      var display = lang === 'en' ? 'ES' : 'EN';
+      if (langLabel) langLabel.textContent = display;
+      if (langLabelMobile) langLabelMobile.textContent = display;
+    }
+
+    function applyLang(lang) {
+      currentLang = lang;
+      localStorage.setItem('revsgaming-lang', lang);
+      updateLangLabels(lang);
+
+      if (lang === 'es') {
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+          var key = el.getAttribute('data-i18n');
+          if (translations.es[key] !== undefined) {
+            el.innerHTML = translations.es[key];
+          }
+        });
+        document.documentElement.lang = 'es';
+        /* Update dynamic pricing text */
+        var periodEl = document.getElementById('pricePeriod');
+        if (periodEl) periodEl.textContent = selectedPlan === 'annual' ? '/ año' : '/ mes';
+        var labelEl = document.getElementById('btnCulqiLabel');
+        if (labelEl) labelEl.textContent = selectedPlan === 'annual' ? 'Pagar S/ 118.00 anual' : 'Pagar S/ 11.80 mensual';
+      } else {
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+          var orig = el.getAttribute('data-i18n-default');
+          if (orig !== null) el.innerHTML = orig;
+        });
+        document.documentElement.lang = 'en';
+        /* Update dynamic pricing text */
+        var periodEl = document.getElementById('pricePeriod');
+        if (periodEl) periodEl.textContent = selectedPlan === 'annual' ? '/ year' : '/ month';
+        var labelEl = document.getElementById('btnCulqiLabel');
+        if (labelEl) labelEl.textContent = selectedPlan === 'annual' ? 'Pay S/ 118.00 annually' : 'Pay S/ 11.80 monthly';
+      }
+    }
+
+    /* Apply saved language on load */
+    applyLang(currentLang);
+
+    function onLangToggle() {
+      applyLang(currentLang === 'en' ? 'es' : 'en');
+    }
+
+    if (langToggleBtn) langToggleBtn.addEventListener('click', onLangToggle);
+    if (langToggleMobileBtn) langToggleMobileBtn.addEventListener('click', onLangToggle);
   </script>
 </body>
 </html>

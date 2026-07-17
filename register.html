@@ -752,6 +752,19 @@
     html:not(.light-mode) .icon-moon { display: none; }
     html.light-mode .icon-sun { display: none; }
 
+    .app-login-btn {
+      background: none;
+      border: none;
+      color: var(--accent);
+      cursor: pointer;
+      font-size: 0.875rem;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+    .app-login-btn:hover { color: var(--green-light); }
+
     /* ── TRIAL SUCCESS CARD ── */
     .trial-success-card {
       text-align: center;
@@ -1045,7 +1058,9 @@
         </form>
 
         <div class="form-footer-links" style="margin-top: 18px;">
-          <a href="#">¿Ya tienes cuenta? Inicia sesión en la app</a>
+          <button type="button" onclick="openRevsGamingApp()" class="app-login-btn">
+            ¿Ya tienes cuenta? Abre la app
+          </button>
         </div>
 
         <hr class="divider" />
@@ -1436,6 +1451,64 @@
       })
 
       Culqi.open()
+    }
+
+    /* ================================================================
+       DEEP LINK — Abrir app RevsGaming
+    ================================================================ */
+    function openRevsGamingApp() {
+      var appLink = 'revsgaming://login'
+      window.location.href = appLink
+
+      setTimeout(function () {
+        showAppNotInstalledMsg()
+      }, 2500)
+    }
+
+    function showAppNotInstalledMsg() {
+      var existing = document.getElementById('app-not-installed-toast')
+      if (existing) existing.remove()
+
+      var toast = document.createElement('div')
+      toast.id = 'app-not-installed-toast'
+      toast.style.cssText = [
+        'position:fixed',
+        'bottom:32px',
+        'left:50%',
+        'transform:translateX(-50%)',
+        'background:var(--bg-card)',
+        'border:1px solid var(--border)',
+        'padding:16px 24px',
+        'border-radius:12px',
+        'z-index:9999',
+        'box-shadow:0 8px 32px rgba(0,0,0,0.3)',
+        'text-align:center',
+        'font-family:\'Inter\',sans-serif',
+        'color:var(--text)',
+        'max-width:320px',
+        'width:calc(100% - 48px)'
+      ].join(';')
+
+      toast.innerHTML = [
+        '<p style="margin-bottom:12px;font-size:0.9rem;">¿No tienes RevsGaming instalado?</p>',
+        '<a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0"',
+        '   target="_blank" rel="noopener"',
+        '   style="background:var(--green);color:#0d1117;padding:8px 20px;border-radius:6px;',
+        '          font-weight:600;text-decoration:none;font-family:\'Space Grotesk\',sans-serif;',
+        '          display:inline-block;">',
+        '  Descargar ahora',
+        '</a>',
+        '<button onclick="document.getElementById(\'app-not-installed-toast\').remove()"',
+        '        style="display:block;margin:10px auto 0;background:none;border:none;',
+        '               color:var(--text-muted);cursor:pointer;font-size:0.8rem;">',
+        '  Cerrar',
+        '</button>'
+      ].join('')
+
+      document.body.appendChild(toast)
+      setTimeout(function () {
+        if (toast.parentElement) toast.remove()
+      }, 8000)
     }
 
     // Callback global de Culqi — se ejecuta cuando el usuario completa el formulario de pago
