@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Download RevsGaming — v0.84.0 Beta</title>
+  <meta name="description" content="Download RevsGaming v0.84.0 Beta — retro game launcher for Windows with online netplay, cloud saves and support for PS1, NES, SNES, GBA, N64 and more." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://revsgaming.com/download/" />
+  <meta property="og:title" content="Download RevsGaming v0.84.0 Beta" />
+  <meta property="og:description" content="Retro game launcher for Windows with online netplay 2–4 players, cloud saves and automatic library." />
+  <meta property="og:image" content="https://revsgaming.com/og-image.png" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://revsgaming.com/download/" />
+
+  <script>if(localStorage.getItem('revsgaming-theme')==='light')document.documentElement.classList.add('light-mode')</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="../js/i18n.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── DARK (default) ── */
+    :root {
+      --bg-deep:     #0d1117;
+      --bg-main:     #1b2838;
+      --bg-card:     #16202d;
+      --bg-panel:    #1e2d3d;
+      --green:       #7EC8A0;
+      --green-light: #a8d8b8;
+      --accent:      #66c0f4;
+      --text:        #c6d4df;
+      --text-muted:  #8f98a0;
+      --border:      rgba(102,192,244,0.15);
+      --glass:       rgba(22,32,45,0.92);
+    }
+
+    /* ── LIGHT MODE ── */
+    html.light-mode {
+      --bg-deep:    #f5f7fa;
+      --bg-main:    #ffffff;
+      --bg-card:    #ffffff;
+      --bg-panel:   #f0f4f8;
+      --green:      #2e7d50;
+      --green-light:#38966a;
+      --accent:     #1565a8;
+      --text:       #1a2332;
+      --text-muted: #546678;
+      --border:     rgba(20,40,80,0.1);
+      --glass:      rgba(255,255,255,0.95);
+    }
+
+    html:not(.light-mode) .icon-moon { display: none; }
+    html.light-mode .icon-sun { display: none; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background: var(--bg-deep);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background 0.25s, color 0.25s;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; }
+    img { display: block; max-width: 100%; }
+    button { cursor: pointer; border: none; font-family: 'Inter', sans-serif; }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      background: rgba(13,17,23,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      padding: 14px 0;
+      transition: background 0.25s, border-color 0.25s;
+    }
+    html.light-mode .navbar { background: rgba(255,255,255,0.97); }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .nav-logo img { height: 28px; }
+    .nav-logo-fallback { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--text); display: none; }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 4px;
+      flex: 1;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--text);
+      background: rgba(255,255,255,0.06);
+    }
+    html.light-mode .nav-links a:hover { background: rgba(0,0,0,0.05); }
+
+    .theme-toggle {
+      background: none; border: 1px solid var(--border);
+      color: var(--text-muted); border-radius: 6px;
+      padding: 6px 8px; cursor: pointer; display: flex; align-items: center;
+      transition: color 0.2s, border-color 0.2s, background 0.2s; flex-shrink: 0;
+    }
+    .theme-toggle:hover { color: var(--text); border-color: var(--green); background: rgba(126,200,160,0.08); }
+
+    .lang-toggle {
+      background: none; border: 1px solid var(--border);
+      color: var(--text-muted); border-radius: 6px; padding: 5px 10px;
+      cursor: pointer; font-size: 0.8rem; font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      flex-shrink: 0; letter-spacing: 0.05em;
+    }
+    .lang-toggle:hover { color: var(--text); border-color: var(--accent); background: rgba(102,192,244,0.08); }
+
+    .btn-nav-cta {
+      background: var(--green); color: #0d1117;
+      font-size: 0.8rem; font-weight: 700; padding: 7px 16px;
+      border-radius: 6px; flex-shrink: 0; letter-spacing: 0.02em;
+      transition: background 0.2s, transform 0.1s;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .btn-nav-cta:hover { background: var(--green-light); transform: translateY(-1px); }
+
+    .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 6px; flex-direction: column; gap: 4px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--text-muted); border-radius: 2px; transition: all 0.3s; }
+
+    .nav-mobile {
+      display: none; flex-direction: column; gap: 4px;
+      padding: 12px 24px 16px; border-top: 1px solid var(--border);
+    }
+    .nav-mobile a {
+      font-size: 0.9rem; font-weight: 500; color: var(--text-muted);
+      padding: 10px 12px; border-radius: 6px; display: block;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-mobile a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+    html.light-mode .nav-mobile { background: var(--bg-main); }
+    html.light-mode .nav-mobile a:hover { background: rgba(0,0,0,0.05); }
+
+    /* ── MAIN CONTENT ── */
+    main { flex: 1; padding: 64px 0 80px; }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .version-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(126,200,160,0.1);
+      border: 1px solid rgba(126,200,160,0.25);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--green);
+      letter-spacing: 0.08em;
+      margin-bottom: 20px;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .dot-live {
+      width: 7px; height: 7px;
+      background: var(--green); border-radius: 50%;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.8); }
+    }
+    .page-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffffff 40%, var(--green-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+    }
+    html.light-mode .page-title {
+      background: linear-gradient(135deg, var(--text) 40%, var(--green) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+    .page-subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* ── DOWNLOAD GRID ── */
+    .download-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* ── OS SELECTOR ── */
+    .os-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      transition: background 0.25s, border-color 0.25s;
+    }
+
+    .os-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+    .os-tab {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .os-tab:hover {
+      border-color: var(--green);
+      color: var(--text);
+      background: rgba(126,200,160,0.06);
+    }
+    .os-tab.active {
+      border-color: var(--green);
+      color: var(--green);
+      background: rgba(126,200,160,0.1);
+    }
+    .os-tab.disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .os-tab svg { flex-shrink: 0; }
+
+    /* ── DOWNLOAD PANEL ── */
+    .dl-panel { display: none; }
+    .dl-panel.visible { display: block; }
+
+    .dl-os-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .dl-os-status {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+    .dl-os-status .badge-supported {
+      color: var(--green);
+      font-weight: 600;
+    }
+    .dl-os-status .badge-unsupported {
+      color: var(--red, #C47E7E);
+      font-weight: 600;
+    }
+
+    .dl-file-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+      transition: border-color 0.2s;
+    }
+    .dl-file-row:hover { border-color: var(--green); }
+    html.light-mode .dl-file-row { background: var(--bg-panel); }
+
+    .dl-file-icon {
+      width: 40px; height: 40px;
+      border-radius: 8px;
+      background: rgba(126,200,160,0.12);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      color: var(--green);
+    }
+    .dl-file-info { flex: 1; min-width: 0; }
+    .dl-file-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .dl-file-meta {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+    .dl-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--green);
+      color: #0d1117;
+      font-weight: 700;
+      font-size: 0.85rem;
+      font-family: 'Space Grotesk', sans-serif;
+      padding: 9px 18px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.1s;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .dl-btn:hover { background: var(--green-light); transform: translateY(-1px); }
+    html.light-mode .dl-btn { color: #fff; }
+
+    .dl-unsupported {
+      text-align: center;
+      padding: 40px 24px;
+    }
+    .dl-unsupported svg {
+      color: var(--text-muted);
+      margin: 0 auto 16px;
+    }
+    .dl-unsupported h3 {
+      font-size: 1.1rem;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .dl-unsupported p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      max-width: 340px;
+      margin: 0 auto 20px;
+    }
+
+    /* ── REQUIREMENTS ── */
+    .reqs-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      margin-top: 24px;
+    }
+    .req-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .req-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+    .req-item svg { color: var(--green); flex-shrink: 0; }
+
+    /* ── DETECTED NOTICE ── */
+    .detected-notice {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      background: rgba(102,192,244,0.07);
+      border: 1px solid rgba(102,192,244,0.15);
+      border-radius: 20px;
+      padding: 4px 12px;
+      margin-bottom: 20px;
+    }
+    .detected-notice svg { color: var(--accent); }
+
+    /* ── SIDEBAR (right) ── */
+    .sidebar-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      transition: background 0.25s, border-color 0.25s;
+    }
+    .sidebar-card + .sidebar-card { margin-top: 16px; }
+
+    .sidebar-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    /* Version info */
+    .version-info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+    .version-info-row:last-child { border-bottom: none; }
+    .version-info-label { color: var(--text-muted); }
+    .version-info-value { color: var(--text); font-weight: 600; font-family: 'Space Grotesk', sans-serif; }
+    .version-info-value.green { color: var(--green); }
+
+    /* What's new */
+    .whats-new-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .whats-new-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .whats-new-list li::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+
+    .changelog-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.8rem;
+      color: var(--accent);
+      margin-top: 14px;
+      transition: opacity 0.2s;
+    }
+    .changelog-link:hover { opacity: 0.75; }
+
+    /* Console support */
+    .console-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .console-chip {
+      text-align: center;
+      padding: 8px 4px;
+      background: var(--bg-panel);
+      border-radius: 8px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      font-family: 'Space Grotesk', sans-serif;
+      transition: background 0.2s, color 0.2s;
+    }
+    .console-chip:hover { background: rgba(126,200,160,0.1); color: var(--green); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg-panel);
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      text-align: center;
+      transition: background 0.25s, border-color 0.25s;
+    }
+    footer a { color: var(--text-muted); transition: color 0.2s; }
+    footer a:hover { color: var(--text); }
+    .footer-sep { margin: 0 8px; opacity: 0.4; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .download-grid {
+        grid-template-columns: 1fr;
+      }
+      .nav-links, .theme-toggle, .lang-toggle, .btn-nav-cta { display: none; }
+      .hamburger { display: flex; margin-left: auto; }
+      .nav-mobile.open { display: flex; }
+      main { padding: 40px 0 60px; }
+      .console-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (min-width: 769px) {
+      .nav-mobile { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAVBAR ── -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="/" class="nav-logo">
+          <img
+            src="../logoPrimary.png"
+            alt="RevsGaming"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';"
+          />
+          <span class="nav-logo-fallback">RevsGaming</span>
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="/#features" data-i18n="nav.features">Features</a></li>
+          <li><a href="/#consolas" data-i18n="nav.consoles">Consoles</a></li>
+          <li><a href="/#netplay" data-i18n="nav.multiplayer">Multiplayer</a></li>
+          <li><a href="/changelog/">Changelog</a></li>
+        </ul>
+
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+        <button id="langToggle" class="lang-toggle" aria-label="Switch language">
+          <span class="lang-label">ES</span>
+        </button>
+
+        <a href="/register.html" class="btn-nav-cta" data-i18n="nav.signup">Sign up</a>
+
+        <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="nav-mobile" id="navMobile">
+      <a href="/#features" data-i18n="nav.features">Features</a>
+      <a href="/#consolas" data-i18n="nav.consoles">Consoles</a>
+      <a href="/#netplay" data-i18n="nav.multiplayer">Multiplayer</a>
+      <a href="/changelog/">Changelog</a>
+      <a href="/register.html" class="btn-nav-cta" style="text-align:center;" data-i18n="nav.signup">Sign up</a>
+      <div style="display:flex;justify-content:center;gap:8px;margin-top:4px;">
+        <button id="themeToggleMobile" class="theme-toggle" aria-label="Toggle theme">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+        <button id="langToggleMobile" class="lang-toggle" aria-label="Switch language">
+          <span class="lang-label">ES</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── MAIN ── -->
+  <main>
+    <div class="container">
+
+      <!-- Header -->
+      <div class="page-header">
+        <div class="version-badge">
+          <span class="dot-live"></span>
+          LATEST STABLE &nbsp;·&nbsp; v0.84.0 Beta
+        </div>
+        <h1 class="page-title" data-i18n="dl.title">Download RevsGaming</h1>
+        <p class="page-subtitle" data-i18n="dl.subtitle">
+          Free retro game launcher for Windows — play online with friends, no setup required.
+        </p>
+      </div>
+
+      <!-- Grid -->
+      <div class="download-grid">
+
+        <!-- LEFT — OS picker + file list -->
+        <div class="os-card">
+
+          <!-- Detected OS notice (filled by JS) -->
+          <div class="detected-notice" id="detectedNotice" style="display:none;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </svg>
+            <span id="detectedNoticeText"></span>
+          </div>
+
+          <!-- OS tabs -->
+          <div class="os-tabs" role="tablist">
+            <!-- Windows -->
+            <button
+              class="os-tab" id="tab-windows" role="tab"
+              aria-selected="true" aria-controls="panel-windows"
+              onclick="selectOS('windows')"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M0 3.449L9.75 2.1v9.451H0V3.449zm10.949-1.49L24 0v11.4H10.949V1.958zm0 12.244H24V24l-13.051-1.88v-8.918zm-1.199.185v8.862L0 20.699V14.4h9.75z"/>
+              </svg>
+              Windows
+            </button>
+            <!-- macOS — unsupported -->
+            <button
+              class="os-tab disabled" id="tab-mac" role="tab"
+              aria-selected="false" aria-controls="panel-mac"
+              onclick="selectOS('mac')"
+              title="macOS not yet supported"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701z"/>
+              </svg>
+              macOS
+            </button>
+            <!-- Linux — unsupported -->
+            <button
+              class="os-tab disabled" id="tab-linux" role="tab"
+              aria-selected="false" aria-controls="panel-linux"
+              onclick="selectOS('linux')"
+              title="Linux not yet supported"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587.166 1.18.268 1.575.135 1.658-.498 2.398-1.81 2.326-3.426l-.047-.501c.043-.038.094-.076.134-.123 1.178-.904 4.482.6 5.746-.271.332-.255.522-.611.485-.973h.013c.243-.649-.006-1.troubles-related-to-cov19-outbreak.72-1.988l-.084-.052c.094-.249.151-.479.142-.684.015-.987-.888-2.561-2.048-3.932-.501-.577-.73-1.265-.7-2.02.013-.663.135-1.47.52-2.276.474-.993.688-2.467.017-3.62-.539-.934-1.524-1.54-2.532-1.54zm.016 1.58c.7 0 1.278.315 1.612.934.535.948.36 2.135-.044 3.007-.45.963-.592 1.85-.605 2.598-.038 1.003.304 1.905.98 2.662 1.073 1.275 1.869 2.738 1.856 3.511-.013.394-.111.652-.259.756-.19.126-.5.252-.88.265-.613.026-1.292-.211-1.956-.499-.657-.282-1.314-.602-2.129-.602-.802 0-1.523.334-2.155.665-.636.325-1.266.58-1.847.57-.425-.016-.672-.162-.824-.47-.174-.354-.171-.823.044-1.479.096-.316.038-.696-.02-1.12-.027-.15-.055-.3-.055-.458-.003-.128.029-.274.1-.412.201-.382.479-.54.752-.656.27-.116.534-.18.73-.374.195-.19.319-.487.48-.726.164-.24.289-.478.289-.717s-.076-.374-.19-.542c-.28-.417-.666-.644-1.034-.863-.366-.217-.713-.435-.876-.85-.13-.32-.106-.77.066-1.365.31-1.065 1.017-2.273 1.586-3.116.47-.693.827-1.28 1.04-1.98.21-.69.244-1.48.002-2.322l-.09-.317-.138-.422-.172-.452c-.11-.293-.197-.604-.197-.942 0-.397.131-.774.361-1.073.256-.33.626-.518 1.029-.518z"/>
+              </svg>
+              Linux
+            </button>
+          </div>
+
+          <!-- Windows panel -->
+          <div class="dl-panel visible" id="panel-windows" role="tabpanel" aria-labelledby="tab-windows">
+            <div class="dl-os-name">Windows</div>
+            <div class="dl-os-status">
+              <span class="badge-supported" data-i18n="dl.supported">Fully supported</span>
+              &nbsp;·&nbsp; Windows 10 / 11 64-bit
+            </div>
+
+            <!-- Installer -->
+            <div class="dl-file-row">
+              <div class="dl-file-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+              </div>
+              <div class="dl-file-info">
+                <div class="dl-file-name">RevsGaming-Setup-0.84.0.exe</div>
+                <div class="dl-file-meta">Installer · Windows 10/11 · 64-bit</div>
+              </div>
+              <a
+                id="dlBtnWin"
+                class="dl-btn"
+                href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0"
+                target="_blank"
+                rel="noopener"
+                data-i18n="dl.btn.download"
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Download
+              </a>
+            </div>
+
+            <!-- Requirements -->
+            <div class="reqs-title" data-i18n="dl.reqs.title">System Requirements</div>
+            <div class="req-list">
+              <div class="req-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span data-i18n="dl.req.os">Windows 10 / 11 (64-bit)</span>
+              </div>
+              <div class="req-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span data-i18n="dl.req.ram">4 GB RAM minimum</span>
+              </div>
+              <div class="req-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span data-i18n="dl.req.disk">500 MB disk space (+ games)</span>
+              </div>
+              <div class="req-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span data-i18n="dl.req.net">Internet connection for online features</span>
+              </div>
+              <div class="req-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span data-i18n="dl.req.includes">Mednafen &amp; RetroArch included — no extra installs</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- macOS panel (unsupported) -->
+          <div class="dl-panel" id="panel-mac" role="tabpanel" aria-labelledby="tab-mac">
+            <div class="dl-unsupported">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+              </svg>
+              <h3 data-i18n="dl.mac.title">macOS not supported yet</h3>
+              <p data-i18n="dl.mac.desc">RevsGaming is currently Windows-only. A macOS version may come in a future release.</p>
+              <a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/issues" target="_blank" rel="noopener" class="dl-btn" style="display:inline-flex;" data-i18n="dl.mac.vote">
+                Vote on GitHub Issues
+              </a>
+            </div>
+          </div>
+
+          <!-- Linux panel (unsupported) -->
+          <div class="dl-panel" id="panel-linux" role="tabpanel" aria-labelledby="tab-linux">
+            <div class="dl-unsupported">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+              </svg>
+              <h3 data-i18n="dl.linux.title">Linux not supported yet</h3>
+              <p data-i18n="dl.linux.desc">RevsGaming is currently Windows-only. A Linux version may come in a future release.</p>
+              <a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/issues" target="_blank" rel="noopener" class="dl-btn" style="display:inline-flex;" data-i18n="dl.linux.vote">
+                Vote on GitHub Issues
+              </a>
+            </div>
+          </div>
+
+        </div><!-- /os-card -->
+
+        <!-- RIGHT — sidebar -->
+        <div>
+
+          <!-- Version info -->
+          <div class="sidebar-card">
+            <div class="sidebar-title" data-i18n="dl.sidebar.version">Version Info</div>
+            <div class="version-info-row">
+              <span class="version-info-label" data-i18n="dl.ver.version">Version</span>
+              <span class="version-info-value green">v0.84.0 Beta</span>
+            </div>
+            <div class="version-info-row">
+              <span class="version-info-label" data-i18n="dl.ver.released">Released</span>
+              <span class="version-info-value">2026</span>
+            </div>
+            <div class="version-info-row">
+              <span class="version-info-label" data-i18n="dl.ver.license">License</span>
+              <span class="version-info-value" data-i18n="dl.ver.license.val">Free Beta</span>
+            </div>
+            <div class="version-info-row">
+              <span class="version-info-label" data-i18n="dl.ver.platform">Platform</span>
+              <span class="version-info-value">Windows 10/11</span>
+            </div>
+            <div class="version-info-row">
+              <span class="version-info-label" data-i18n="dl.ver.arch">Architecture</span>
+              <span class="version-info-value">x64</span>
+            </div>
+          </div>
+
+          <!-- What's new -->
+          <div class="sidebar-card" style="margin-top:16px;">
+            <div class="sidebar-title" data-i18n="dl.sidebar.whats_new">What's new in v0.84.0</div>
+            <ul class="whats-new-list">
+              <li data-i18n="dl.new.1">RetroArch netplay up to 4 players (MITM server)</li>
+              <li data-i18n="dl.new.2">Cloud saves sync on game exit (Supabase Storage)</li>
+              <li data-i18n="dl.new.3">Friends system with real-time online presence</li>
+              <li data-i18n="dl.new.4">Auto-download PS1 BIOS on install</li>
+              <li data-i18n="dl.new.5">Full controller navigation (D-Pad, A, B, Start)</li>
+              <li data-i18n="dl.new.6">Guest mode — play without an account</li>
+            </ul>
+            <a href="/changelog/" class="changelog-link" data-i18n="dl.full.changelog">
+              Full changelog
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </a>
+          </div>
+
+          <!-- Supported consoles -->
+          <div class="sidebar-card" style="margin-top:16px;">
+            <div class="sidebar-title" data-i18n="dl.sidebar.consoles">Supported Consoles</div>
+            <div class="console-grid">
+              <div class="console-chip">PS1</div>
+              <div class="console-chip">NES</div>
+              <div class="console-chip">SNES</div>
+              <div class="console-chip">GBA</div>
+              <div class="console-chip">N64</div>
+              <div class="console-chip">MD</div>
+              <div class="console-chip">Saturn</div>
+              <div class="console-chip">PS2</div>
+              <div class="console-chip">+ more</div>
+            </div>
+          </div>
+
+        </div><!-- /sidebar -->
+      </div><!-- /download-grid -->
+
+    </div><!-- /container -->
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <span>&copy; 2026 RevsGaming &middot; RUC 20613365045</span>
+    <span class="footer-sep">|</span>
+    <a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0" target="_blank" rel="noopener">GitHub</a>
+    <span class="footer-sep">|</span>
+    <a href="/legal/privacy.html" data-i18n="footer.privacy">Privacy</a>
+    <span class="footer-sep">|</span>
+    <a href="/legal/terms.html" data-i18n="footer.terms">Terms</a>
+    <span class="footer-sep">|</span>
+    <a href="/libro-reclamaciones.html">Libro de Reclamaciones</a>
+  </footer>
+
+  <script>
+    /* ── Theme ── */
+    (function() {
+      if (localStorage.getItem('revsgaming-theme') === 'light') {
+        document.documentElement.classList.add('light-mode');
+      }
+    })();
+
+    function setupThemeToggle(id) {
+      const btn = document.getElementById(id);
+      if (!btn) return;
+      btn.addEventListener('click', () => {
+        const isLight = document.documentElement.classList.toggle('light-mode');
+        localStorage.setItem('revsgaming-theme', isLight ? 'light' : 'dark');
+      });
+    }
+    setupThemeToggle('themeToggle');
+    setupThemeToggle('themeToggleMobile');
+
+    /* ── Hamburger ── */
+    const hamburger = document.getElementById('hamburger');
+    const navMobile = document.getElementById('navMobile');
+    if (hamburger && navMobile) {
+      hamburger.addEventListener('click', () => {
+        const open = navMobile.classList.toggle('open');
+        hamburger.setAttribute('aria-expanded', open);
+      });
+    }
+
+    /* ── OS Detection ── */
+    function detectOS() {
+      const ua = navigator.userAgent.toLowerCase();
+      const platform = (navigator.platform || '').toLowerCase();
+      if (ua.includes('win') || platform.includes('win')) return 'windows';
+      if (ua.includes('mac') || platform.includes('mac')) return 'mac';
+      if (ua.includes('linux') || platform.includes('linux')) return 'linux';
+      return 'windows'; // default to Windows (most likely for this app)
+    }
+
+    function selectOS(os) {
+      // Update tabs
+      document.querySelectorAll('.os-tab').forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      const tab = document.getElementById('tab-' + os);
+      if (tab) { tab.classList.add('active'); tab.setAttribute('aria-selected', 'true'); }
+
+      // Update panels
+      document.querySelectorAll('.dl-panel').forEach(p => p.classList.remove('visible'));
+      const panel = document.getElementById('panel-' + os);
+      if (panel) panel.classList.add('visible');
+    }
+
+    // Auto-detect and show notice
+    (function() {
+      const os = detectOS();
+      const osNames = { windows: 'Windows', mac: 'macOS', linux: 'Linux' };
+      const notice = document.getElementById('detectedNotice');
+      const noticeText = document.getElementById('detectedNoticeText');
+
+      selectOS(os);
+
+      if (notice && noticeText) {
+        noticeText.textContent = 'Detected OS: ' + (osNames[os] || os);
+        notice.style.display = 'inline-flex';
+      }
+
+      // If Windows, try to get direct download link from GitHub API
+      // and update button href (graceful degradation to releases page)
+      if (os === 'windows') {
+        fetch('https://api.github.com/repos/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tags/v0.84.0')
+          .then(r => r.json())
+          .then(data => {
+            if (!data.assets || !data.assets.length) return;
+            // Find the .exe installer
+            const exe = data.assets.find(a =>
+              a.name.endsWith('.exe') && a.browser_download_url
+            );
+            if (exe) {
+              const btn = document.getElementById('dlBtnWin');
+              if (btn) {
+                btn.href = exe.browser_download_url;
+                btn.removeAttribute('target');
+                btn.removeAttribute('rel');
+                // Update file meta
+                const meta = btn.closest('.dl-file-row')?.querySelector('.dl-file-meta');
+                if (meta) {
+                  const mb = (exe.size / 1024 / 1024).toFixed(0);
+                  meta.textContent = `Installer · Windows 10/11 · 64-bit · ${mb} MB`;
+                }
+                const name = btn.closest('.dl-file-row')?.querySelector('.dl-file-name');
+                if (name) name.textContent = exe.name;
+              }
+            }
+          })
+          .catch(() => {/* keep fallback GitHub releases URL */});
+      }
+    })();
+
+    /* ── i18n page keys ── */
+    if (window.RVGi18n) {
+      window.RVGi18n.register({
+        'dl.title':               'Descargar RevsGaming',
+        'dl.subtitle':            'Lanzador retro gratuito para Windows — juega online con amigos, sin configuración.',
+        'dl.supported':           'Totalmente compatible',
+        'dl.btn.download':        'Descargar',
+        'dl.reqs.title':          'Requisitos del sistema',
+        'dl.req.os':              'Windows 10 / 11 (64-bit)',
+        'dl.req.ram':             '4 GB de RAM mínimo',
+        'dl.req.disk':            '500 MB de espacio (+ juegos)',
+        'dl.req.net':             'Conexión a internet para funciones online',
+        'dl.req.includes':        'Mednafen y RetroArch incluidos — sin instalaciones extras',
+        'dl.mac.title':           'macOS aún no soportado',
+        'dl.mac.desc':            'RevsGaming es actualmente solo para Windows. Una versión para macOS podría llegar en el futuro.',
+        'dl.mac.vote':            'Votar en GitHub Issues',
+        'dl.linux.title':         'Linux aún no soportado',
+        'dl.linux.desc':          'RevsGaming es actualmente solo para Windows. Una versión para Linux podría llegar en el futuro.',
+        'dl.linux.vote':          'Votar en GitHub Issues',
+        'dl.sidebar.version':     'Información de versión',
+        'dl.ver.version':         'Versión',
+        'dl.ver.released':        'Lanzado',
+        'dl.ver.license':         'Licencia',
+        'dl.ver.license.val':     'Beta gratuita',
+        'dl.ver.platform':        'Plataforma',
+        'dl.ver.arch':            'Arquitectura',
+        'dl.sidebar.whats_new':   'Novedades en v0.84.0',
+        'dl.new.1':               'Netplay RetroArch hasta 4 jugadores (servidor MITM)',
+        'dl.new.2':               'Cloud saves al salir del juego (Supabase Storage)',
+        'dl.new.3':               'Sistema de amigos con presencia en tiempo real',
+        'dl.new.4':               'Descarga automática de BIOS de PS1 al instalar',
+        'dl.new.5':               'Navegación completa con mando (D-Pad, A, B, Start)',
+        'dl.new.6':               'Modo invitado — juega sin cuenta',
+        'dl.full.changelog':      'Ver changelog completo',
+        'dl.sidebar.consoles':    'Consolas soportadas',
+        'footer.privacy':         'Privacidad',
+        'footer.terms':           'Términos',
+      });
+    }
+  </script>
+</body>
+</html>

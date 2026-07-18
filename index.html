@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RevsGaming — Revive los clásicos. Juega online con tus amigos.</title>
@@ -21,7 +25,7 @@
   <meta name="twitter:image" content="https://revsgaming.com/og-image.png" />
   <!-- SEO adicional -->
   <meta name="keywords" content="launcher retro, emulador PS1, netplay online, juegos retro Peru, NES SNES N64 GBA online, cloud saves, RevsGaming" />
-  <meta name="author" content="AntonioPCGamer" />
+  <meta name="author" content="Antonio" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://revsgaming.com/" />
   <!-- JSON-LD — SoftwareApplication -->
@@ -133,6 +137,7 @@
   <meta name="theme-color" content="#0d1117" media="(prefers-color-scheme: dark)" />
   <meta name="theme-color" content="#f0f4f8" media="(prefers-color-scheme: light)" />
 
+  <script>if(localStorage.getItem('revsgaming-theme')==='light')document.documentElement.classList.add('light-mode')</script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -2209,9 +2214,7 @@
 
       <a
         class="btn-nav-cta"
-        href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0"
-        target="_blank"
-        rel="noopener"
+        href="/download/"
         data-i18n="nav.download"
       >Download Beta</a>
 
@@ -2230,9 +2233,7 @@
       <a href="/register.html" class="btn-nav-register" style="text-align:center;" data-i18n="nav.signup">Sign up</a>
       <a
         class="btn-nav-cta"
-        href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0"
-        target="_blank"
-        rel="noopener"
+        href="/download/"
         style="text-align:center;"
         data-i18n="nav.download"
       >Download Beta</a>
@@ -2704,9 +2705,7 @@
 
         <a
           class="download-cta-btn"
-          href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0"
-          target="_blank"
-          rel="noopener"
+          href="/download/"
           data-i18n="download.btn"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -2720,16 +2719,6 @@
           <span class="download-req" data-i18n="download.req2">Mednafen + RetroArch included</span>
           <span class="download-req" data-i18n="download.req3">Access after purchase</span>
         </div>
-
-        <a
-          class="download-source"
-          href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0"
-          target="_blank"
-          rel="noopener"
-          data-i18n="download.source"
-        >
-          View source code on GitHub &#8599;
-        </a>
       </div>
     </div>
   </section>
@@ -2755,7 +2744,7 @@
             Retro game launcher for Windows with online netplay, automatic library and cloud saves.
           </p>
           <p class="footer-copy">
-            &copy; 2026 RevsGaming &mdash; AntonioPCGamer
+            &copy; 2026 RevsGaming &mdash; Antonio Zegarra
           </p>
         </div>
 
@@ -2763,17 +2752,9 @@
         <div>
           <div class="footer-col-title" data-i18n="footer.col.resources">Resources</div>
           <ul class="footer-links">
-            <li><a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0" target="_blank" rel="noopener" data-i18n="footer.download">Download</a></li>
+            <li><a href="/download/" data-i18n="footer.download">Download</a></li>
             <li><a href="/changelog/">Changelog</a></li>
             <li><a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/issues" target="_blank" rel="noopener" data-i18n="footer.bugreport">Report Bug</a></li>
-          </ul>
-        </div>
-
-        <!-- Community -->
-        <div>
-          <div class="footer-col-title" data-i18n="footer.col.community">Community</div>
-          <ul class="footer-links">
-            <li><a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0" target="_blank" rel="noopener">GitHub</a></li>
           </ul>
         </div>
 

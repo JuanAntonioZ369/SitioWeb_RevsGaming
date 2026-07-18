@@ -1,36 +1,57 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://revsgaming.com/changelog/" />
   <meta property="og:title" content="Changelog — RevsGaming" />
-  <meta property="og:description" content="Historial de versiones de RevsGaming. Mira qué hay de nuevo en cada actualización." />
+  <meta property="og:description" content="Version history of RevsGaming. See what's new in every update." />
   <meta property="og:image" content="https://revsgaming.com/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Changelog — RevsGaming" />
-  <meta name="twitter:description" content="Historial de versiones de RevsGaming." />
+  <meta name="twitter:description" content="Version history of RevsGaming." />
   <meta name="twitter:image" content="https://revsgaming.com/og-image.png" />
   <title>Changelog — RevsGaming</title>
+  <script>if(localStorage.getItem('revsgaming-theme')==='light')document.documentElement.classList.add('light-mode')</script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* ── DARK (default) ── */
     :root {
-      --bg-deep: #0d1117;
-      --bg-main: #1b2838;
-      --bg-card: #16202d;
-      --bg-panel: #1e2d3d;
-      --green: #7EC8A0;
+      --bg-deep:     #0d1117;
+      --bg-main:     #1b2838;
+      --bg-card:     #16202d;
+      --bg-panel:    #1e2d3d;
+      --green:       #7EC8A0;
       --green-light: #a8d8b8;
-      --red: #C47E7E;
-      --accent: #66c0f4;
-      --text: #c6d4df;
-      --text-muted: #8f98a0;
-      --border: rgba(102,192,244,0.15);
+      --red:         #C47E7E;
+      --accent:      #66c0f4;
+      --text:        #c6d4df;
+      --text-muted:  #8f98a0;
+      --border:      rgba(102,192,244,0.15);
+    }
+
+    /* ── LIGHT MODE ── */
+    html.light-mode {
+      --bg-deep:    #f0f4f8;
+      --bg-main:    #ffffff;
+      --bg-card:    #ffffff;
+      --bg-panel:   #eef2f7;
+      --green:      #2e7d50;
+      --green-light:#3a9e65;
+      --red:        #b03a3a;
+      --accent:     #1a6fa8;
+      --text:       #1a2332;
+      --text-muted: #5a6a7a;
+      --border:     rgba(30,80,140,0.13);
     }
 
     html { scroll-behavior: smooth; }
@@ -42,6 +63,7 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      transition: background 0.25s, color 0.25s;
     }
 
     /* ── NAVBAR ── */
@@ -51,6 +73,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
+      transition: background 0.25s, border-color 0.25s;
     }
     .nav-inner {
       max-width: 1200px;
@@ -91,10 +114,10 @@
       border-radius: 6px;
       transition: color 0.2s, background 0.2s;
     }
-    .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+    .nav-links a:hover { color: var(--text); background: rgba(128,128,128,0.08); }
     .nav-cta {
       background: var(--green);
-      color: #0d1117 !important;
+      color: #fff !important;
       padding: 7px 16px !important;
       border-radius: 6px !important;
       font-weight: 600 !important;
@@ -104,6 +127,45 @@
       white-space: nowrap;
     }
     .nav-cta:hover { background: var(--green-light) !important; opacity: 1; }
+    html.light-mode .nav-cta { color: #fff !important; }
+
+    /* Controls: theme + lang toggles */
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-left: auto;
+    }
+
+    .theme-toggle,
+    .lang-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      border-radius: 8px;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover,
+    .lang-toggle:hover {
+      background: rgba(128,128,128,0.1);
+      color: var(--text);
+      border-color: rgba(128,128,128,0.3);
+    }
+    .theme-toggle svg { width: 18px; height: 18px; }
+    .lang-toggle { width: auto; padding: 0 10px; font-size: 0.78rem; font-weight: 700; font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.04em; }
+    .lang-label { pointer-events: none; }
+
+    /* Sun visible in dark mode, Moon visible in light mode */
+    .icon-moon { display: none; }
+    html.light-mode .icon-sun  { display: none; }
+    html.light-mode .icon-moon { display: block; }
 
     .nav-hamburger {
       display: none;
@@ -124,7 +186,8 @@
     }
 
     @media (max-width: 768px) {
-      .nav-hamburger { display: block; margin-left: auto; }
+      .nav-hamburger { display: block; }
+      .nav-controls { margin-left: 0; }
       .nav-links {
         display: none;
         position: absolute;
@@ -137,6 +200,7 @@
         align-items: flex-start;
         padding: 12px 24px 16px;
         gap: 2px;
+        transition: background 0.25s;
       }
       .nav-links.open { display: flex; }
       .nav-links a { width: 100%; padding: 10px 12px; }
@@ -148,15 +212,17 @@
       border-bottom: 1px solid var(--border);
       padding: 64px 24px 48px;
       text-align: center;
+      transition: background 0.25s, border-color 0.25s;
     }
     .hero h1 {
       font-family: 'Space Grotesk', sans-serif;
       font-size: clamp(2rem, 5vw, 3rem);
       font-weight: 700;
-      color: #fff;
+      color: var(--text);
       letter-spacing: -0.02em;
       margin-bottom: 12px;
     }
+    html:not(.light-mode) .hero h1 { color: #fff; }
     .hero p {
       color: var(--text-muted);
       font-size: 1.05rem;
@@ -174,6 +240,10 @@
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 600;
       font-size: 0.9rem;
+    }
+    html.light-mode .badge-current {
+      background: rgba(46,125,80,0.1);
+      border-color: rgba(46,125,80,0.3);
     }
     .badge-current::before {
       content: '';
@@ -210,10 +280,11 @@
       transition: all 0.2s;
       letter-spacing: 0.02em;
     }
-    .filter-btn:hover { color: var(--text); border-color: rgba(102,192,244,0.35); }
-    .filter-btn.active { background: var(--green); border-color: var(--green); color: #0d1117; }
-    .filter-btn[data-filter="NUEVO"].active { background: var(--green); border-color: var(--green); color: #0d1117; }
-    .filter-btn[data-filter="MEJORA"].active { background: var(--accent); border-color: var(--accent); color: #0d1117; }
+    .filter-btn:hover { color: var(--text); border-color: rgba(102,192,244,0.35); background: var(--bg-main); }
+    html.light-mode .filter-btn:hover { border-color: rgba(30,80,140,0.3); }
+    .filter-btn.active { background: var(--green); border-color: var(--green); color: #fff; }
+    .filter-btn[data-filter="NUEVO"].active  { background: var(--green); border-color: var(--green); color: #fff; }
+    .filter-btn[data-filter="MEJORA"].active { background: var(--accent); border-color: var(--accent); color: #fff; }
     .filter-btn[data-filter="CORRECCIÓN"].active { background: var(--red); border-color: var(--red); color: #fff; }
 
     /* ── TIMELINE ── */
@@ -254,6 +325,7 @@
       border-radius: 50%;
       border: 3px solid var(--bg-deep);
       box-shadow: 0 0 0 2px var(--green);
+      transition: border-color 0.25s;
     }
     .version-card:not(:first-child) .timeline-dot {
       background: var(--bg-panel);
@@ -265,9 +337,14 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       overflow: hidden;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, background 0.25s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    html.light-mode .card-inner {
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
     }
     .card-inner:hover { border-color: rgba(102,192,244,0.3); }
+    html.light-mode .card-inner:hover { border-color: rgba(30,80,140,0.25); }
 
     .card-header {
       background: var(--bg-panel);
@@ -277,6 +354,7 @@
       gap: 12px;
       flex-wrap: wrap;
       border-bottom: 1px solid var(--border);
+      transition: background 0.25s, border-color 0.25s;
     }
     .version-num {
       font-family: 'Space Grotesk', sans-serif;
@@ -290,7 +368,7 @@
     }
     .badge-actual {
       background: var(--green);
-      color: #0d1117;
+      color: #fff;
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 700;
       font-size: 0.7rem;
@@ -328,9 +406,13 @@
       letter-spacing: 0.06em;
       margin-top: 2px;
     }
-    .tag-nuevo { background: rgba(126,200,160,0.18); color: var(--green); border: 1px solid rgba(126,200,160,0.3); }
-    .tag-mejora { background: rgba(102,192,244,0.15); color: var(--accent); border: 1px solid rgba(102,192,244,0.25); }
+    .tag-nuevo     { background: rgba(126,200,160,0.18); color: var(--green); border: 1px solid rgba(126,200,160,0.3); }
+    .tag-mejora    { background: rgba(102,192,244,0.15); color: var(--accent); border: 1px solid rgba(102,192,244,0.25); }
     .tag-corrección { background: rgba(196,126,126,0.15); color: var(--red); border: 1px solid rgba(196,126,126,0.25); }
+
+    html.light-mode .tag-nuevo     { background: rgba(46,125,80,0.1); border-color: rgba(46,125,80,0.25); }
+    html.light-mode .tag-mejora    { background: rgba(26,111,168,0.1); border-color: rgba(26,111,168,0.2); }
+    html.light-mode .tag-corrección { background: rgba(176,58,58,0.1); border-color: rgba(176,58,58,0.2); }
 
     /* card oculta si todos sus items están ocultos */
     .version-card.all-hidden { display: none; }
@@ -341,6 +423,7 @@
       background: var(--bg-main);
       border-top: 1px solid var(--border);
       padding: 28px 24px;
+      transition: background 0.25s, border-color 0.25s;
     }
     .footer-inner {
       max-width: 1200px;
@@ -359,6 +442,7 @@
       display: flex;
       gap: 20px;
       list-style: none;
+      flex-wrap: wrap;
     }
     .footer-links a {
       font-size: 0.83rem;
@@ -385,32 +469,55 @@
         <img src="../logoPrimary.png" height="36" alt="RevsGaming" onerror="this.style.display='none'" />
         <span class="nav-logo-text">RevsGaming</span>
       </a>
-      <button class="nav-hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+
       <ul class="nav-links" id="navLinks">
-        <li><a href="../index.html">Inicio</a></li>
-        <li><a href="../index.html#features">Características</a></li>
-        <li><a href="../index.html#consoles">Consolas</a></li>
-        <li><a href="../index.html#download">Descargar</a></li>
-        <li><a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0" target="_blank" rel="noopener" class="nav-cta">Descargar Beta</a></li>
+        <li><a href="../index.html" data-i18n="nav.home">Home</a></li>
+        <li><a href="../index.html#features" data-i18n="nav.features">Features</a></li>
+        <li><a href="../index.html#consoles" data-i18n="nav.consoles">Consoles</a></li>
+        <li><a href="../index.html#download" data-i18n="nav.download">Download</a></li>
+        <li><a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0" target="_blank" rel="noopener" class="nav-cta" data-i18n="nav.downloadBeta">Download Beta</a></li>
       </ul>
+
+      <!-- Theme + Lang toggles -->
+      <div class="nav-controls">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <!-- Sun (dark mode) -->
+          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <!-- Moon (light mode) -->
+          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+
+        <button class="lang-toggle" id="langToggle" aria-label="Switch language">
+          <span class="lang-label">ES</span>
+        </button>
+
+        <button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
   </nav>
 
   <!-- HERO -->
   <section class="hero">
-    <h1>Changelog</h1>
-    <p>Historial de versiones de RevsGaming</p>
-    <span class="badge-current">Versión actual: v0.84.0 Beta</span>
+    <h1 data-i18n="changelog.title">Changelog</h1>
+    <p data-i18n="changelog.subtitle">Version history of RevsGaming</p>
+    <span class="badge-current" data-i18n="changelog.current">Current version: v0.84.0 Beta</span>
   </section>
 
   <!-- FILTROS -->
-  <div class="filters-wrap" role="group" aria-label="Filtrar por tipo de cambio">
-    <button class="filter-btn active" data-filter="TODOS">Todos</button>
-    <button class="filter-btn" data-filter="NUEVO">NUEVO</button>
-    <button class="filter-btn" data-filter="MEJORA">MEJORA</button>
-    <button class="filter-btn" data-filter="CORRECCIÓN">CORRECCIÓN</button>
+  <div class="filters-wrap" role="group" aria-label="Filter by change type">
+    <button class="filter-btn active" data-filter="TODOS" data-i18n="filter.all">All</button>
+    <button class="filter-btn" data-filter="NUEVO" data-i18n="filter.new">NEW</button>
+    <button class="filter-btn" data-filter="MEJORA" data-i18n="filter.improvement">IMPROVEMENT</button>
+    <button class="filter-btn" data-filter="CORRECCIÓN" data-i18n="filter.fix">FIX</button>
   </div>
 
   <!-- TIMELINE -->
@@ -423,50 +530,50 @@
       <div class="card-inner">
         <div class="card-header">
           <span class="version-num">v0.84.0</span>
-          <span class="version-date">Junio 2026</span>
-          <span class="badge-actual">ACTUAL</span>
+          <span class="version-date" data-i18n="date.jun2026">June 2026</span>
+          <span class="badge-actual" data-i18n="badge.current">CURRENT</span>
         </div>
         <div class="card-body">
           <ul class="change-list">
             <li class="change-item" data-type="NUEVO">
-              <span class="tag tag-nuevo">NUEVO</span>
-              <span>Sistema de amigos con presencia en tiempo real (Supabase Realtime)</span>
+              <span class="tag tag-nuevo">NEW</span>
+              <span>Friends system with real-time presence (Supabase Realtime)</span>
             </li>
             <li class="change-item" data-type="NUEVO">
-              <span class="tag tag-nuevo">NUEVO</span>
-              <span>Cloud saves automáticos con Supabase Storage (.mcr, .mcs, .srm, .sav, .state*)</span>
+              <span class="tag tag-nuevo">NEW</span>
+              <span>Automatic cloud saves via Supabase Storage (.mcr, .mcs, .srm, .sav, .state*)</span>
             </li>
             <li class="change-item" data-type="NUEVO">
-              <span class="tag tag-nuevo">NUEVO</span>
-              <span>Descarga automática de BIOS de PS1 desde URL configurable en Supabase</span>
+              <span class="tag tag-nuevo">NEW</span>
+              <span>Automatic PS1 BIOS download from a configurable URL in Supabase</span>
             </li>
             <li class="change-item" data-type="NUEVO">
-              <span class="tag tag-nuevo">NUEVO</span>
-              <span>Descarga de cores de RetroArch desde buildbot oficial con extracción ZIP automática</span>
+              <span class="tag tag-nuevo">NEW</span>
+              <span>RetroArch core download from official buildbot with automatic ZIP extraction</span>
             </li>
             <li class="change-item" data-type="NUEVO">
-              <span class="tag tag-nuevo">NUEVO</span>
-              <span>Quick Join numérico para RetroArch (4 jugadores) con sala en Supabase</span>
+              <span class="tag tag-nuevo">NEW</span>
+              <span>Numeric Quick Join for RetroArch (4 players) with room stored in Supabase</span>
             </li>
             <li class="change-item" data-type="NUEVO">
-              <span class="tag tag-nuevo">NUEVO</span>
-              <span>Quick Join alfanumérico para Mednafen (2 jugadores PS1)</span>
+              <span class="tag tag-nuevo">NEW</span>
+              <span>Alphanumeric Quick Join for Mednafen (2-player PS1)</span>
             </li>
             <li class="change-item" data-type="NUEVO">
-              <span class="tag tag-nuevo">NUEVO</span>
-              <span>Auto-detección de emulador por tipo de código de sala</span>
+              <span class="tag tag-nuevo">NEW</span>
+              <span>Auto-detection of emulator based on room code format</span>
             </li>
             <li class="change-item" data-type="MEJORA">
-              <span class="tag tag-mejora">MEJORA</span>
-              <span>Netplay configurable desde Supabase sin redesplegar la app</span>
+              <span class="tag tag-mejora">IMPROVEMENT</span>
+              <span>Netplay configurable from Supabase without redeploying the app</span>
             </li>
             <li class="change-item" data-type="MEJORA">
-              <span class="tag tag-mejora">MEJORA</span>
-              <span>Prevención de path traversal en rutas de juegos</span>
+              <span class="tag tag-mejora">IMPROVEMENT</span>
+              <span>Path traversal prevention on game paths</span>
             </li>
             <li class="change-item" data-type="MEJORA">
-              <span class="tag tag-mejora">MEJORA</span>
-              <span>CSP via onHeadersReceived para mayor seguridad</span>
+              <span class="tag tag-mejora">IMPROVEMENT</span>
+              <span>CSP via onHeadersReceived for enhanced security</span>
             </li>
           </ul>
         </div>
@@ -479,29 +586,29 @@
       <div class="card-inner">
         <div class="card-header">
           <span class="version-num">v0.75.0</span>
-          <span class="version-date">Abril 2026</span>
+          <span class="version-date" data-i18n="date.apr2026">April 2026</span>
         </div>
         <div class="card-body">
           <ul class="change-list">
             <li class="change-item" data-type="NUEVO">
-              <span class="tag tag-nuevo">NUEVO</span>
-              <span>Netplay 4 jugadores con RetroArch + servidor MITM en Lima, Perú</span>
+              <span class="tag tag-nuevo">NEW</span>
+              <span>4-player netplay with RetroArch + MITM server in Lima, Peru</span>
             </li>
             <li class="change-item" data-type="NUEVO">
-              <span class="tag tag-nuevo">NUEVO</span>
-              <span>Control remoto desde Supabase (beta_open, latest_version, download_url)</span>
+              <span class="tag tag-nuevo">NEW</span>
+              <span>Remote control from Supabase (beta_open, latest_version, download_url)</span>
             </li>
             <li class="change-item" data-type="NUEVO">
-              <span class="tag tag-nuevo">NUEVO</span>
-              <span>Modo invitado — jugar sin cuenta con apodo temporal</span>
+              <span class="tag tag-nuevo">NEW</span>
+              <span>Guest mode — play without an account using a temporary nickname</span>
             </li>
             <li class="change-item" data-type="NUEVO">
-              <span class="tag tag-nuevo">NUEVO</span>
-              <span>Soporte multi-sistema: NES, SNES, GBA, Game Boy, N64, Mega Drive (CORE_MAP)</span>
+              <span class="tag tag-nuevo">NEW</span>
+              <span>Multi-system support: NES, SNES, GBA, Game Boy, N64, Mega Drive (CORE_MAP)</span>
             </li>
             <li class="change-item" data-type="MEJORA">
-              <span class="tag tag-mejora">MEJORA</span>
-              <span>Validación de isTrustedSender() en handlers IPC sensibles</span>
+              <span class="tag tag-mejora">IMPROVEMENT</span>
+              <span>isTrustedSender() validation on sensitive IPC handlers</span>
             </li>
           </ul>
         </div>
@@ -514,37 +621,37 @@
       <div class="card-inner">
         <div class="card-header">
           <span class="version-num">v0.60.0</span>
-          <span class="version-date">Febrero 2026</span>
+          <span class="version-date" data-i18n="date.feb2026">February 2026</span>
         </div>
         <div class="card-body">
           <ul class="change-list">
             <li class="change-item" data-type="NUEVO">
-              <span class="tag tag-nuevo">NUEVO</span>
-              <span>Login y registro con email/password via Supabase Auth</span>
+              <span class="tag tag-nuevo">NEW</span>
+              <span>Login and registration with email/password via Supabase Auth</span>
             </li>
             <li class="change-item" data-type="NUEVO">
-              <span class="tag tag-nuevo">NUEVO</span>
-              <span>Auto-restore del nickname al iniciar en PC nueva</span>
+              <span class="tag tag-nuevo">NEW</span>
+              <span>Auto-restore of nickname when logging in from a new PC</span>
             </li>
             <li class="change-item" data-type="NUEVO">
-              <span class="tag tag-nuevo">NUEVO</span>
-              <span>Gate de beta configurable (beta_open en app_config)</span>
+              <span class="tag tag-nuevo">NEW</span>
+              <span>Configurable beta gate (beta_open flag in app_config)</span>
             </li>
             <li class="change-item" data-type="NUEVO">
-              <span class="tag tag-nuevo">NUEVO</span>
-              <span>Detección de actualizaciones vs latest_version en Supabase</span>
+              <span class="tag tag-nuevo">NEW</span>
+              <span>Update detection against latest_version in Supabase</span>
             </li>
             <li class="change-item" data-type="NUEVO">
-              <span class="tag tag-nuevo">NUEVO</span>
-              <span>Vista lista y grilla con búsqueda en tiempo real</span>
+              <span class="tag tag-nuevo">NEW</span>
+              <span>List and grid view with real-time search</span>
             </li>
             <li class="change-item" data-type="NUEVO">
-              <span class="tag tag-nuevo">NUEVO</span>
-              <span>Selector manual de .cue para juegos fuera de la carpeta</span>
+              <span class="tag tag-nuevo">NEW</span>
+              <span>Manual .cue selector for games outside the main folder</span>
             </li>
             <li class="change-item" data-type="MEJORA">
-              <span class="tag tag-mejora">MEJORA</span>
-              <span>Soporte de 3 niveles de carpetas en escaneo de games/</span>
+              <span class="tag tag-mejora">IMPROVEMENT</span>
+              <span>Support for 3-level folder nesting in games/ folder scan</span>
             </li>
           </ul>
         </div>
@@ -557,29 +664,29 @@
       <div class="card-inner">
         <div class="card-header">
           <span class="version-num">v0.40.0</span>
-          <span class="version-date">Noviembre 2025</span>
+          <span class="version-date" data-i18n="date.nov2025">November 2025</span>
         </div>
         <div class="card-body">
           <ul class="change-list">
             <li class="change-item" data-type="NUEVO">
-              <span class="tag tag-nuevo">NUEVO</span>
-              <span>Biblioteca visual de juegos (detección automática por carpetas)</span>
+              <span class="tag tag-nuevo">NEW</span>
+              <span>Visual game library (automatic detection by folder)</span>
             </li>
             <li class="change-item" data-type="NUEVO">
-              <span class="tag tag-nuevo">NUEVO</span>
-              <span>Netplay PS1 2 jugadores via Mednafen + servidor relay</span>
+              <span class="tag tag-nuevo">NEW</span>
+              <span>PS1 2-player netplay via Mednafen + relay server</span>
             </li>
             <li class="change-item" data-type="NUEVO">
-              <span class="tag tag-nuevo">NUEVO</span>
-              <span>Código de sala de 6 letras para partidas online</span>
+              <span class="tag tag-nuevo">NEW</span>
+              <span>6-letter room code for online sessions</span>
             </li>
             <li class="change-item" data-type="NUEVO">
-              <span class="tag tag-nuevo">NUEVO</span>
-              <span>Soporte completo de mando (D-Pad, A, B, Start) en toda la app</span>
+              <span class="tag tag-nuevo">NEW</span>
+              <span>Full gamepad support (D-Pad, A, B, Start) across the entire app</span>
             </li>
             <li class="change-item" data-type="NUEVO">
-              <span class="tag tag-nuevo">NUEVO</span>
-              <span>Launcher de juegos PS1 (.cue) con Mednafen 1.32.1</span>
+              <span class="tag tag-nuevo">NEW</span>
+              <span>PS1 game launcher (.cue) with Mednafen 1.32.1</span>
             </li>
           </ul>
         </div>
@@ -591,17 +698,29 @@
   <!-- FOOTER -->
   <footer>
     <div class="footer-inner">
-      <span class="footer-copy">© 2026 RevsGaming · RUC 20613365045 · RUC 20613365045</span>
+      <span class="footer-copy">© 2026 RevsGaming · RUC 20613365045</span>
       <ul class="footer-links">
         <li><a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0" target="_blank" rel="noopener">GitHub</a></li>
-        <li><a href="../legal/privacy.html">Privacidad</a></li>
-        <li><a href="../legal/terms.html">Términos</a></li>
+        <li><a href="../legal/privacy.html" data-i18n="footer.privacy">Privacy</a></li>
+        <li><a href="../legal/terms.html" data-i18n="footer.terms">Terms</a></li>
+        <li><a href="../libro-reclamaciones.html" data-i18n="footer.reclamaciones">Complaints Book</a></li>
       </ul>
     </div>
   </footer>
 
   <script>
-    // Hamburger
+    /* ── Theme toggle ── */
+    const themeToggle = document.getElementById('themeToggle');
+    (function() {
+      const saved = localStorage.getItem('revsgaming-theme');
+      if (saved === 'light') document.documentElement.classList.add('light-mode');
+    })();
+    themeToggle.addEventListener('click', () => {
+      const isLight = document.documentElement.classList.toggle('light-mode');
+      localStorage.setItem('revsgaming-theme', isLight ? 'light' : 'dark');
+    });
+
+    /* ── Hamburger ── */
     const hamburger = document.getElementById('hamburger');
     const navLinks  = document.getElementById('navLinks');
     hamburger.addEventListener('click', () => {
@@ -609,7 +728,7 @@
       hamburger.setAttribute('aria-expanded', open);
     });
 
-    // Filtros
+    /* ── Filters ── */
     const filterBtns = document.querySelectorAll('.filter-btn');
     const allItems   = document.querySelectorAll('.change-item');
     const allCards   = document.querySelectorAll('.version-card');
@@ -629,12 +748,40 @@
           }
         });
 
-        // Ocultar cards cuyas listas queden todas vacías
         allCards.forEach(card => {
           const visible = card.querySelectorAll('.change-item:not(.hidden)');
           card.classList.toggle('all-hidden', visible.length === 0);
         });
       });
+    });
+  </script>
+
+  <script src="../js/i18n.js"></script>
+  <script>
+    /* ── Changelog-specific translations ── */
+    window.RVGi18n && window.RVGi18n.register({
+      es: {
+        'changelog.title':   'Changelog',
+        'changelog.subtitle':'Historial de versiones de RevsGaming',
+        'changelog.current': 'Versión actual: v0.84.0 Beta',
+        'filter.all':        'Todos',
+        'filter.new':        'NUEVO',
+        'filter.improvement':'MEJORA',
+        'filter.fix':        'CORRECCIÓN',
+        'badge.current':     'ACTUAL',
+        'date.jun2026':      'Junio 2026',
+        'date.apr2026':      'Abril 2026',
+        'date.feb2026':      'Febrero 2026',
+        'date.nov2025':      'Noviembre 2025',
+        'footer.privacy':    'Privacidad',
+        'footer.terms':      'Términos',
+        'footer.reclamaciones': 'Libro de Reclamaciones',
+        'nav.home':          'Inicio',
+        'nav.features':      'Características',
+        'nav.consoles':      'Consolas',
+        'nav.download':      'Descargar',
+        'nav.downloadBeta':  'Descargar Beta',
+      }
     });
   </script>
 </body>
