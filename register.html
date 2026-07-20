@@ -1517,22 +1517,41 @@
       }
     }
 
-    // Traducciones EN para register.html
+    // HTML defaults are Spanish; register EN translations explicitly
     if (window.RVGi18n) {
       window.RVGi18n.register({
-        'reg.title': 'Create your account',
-        'reg.subtitle': 'Join RevsGaming and start your 2-month free trial',
-        'reg.step1': 'Account',
-        'reg.step2': 'Access Active',
-        'reg.username.label': 'Username',
-        'reg.email.label': 'Email',
-        'reg.password.label': 'Password',
-        'reg.confirm.label': 'Confirm password',
-        'reg.submit': 'Create account',
-        'reg.already': 'Already have an account? Open the app',
+        en: {
+          'reg.title':          'Create your account',
+          'reg.subtitle':       'Join RevsGaming and start your 2-month free trial',
+          'reg.step1':          'Account',
+          'reg.step2':          'Access Active',
+          'reg.username.label': 'Username',
+          'reg.email.label':    'Email',
+          'reg.password.label': 'Password',
+          'reg.confirm.label':  'Confirm password',
+          'reg.submit':         'Create account',
+          'reg.already':        'Already have an account? Open the app',
+          /* common overrides in EN */
+          'nav.home':           'Home',
+          'footer.privacy':     'Privacy',
+          'footer.terms':       'Terms',
+        },
+        es: {
+          'reg.title':          'Crea tu cuenta',
+          'reg.subtitle':       'Regístrate y obtén acceso completo a RevsGaming',
+          'reg.step1':          'Cuenta',
+          'reg.step2':          'Acceso activo',
+          'reg.username.label': 'Nombre de usuario',
+          'reg.email.label':    'Correo electrónico',
+          'reg.password.label': 'Contraseña',
+          'reg.confirm.label':  'Confirmar contraseña',
+          'reg.submit':         'Crear cuenta',
+          'reg.already':        '¿Ya tienes cuenta? Abre la app',
+        }
       })
     }
   </script>
 
+  <script src="/js/ui-effects.js" defer></script>
 </body>
 </html>
