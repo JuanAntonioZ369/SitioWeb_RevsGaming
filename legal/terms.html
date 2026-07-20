@@ -397,6 +397,7 @@
     }
     .lang-toggle:hover { color: var(--text); border-color: var(--accent); background: rgba(102,192,244,0.08); }
   </style>
+  <script src="../js/config.js"></script>
   <script src="../js/i18n.js"></script>
 </head>
 <body>
@@ -416,6 +417,7 @@
         <li><a href="../index.html#features">Características</a></li>
         <li><a href="../index.html#consolas">Consolas</a></li>
         <li><a href="/download/">Descargar</a></li>
+            <li style="display:flex;justify-content:center;gap:8px;padding:8px 0 4px;"><button id="themeToggleMobile" class="theme-toggle" aria-label="Cambiar tema" title="Cambiar tema"><svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button><button id="langToggleMobile" class="lang-toggle" aria-label="Switch language"><span class="lang-label-mobile">ES</span></button></li>
       </ul>
       <button id="themeToggle" class="theme-toggle" aria-label="Cambiar tema" title="Cambiar tema">
         <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -539,12 +541,12 @@
       <ul>
         <li>Eres responsable de mantener la confidencialidad de tus credenciales (email y contraseña).</li>
         <li>Eres responsable de toda la actividad que ocurra bajo tu cuenta.</li>
-        <li>Debes notificar cualquier uso no autorizado de tu cuenta lo antes posible a <a href="mailto:soporte@revsgaming.com">soporte@revsgaming.com</a>.</li>
+        <li>Debes notificar cualquier uso no autorizado de tu cuenta lo antes posible a <a data-cfg="email" href="mailto:jnntnzegarra369@gmail.com">jnntnzegarra369@gmail.com</a>.</li>
         <li>No debes compartir tu cuenta con otras personas.</li>
       </ul>
       <p>Puedes solicitar la eliminación de tu cuenta en cualquier momento escribiéndonos a:</p>
       <div class="highlight-box">
-        <a href="mailto:soporte@revsgaming.com">soporte@revsgaming.com</a>
+        <a data-cfg="email" href="mailto:jnntnzegarra369@gmail.com">jnntnzegarra369@gmail.com</a>
         <br />La eliminación incluirá tu email, nickname y todos los archivos de save almacenados en Supabase Storage.
       </div>
       <p>RevsGaming se reserva el derecho de suspender o eliminar cuentas que incumplan estos Términos, sin previo aviso y sin obligación de reembolso.</p>
@@ -600,7 +602,7 @@
         <li><strong>Marcas de videojuegos:</strong> los nombres de consolas y juegos mencionados en RevsGaming (PlayStation, Nintendo, SEGA, etc.) son marcas registradas de sus respectivos propietarios. RevsGaming no tiene ninguna afiliación con dichas empresas.</li>
       </ul>
       <div class="highlight-box">
-        Si crees que RevsGaming infringe algún derecho de propiedad intelectual de tu titularidad, contáctanos a <a href="mailto:soporte@revsgaming.com">soporte@revsgaming.com</a> para resolver el asunto a la mayor brevedad.
+        Si crees que RevsGaming infringe algún derecho de propiedad intelectual de tu titularidad, contáctanos a <a data-cfg="email" href="mailto:jnntnzegarra369@gmail.com">jnntnzegarra369@gmail.com</a> para resolver el asunto a la mayor brevedad.
       </div>
     </section>
 
@@ -627,7 +629,7 @@
       </div>
       <p>Para cualquier consulta, reporte de abuso, solicitud de eliminación de cuenta o comunicación relacionada con estos Términos de Servicio, contáctanos por correo:</p>
       <div class="highlight-box">
-        <a href="mailto:soporte@revsgaming.com">soporte@revsgaming.com</a>
+        <a data-cfg="email" href="mailto:jnntnzegarra369@gmail.com">jnntnzegarra369@gmail.com</a>
       </div>
       <p>Intentamos responder a todas las consultas en un plazo razonable. Para reportes de seguridad urgentes, indica "SEGURIDAD" en el asunto del correo.</p>
       <p>También puedes consultar nuestra <a href="privacy.html">Política de Privacidad</a> para información sobre el tratamiento de datos personales.</p>

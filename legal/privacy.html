@@ -385,6 +385,7 @@
     }
     .lang-toggle:hover { color: var(--text); border-color: var(--accent); background: rgba(102,192,244,0.08); }
   </style>
+  <script src="../js/config.js"></script>
   <script src="../js/i18n.js"></script>
 </head>
 <body>
@@ -404,6 +405,7 @@
         <li><a href="../index.html#features">Características</a></li>
         <li><a href="../index.html#consolas">Consolas</a></li>
         <li><a href="/download/">Descargar</a></li>
+            <li style="display:flex;justify-content:center;gap:8px;padding:8px 0 4px;"><button id="themeToggleMobile" class="theme-toggle" aria-label="Cambiar tema" title="Cambiar tema"><svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button><button id="langToggleMobile" class="lang-toggle" aria-label="Switch language"><span class="lang-label-mobile">ES</span></button></li>
       </ul>
       <button id="themeToggle" class="theme-toggle" aria-label="Cambiar tema" title="Cambiar tema">
         <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -530,7 +532,7 @@
       <p>Tus datos personales se conservan mientras tu cuenta esté activa en RevsGaming. Esto incluye tu email, nickname y los archivos de save almacenados en Supabase Storage.</p>
       <p>Si deseas eliminar tu cuenta y todos los datos asociados, puedes solicitarlo escribiéndonos:</p>
       <div class="highlight-box">
-        <a href="mailto:soporte@revsgaming.com">soporte@revsgaming.com</a>
+        <a data-cfg="email" href="mailto:jnntnzegarra369@gmail.com">jnntnzegarra369@gmail.com</a>
         <br />Indica tu nickname y el email de tu cuenta. Procesaremos la solicitud en un plazo razonable.
       </div>
       <p>Los datos de presencia en tiempo real (estado online/offline) no se almacenan de forma permanente y se eliminan automáticamente al cerrar sesión.</p>
@@ -551,7 +553,7 @@
         <li><strong>Tokens locales:</strong> el token de sesión se almacena localmente en tu dispositivo y no se comparte con terceros.</li>
       </ul>
       <div class="highlight-box accent-blue">
-        RevsGaming es software en fase beta. Aunque tomamos medidas de seguridad razonables, no podemos garantizar seguridad absoluta. Si descubres una vulnerabilidad, por favor repórtala a <a href="mailto:soporte@revsgaming.com">soporte@revsgaming.com</a>.
+        RevsGaming es software en fase beta. Aunque tomamos medidas de seguridad razonables, no podemos garantizar seguridad absoluta. Si descubres una vulnerabilidad, por favor repórtala a <a data-cfg="email" href="mailto:jnntnzegarra369@gmail.com">jnntnzegarra369@gmail.com</a>.
       </div>
     </section>
 
@@ -580,7 +582,7 @@
       <ul>
         <li><strong>Acceso:</strong> solicitar información sobre qué datos tenemos almacenados sobre ti.</li>
         <li><strong>Rectificación:</strong> corregir tu nickname o email desde los ajustes de la app.</li>
-        <li><strong>Eliminación:</strong> solicitar la eliminación de tu cuenta y todos los datos asociados escribiendo a <a href="mailto:soporte@revsgaming.com">soporte@revsgaming.com</a>.</li>
+        <li><strong>Eliminación:</strong> solicitar la eliminación de tu cuenta y todos los datos asociados escribiendo a <a data-cfg="email" href="mailto:jnntnzegarra369@gmail.com">jnntnzegarra369@gmail.com</a>.</li>
         <li><strong>Portabilidad:</strong> tus saves se almacenan en formatos estándar (.mcr, .srm, .sav, .state) que puedes descargar y usar con cualquier emulador compatible.</li>
       </ul>
     </section>
@@ -593,7 +595,7 @@
       </div>
       <p>Para cualquier consulta, solicitud o reporte relacionado con esta política de privacidad, contáctanos por correo:</p>
       <div class="highlight-box">
-        <a href="mailto:soporte@revsgaming.com">soporte@revsgaming.com</a>
+        <a data-cfg="email" href="mailto:jnntnzegarra369@gmail.com">jnntnzegarra369@gmail.com</a>
       </div>
       <p>Esta política puede actualizarse ocasionalmente. Los cambios significativos se notificarán dentro de la app. La fecha de "Última actualización" al inicio de este documento refleja la versión vigente.</p>
     </section>
