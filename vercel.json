@@ -1,10 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "functions": {
-    "api/payment.js": {
-      "maxDuration": 10,
-      "memory": 128
-    }
+    "api/payment.js":        { "maxDuration": 10, "memory": 128 },
+    "api/activate-trial.js": { "maxDuration": 10, "memory": 128 },
+    "api/reclamacion.js":    { "maxDuration": 10, "memory": 128 }
   },
   "headers": [
     {
@@ -16,7 +15,7 @@
         { "key": "Permissions-Policy",       "value": "camera=(), microphone=(), geolocation=()" },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://checkout.culqi.com https://fonts.googleapis.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.culqi.com https://checkout.culqi.com https://kyoyunuwfuujqdomdmlh.supabase.co; frame-src https://checkout.culqi.com; object-src 'none'; base-uri 'self';"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://checkout.culqi.com https://fonts.googleapis.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.culqi.com https://checkout.culqi.com https://kyoyunuwfuujqdomdmlh.supabase.co https://api.github.com; frame-src https://checkout.culqi.com; object-src 'none'; base-uri 'self';"
         }
       ]
     }
