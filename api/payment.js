@@ -36,13 +36,13 @@
 // ---------------------------------------------------------------------------
 const PLANS = {
   monthly: {
-    amount:      999,                                  // $9.99 USD
+    amount:      399,                                  // $3.99 USD
     days:        30,
     description: 'RevsGaming — Monthly Access',
     label:       'monthly'
   },
   annual: {
-    amount:      9999,                                 // $99.99 USD
+    amount:      3999,                                 // $39.99 USD
     days:        365,
     description: 'RevsGaming — Annual Access',
     label:       'annual'
