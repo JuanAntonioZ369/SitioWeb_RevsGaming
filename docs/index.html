@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
@@ -7,8 +7,8 @@
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Guía de Usuario — RevsGaming</title>
-  <meta name="description" content="Guía completa de RevsGaming: instalación, organización de juegos, netplay online, cloud saves, controles y preguntas frecuentes." />
+  <title>User Guide — RevsGaming</title>
+  <meta name="description" content="Complete RevsGaming guide: installation, game organization, online netplay, cloud saves, controls and frequently asked questions." />
   <script>if(localStorage.getItem('revsgaming-theme')==='light')document.documentElement.classList.add('light-mode')</script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -914,10 +914,6 @@
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
         </svg>
       </button>
-      <button id="langToggle" class="lang-toggle" aria-label="Switch language">
-        <span class="lang-label">ES</span>
-      </button>
-
       <a href="/register.html" class="btn-nav-register" data-i18n="nav.signup">Sign up</a>
       <a class="btn-nav-cta" href="/download/" data-i18n="nav.download">Download Beta</a>
 
@@ -940,32 +936,31 @@
           <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
           <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
-        <button id="langToggleMobile" class="lang-toggle" aria-label="Switch language"><span class="lang-label-mobile">ES</span></button>
       </div>
     </div>
   </nav>
 
   <!-- SIDEBAR MOBILE TOGGLE (outside nav wrapper) -->
   <button class="sidebar-mobile-toggle" id="sidebarToggle" aria-expanded="false">
-    Contenidos de la guía
+    Guide Contents
   </button>
 
   <div class="docs-wrapper">
     <!-- SIDEBAR -->
     <aside class="docs-sidebar" id="docsSidebar">
       <div class="docs-sidebar-inner">
-        <div class="sidebar-label">Guía de Usuario</div>
+        <div class="sidebar-label">User Guide</div>
         <ul class="sidebar-nav" id="sidebarNav">
-          <li><a href="#introduccion" class="active"><span class="nav-num">01</span> Introducción</a></li>
-          <li><a href="#instalacion"><span class="nav-num">02</span> Instalación</a></li>
-          <li><a href="#organizar-juegos"><span class="nav-num">03</span> Organizar tus juegos</a></li>
-          <li><a href="#jugar-solo"><span class="nav-num">04</span> Jugar en solitario</a></li>
-          <li><a href="#online-2j"><span class="nav-num">05</span> Online — 2 jugadores (PS1)</a></li>
-          <li><a href="#online-4j"><span class="nav-num">06</span> Online — hasta 4 jugadores</a></li>
-          <li><a href="#amigos"><span class="nav-num">07</span> Sistema de amigos</a></li>
+          <li><a href="#introduccion" class="active"><span class="nav-num">01</span> Introduction</a></li>
+          <li><a href="#instalacion"><span class="nav-num">02</span> Installation</a></li>
+          <li><a href="#organizar-juegos"><span class="nav-num">03</span> Organizing your games</a></li>
+          <li><a href="#jugar-solo"><span class="nav-num">04</span> Playing solo</a></li>
+          <li><a href="#online-2j"><span class="nav-num">05</span> Online — 2 players (PS1)</a></li>
+          <li><a href="#online-4j"><span class="nav-num">06</span> Online — up to 4 players</a></li>
+          <li><a href="#amigos"><span class="nav-num">07</span> Friends system</a></li>
           <li><a href="#cloud-saves"><span class="nav-num">08</span> Cloud Saves</a></li>
-          <li><a href="#controles"><span class="nav-num">09</span> Controles con mando</a></li>
-          <li><a href="#faq"><span class="nav-num">10</span> Preguntas frecuentes</a></li>
+          <li><a href="#controles"><span class="nav-num">09</span> Controller input</a></li>
+          <li><a href="#faq"><span class="nav-num">10</span> Frequently asked questions</a></li>
         </ul>
       </div>
     </aside>
@@ -974,25 +969,25 @@
     <main class="docs-content">
       <div class="docs-content-inner">
 
-        <!-- 1. INTRODUCCION -->
+        <!-- 1. INTRODUCTION -->
         <section class="docs-section" id="introduccion">
           <div class="section-eyebrow">01</div>
-          <h2>Introducción</h2>
+          <h2>Introduction</h2>
           <p>
-            RevsGaming es un launcher de juegos retro para Windows. Organiza tu colección automáticamente, lanza los emuladores correctos sin configuración y te conecta con amigos para jugar online.
+            RevsGaming is a retro game launcher for Windows. It automatically organizes your collection, launches the correct emulators without any configuration, and connects you with friends for online play.
           </p>
           <p>
-            Soporta <strong>PS1</strong> mediante Mednafen, y vía RetroArch: <strong>NES, SNES, GBA, Game Boy, N64, Mega Drive, Arcade, Saturn y PS2</strong>. Los emuladores vienen incluidos en el instalador — no necesitas instalar nada por separado.
+            It supports <strong>PS1</strong> via Mednafen, and via RetroArch: <strong>NES, SNES, GBA, Game Boy, N64, Mega Drive, Arcade, Saturn and PS2</strong>. Emulators are bundled in the installer — no separate installation needed.
           </p>
           <div class="docs-note">
-            <strong>Version actual:</strong> v0.84.0 Beta — en desarrollo activo. Algunas funciones pueden cambiar en versiones futuras.
+            <strong>Current version:</strong> v0.84.0 Beta — actively in development. Some features may change in future versions.
           </div>
         </section>
 
-        <!-- 2. INSTALACION -->
+        <!-- 2. INSTALLATION -->
         <section class="docs-section" id="instalacion">
           <div class="section-eyebrow">02</div>
-          <h2>Instalación</h2>
+          <h2>Installation</h2>
 
           <div class="req-badge">
             Windows 10 / 11 (64-bit)
@@ -1002,56 +997,56 @@
             <div class="step-item">
               <div class="step-num">1</div>
               <div class="step-body">
-                <strong>Descarga el instalador</strong>
-                <span>Baja el archivo <code>.exe</code> desde la <a href="/download/" target="_blank" rel="noopener">página de releases en GitHub</a>.</span>
+                <strong>Download the installer</strong>
+                <span>Get the <code>.exe</code> file from the <a href="/download/" target="_blank" rel="noopener">releases page on GitHub</a>.</span>
               </div>
             </div>
             <div class="step-item">
               <div class="step-num">2</div>
               <div class="step-body">
-                <strong>Ejecuta el instalador</strong>
-                <span>Elige la carpeta de instalación. Mednafen, RetroArch y todas las dependencias se instalan automáticamente.</span>
+                <strong>Run the installer</strong>
+                <span>Choose an installation folder. Mednafen, RetroArch and all dependencies are installed automatically.</span>
               </div>
             </div>
             <div class="step-item">
               <div class="step-num">3</div>
               <div class="step-body">
-                <strong>Abre RevsGaming</strong>
-                <span>Usa el acceso directo en el escritorio que crea el instalador.</span>
+                <strong>Open RevsGaming</strong>
+                <span>Use the desktop shortcut created by the installer.</span>
               </div>
             </div>
             <div class="step-item">
               <div class="step-num">4</div>
               <div class="step-body">
-                <strong>Crea una cuenta o entra como invitado</strong>
-                <span>Puedes registrarte para acceder a cloud saves y sistema de amigos, o entrar como invitado con un apodo.</span>
+                <strong>Create an account or play as guest</strong>
+                <span>You can register to access cloud saves and the friends system, or enter as a guest with a nickname.</span>
               </div>
             </div>
             <div class="step-item">
               <div class="step-num">5</div>
               <div class="step-body">
-                <strong>BIOS de PS1 automáticas</strong>
-                <span>Si la app detecta que faltan las BIOS de PS1, las descarga automáticamente al primer uso.</span>
+                <strong>PS1 BIOS auto-download</strong>
+                <span>If the app detects missing PS1 BIOS files, it downloads them automatically on first use.</span>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- 3. ORGANIZAR JUEGOS -->
+        <!-- 3. ORGANIZING GAMES -->
         <section class="docs-section" id="organizar-juegos">
           <div class="section-eyebrow">03</div>
-          <h2>Organizar tus juegos</h2>
+          <h2>Organizing your games</h2>
 
           <p>
-            La carpeta por defecto es <code>games/</code> dentro de la carpeta de instalación. Puedes cambiarla en cualquier momento desde el botón <strong>Carpeta de Juegos</strong> en el sidebar de la app.
+            The default folder is <code>games/</code> inside the installation directory. You can change it at any time from the <strong>Games Folder</strong> button in the app sidebar.
           </p>
 
-          <h3>Estructura recomendada</h3>
+          <h3>Recommended structure</h3>
 
           <div class="code-block">
             <div class="code-header">
-              <span class="code-lang">Estructura de carpetas</span>
-              <button class="btn-copy" onclick="copyCode(this)">Copiar</button>
+              <span class="code-lang">Folder structure</span>
+              <button class="btn-copy" onclick="copyCode(this)">Copy</button>
             </div>
             <pre>games/
 ├── PS1/
@@ -1064,174 +1059,174 @@
           </div>
 
           <ul>
-            <li>Cada juego debe estar en su propia subcarpeta.</li>
-            <li>Para PS1, el archivo principal es el <code>.cue</code> (que apunta al <code>.bin</code>).</li>
-            <li>Para otros sistemas: <code>.nes</code>, <code>.sfc</code>, <code>.gba</code>, <code>.n64</code>, <code>.md</code>, etc.</li>
-            <li>La app soporta hasta 3 niveles de subcarpetas.</li>
+            <li>Each game should be in its own subfolder.</li>
+            <li>For PS1, the main file is the <code>.cue</code> (which points to the <code>.bin</code>).</li>
+            <li>For other systems: <code>.nes</code>, <code>.sfc</code>, <code>.gba</code>, <code>.n64</code>, <code>.md</code>, etc.</li>
+            <li>The app supports up to 3 levels of subfolders.</li>
           </ul>
         </section>
 
-        <!-- 4. JUGAR SOLO -->
+        <!-- 4. PLAYING SOLO -->
         <section class="docs-section" id="jugar-solo">
           <div class="section-eyebrow">04</div>
-          <h2>Jugar en solitario</h2>
+          <h2>Playing solo</h2>
 
           <div class="steps-visual">
             <div class="step-item">
               <div class="step-num">1</div>
               <div class="step-body">
-                <strong>Abre tu biblioteca</strong>
-                <span>RevsGaming detecta y muestra todos tus juegos al iniciar.</span>
+                <strong>Open your library</strong>
+                <span>RevsGaming detects and displays all your games on startup.</span>
               </div>
             </div>
             <div class="step-item">
               <div class="step-num">2</div>
               <div class="step-body">
-                <strong>Selecciona el juego</strong>
-                <span>Haz clic en él, o presiona <strong>A</strong> con el mando si lo tienes conectado.</span>
+                <strong>Select a game</strong>
+                <span>Click it, or press <strong>A</strong> on a connected controller.</span>
               </div>
             </div>
             <div class="step-item">
               <div class="step-num">3</div>
               <div class="step-body">
-                <strong>Elige modo Solo</strong>
-                <span>Selecciona <strong>Solo</strong> en la pantalla de modo que aparece.</span>
+                <strong>Choose Solo mode</strong>
+                <span>Select <strong>Solo</strong> on the mode selection screen that appears.</span>
               </div>
             </div>
             <div class="step-item">
               <div class="step-num">4</div>
               <div class="step-body">
-                <strong>El juego inicia</strong>
-                <span>RevsGaming lanza el emulador correcto automáticamente. Si el core de RetroArch no está descargado, lo descarga en ese momento.</span>
+                <strong>The game launches</strong>
+                <span>RevsGaming starts the correct emulator automatically. If the RetroArch core is not downloaded yet, it will download it at this point.</span>
               </div>
             </div>
           </div>
 
           <div class="docs-note">
-            Para PS1 se usa <strong>Mednafen</strong>. Para NES, SNES, GBA, N64 y el resto se usa <strong>RetroArch</strong> con el core correspondiente.
+            PS1 uses <strong>Mednafen</strong>. NES, SNES, GBA, N64 and other systems use <strong>RetroArch</strong> with the appropriate core.
           </div>
         </section>
 
-        <!-- 5. ONLINE 2J -->
+        <!-- 5. ONLINE 2 PLAYERS -->
         <section class="docs-section" id="online-2j">
           <div class="section-eyebrow">05</div>
-          <h2>Jugar online — 2 jugadores (PS1)</h2>
+          <h2>Play online — 2 players (PS1)</h2>
 
-          <p>El netplay para PS1 soporta 2 jugadores simultáneos usando Mednafen.</p>
+          <p>PS1 netplay supports 2 simultaneous players using Mednafen.</p>
 
-          <h3>Como anfitrión (host)</h3>
+          <h3>As the host</h3>
           <div class="steps-visual">
             <div class="step-item">
               <div class="step-num">1</div>
               <div class="step-body">
-                <strong>Crea la sala</strong>
-                <span>Selecciona un juego PS1 → <strong>Online</strong> → <strong>Crear Sala</strong> → elige <strong>2 Jugadores</strong>.</span>
+                <strong>Create the room</strong>
+                <span>Select a PS1 game → <strong>Online</strong> → <strong>Create Room</strong> → choose <strong>2 Players</strong>.</span>
               </div>
             </div>
             <div class="step-item">
               <div class="step-num">2</div>
               <div class="step-body">
-                <strong>Obtén el código</strong>
-                <span>Aparece un código de 6 letras (ej: <code>XKMT4R</code>). Compártelo con tu amigo por donde prefieras.</span>
+                <strong>Get the code</strong>
+                <span>A 6-letter code appears (e.g. <code>XKMT4R</code>). Share it with your friend however you like.</span>
               </div>
             </div>
             <div class="step-item">
               <div class="step-num">3</div>
               <div class="step-body">
-                <strong>El juego inicia automáticamente</strong>
-                <span>Cuando tu amigo ingresa el código y se conecta, el juego arranca solo en ambos PCs.</span>
+                <strong>The game starts automatically</strong>
+                <span>Once your friend enters the code and connects, the game launches on both PCs.</span>
               </div>
             </div>
           </div>
 
-          <h3>Como jugador (guest)</h3>
+          <h3>As a guest player</h3>
           <div class="steps-visual">
             <div class="step-item">
               <div class="step-num">1</div>
               <div class="step-body">
-                <strong>Ve a Unirse</strong>
-                <span>En la pantalla de modo online, selecciona <strong>Unirse</strong>.</span>
+                <strong>Go to Join</strong>
+                <span>On the online mode screen, select <strong>Join</strong>.</span>
               </div>
             </div>
             <div class="step-item">
               <div class="step-num">2</div>
               <div class="step-body">
-                <strong>Ingresa el código</strong>
-                <span>Escribe el código de 6 letras que te dio el anfitrión. El juego inicia automáticamente.</span>
+                <strong>Enter the code</strong>
+                <span>Type the 6-letter code the host gave you. The game starts automatically.</span>
               </div>
             </div>
           </div>
 
           <div class="docs-note">
-            <strong>Importante:</strong> Ambos jugadores deben tener exactamente la misma ROM — el mismo archivo <code>.cue</code> y <code>.bin</code>. Si los archivos difieren, la sincronización fallará.
+            <strong>Important:</strong> Both players must have exactly the same ROM — the same <code>.cue</code> and <code>.bin</code> files. If the files differ, synchronization will fail.
           </div>
         </section>
 
-        <!-- 6. ONLINE 4J -->
+        <!-- 6. ONLINE UP TO 4 PLAYERS -->
         <section class="docs-section" id="online-4j">
           <div class="section-eyebrow">06</div>
-          <h2>Jugar online — hasta 4 jugadores</h2>
+          <h2>Play online — up to 4 players</h2>
 
-          <p>Disponible para NES, SNES, GBA, Mega Drive y otros sistemas vía RetroArch. El servidor MITM está en Lima, Perú, optimizado para Latinoamérica.</p>
+          <p>Available for NES, SNES, GBA, Mega Drive and other systems via RetroArch. The MITM server is located in Lima, Peru, optimized for Latin America.</p>
 
-          <h3>Como anfitrión (host)</h3>
+          <h3>As the host</h3>
           <div class="steps-visual">
             <div class="step-item">
               <div class="step-num">1</div>
               <div class="step-body">
-                <strong>Crea la sala</strong>
-                <span>Selecciona un juego → <strong>Online</strong> → <strong>Crear Sala</strong> → elige <strong>4 Jugadores</strong>.</span>
+                <strong>Create the room</strong>
+                <span>Select a game → <strong>Online</strong> → <strong>Create Room</strong> → choose <strong>4 Players</strong>.</span>
               </div>
             </div>
             <div class="step-item">
               <div class="step-num">2</div>
               <div class="step-body">
-                <strong>Comparte el código numérico</strong>
-                <span>Aparece un código numérico. Compártelo con hasta 3 amigos.</span>
+                <strong>Share the numeric code</strong>
+                <span>A numeric code appears. Share it with up to 3 friends.</span>
               </div>
             </div>
             <div class="step-item">
               <div class="step-num">3</div>
               <div class="step-body">
-                <strong>Espera a que todos se unan</strong>
-                <span>El juego inicia cuando todos los jugadores se conectan o cuando decides empezar.</span>
+                <strong>Wait for everyone to join</strong>
+                <span>The game starts when all players connect or when you decide to begin.</span>
               </div>
             </div>
           </div>
 
-          <h3>Como jugador (guest)</h3>
+          <h3>As a guest player</h3>
           <div class="steps-visual">
             <div class="step-item">
               <div class="step-num">1</div>
               <div class="step-body">
-                <strong>Ve a Unirse</strong>
-                <span>Selecciona <strong>Unirse</strong> en la pantalla de modo online.</span>
+                <strong>Go to Join</strong>
+                <span>Select <strong>Join</strong> on the online mode screen.</span>
               </div>
             </div>
             <div class="step-item">
               <div class="step-num">2</div>
               <div class="step-body">
-                <strong>Ingresa el código</strong>
-                <span>Escribe el código numérico. El juego inicia automáticamente.</span>
+                <strong>Enter the code</strong>
+                <span>Type the numeric code. The game starts automatically.</span>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- 7. AMIGOS -->
+        <!-- 7. FRIENDS -->
         <section class="docs-section" id="amigos">
           <div class="section-eyebrow">07</div>
-          <h2>Sistema de amigos</h2>
+          <h2>Friends system</h2>
 
           <div class="docs-note">
-            <strong>Requiere cuenta registrada.</strong> El sistema de amigos no está disponible en modo invitado.
+            <strong>Requires a registered account.</strong> The friends system is not available in guest mode.
           </div>
 
           <ul>
-            <li>Busca a un amigo por su nombre de usuario y envíale una solicitud de amistad.</li>
-            <li>Ve en tiempo real quién está online y en qué juego está jugando.</li>
-            <li>Desde la lista de amigos puedes invitarlos directamente a tu sala online.</li>
-            <li>Recibes una notificación cuando un amigo entra a la app.</li>
+            <li>Search for a friend by their username and send a friend request.</li>
+            <li>See in real time who is online and what game they are playing.</li>
+            <li>From your friends list you can invite them directly to your online room.</li>
+            <li>You receive a notification when a friend joins the app.</li>
           </ul>
         </section>
 
@@ -1241,96 +1236,96 @@
           <h2>Cloud Saves</h2>
 
           <div class="docs-note">
-            <strong>Requiere cuenta registrada.</strong> Los saves en la nube no están disponibles en modo invitado.
+            <strong>Requires a registered account.</strong> Cloud saves are not available in guest mode.
           </div>
 
           <ul>
-            <li>Los saves se sincronizan automáticamente al <strong>cerrar un juego</strong>.</li>
-            <li>Al iniciar un juego, se descargan los saves más recientes desde la nube.</li>
-            <li>No es necesaria ninguna acción manual — todo ocurre en segundo plano.</li>
+            <li>Saves are automatically synced when you <strong>close a game</strong>.</li>
+            <li>When launching a game, the most recent saves are downloaded from the cloud.</li>
+            <li>No manual action needed — everything happens in the background.</li>
           </ul>
 
-          <h3>Formatos soportados</h3>
+          <h3>Supported formats</h3>
           <ul>
-            <li><code>.mcr</code>, <code>.mcs</code> — saves de Mednafen (PS1)</li>
-            <li><code>.srm</code>, <code>.sav</code>, <code>.state*</code> — saves y estados de RetroArch</li>
+            <li><code>.mcr</code>, <code>.mcs</code> — Mednafen saves (PS1)</li>
+            <li><code>.srm</code>, <code>.sav</code>, <code>.state*</code> — RetroArch saves and states</li>
           </ul>
 
-          <p>Los saves se almacenan en Supabase Storage, cifrados y asociados a tu cuenta de usuario.</p>
+          <p>Saves are stored in Supabase Storage, encrypted and linked to your user account.</p>
         </section>
 
-        <!-- 9. CONTROLES -->
+        <!-- 9. CONTROLLER INPUT -->
         <section class="docs-section" id="controles">
           <div class="section-eyebrow">09</div>
-          <h2>Controles con mando</h2>
+          <h2>Controller input</h2>
 
-          <p>Puedes navegar toda la interfaz de RevsGaming con un control de Xbox o PlayStation conectado por USB o Bluetooth.</p>
+          <p>You can navigate the entire RevsGaming interface with an Xbox or PlayStation controller connected via USB or Bluetooth.</p>
 
           <div class="docs-table-wrap">
             <table class="docs-table">
               <thead>
                 <tr>
-                  <th>Botón</th>
-                  <th>Acción en la app</th>
+                  <th>Button</th>
+                  <th>App action</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>D-Pad / Stick izquierdo</td>
-                  <td>Navegar por la biblioteca y menús</td>
+                  <td>D-Pad / Left stick</td>
+                  <td>Navigate library and menus</td>
                 </tr>
                 <tr>
-                  <td>A (Cruz)</td>
-                  <td>Confirmar / Abrir juego</td>
+                  <td>A (Cross)</td>
+                  <td>Confirm / Open game</td>
                 </tr>
                 <tr>
-                  <td>B (Círculo)</td>
-                  <td>Volver / Cancelar</td>
+                  <td>B (Circle)</td>
+                  <td>Back / Cancel</td>
                 </tr>
                 <tr>
-                  <td>Y (Triángulo)</td>
-                  <td>Cambiar vista lista / grilla</td>
+                  <td>Y (Triangle)</td>
+                  <td>Toggle list / grid view</td>
                 </tr>
                 <tr>
                   <td>Start</td>
-                  <td>Abrir detector de mandos</td>
+                  <td>Open controller detector</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <p>Una vez dentro de un juego, los controles dependen del emulador (Mednafen o RetroArch) y su configuración estándar de botones.</p>
+          <p>Once inside a game, controls depend on the emulator (Mednafen or RetroArch) and its standard button mapping.</p>
         </section>
 
         <!-- 10. FAQ -->
         <section class="docs-section" id="faq">
           <div class="section-eyebrow">10</div>
-          <h2>Preguntas frecuentes</h2>
+          <h2>Frequently asked questions</h2>
 
           <div class="faq-list">
             <div class="faq-item">
-              <div class="faq-q">¿Dónde pongo las BIOS de PS1?</div>
-              <div class="faq-a">No necesitas hacerlo. RevsGaming descarga las BIOS de PS1 automáticamente al primer uso. Si ya las tienes, la app las detecta.</div>
+              <div class="faq-q">Where do I put the PS1 BIOS files?</div>
+              <div class="faq-a">You don't need to. RevsGaming downloads the PS1 BIOS files automatically on first use. If you already have them, the app will detect them.</div>
             </div>
             <div class="faq-item">
-              <div class="faq-q">¿Qué hago si el core de RetroArch no está?</div>
-              <div class="faq-a">La app lo descarga automáticamente desde buildbot.libretro.com la primera vez que abres un juego que lo necesita. Solo asegúrate de tener conexión a internet.</div>
+              <div class="faq-q">What if the RetroArch core is missing?</div>
+              <div class="faq-a">The app downloads it automatically from buildbot.libretro.com the first time you open a game that requires it. Just make sure you have an internet connection.</div>
             </div>
             <div class="faq-item">
-              <div class="faq-q">¿Mis saves están seguros?</div>
-              <div class="faq-a">Sí. Los cloud saves se almacenan en Supabase Storage, cifrados y vinculados a tu cuenta de usuario. Solo tú tienes acceso a ellos.</div>
+              <div class="faq-q">Are my saves safe?</div>
+              <div class="faq-a">Yes. Cloud saves are stored in Supabase Storage, encrypted and linked to your user account. Only you have access to them.</div>
             </div>
             <div class="faq-item">
-              <div class="faq-q">¿Puedo cambiar la carpeta de juegos?</div>
-              <div class="faq-a">Sí, desde el botón "Carpeta de Juegos" en el sidebar de la app. Puedes apuntar a cualquier unidad o carpeta en tu PC.</div>
+              <div class="faq-q">Can I change the games folder?</div>
+              <div class="faq-a">Yes, from the "Games Folder" button in the app sidebar. You can point it to any drive or folder on your PC.</div>
             </div>
             <div class="faq-item">
-              <div class="faq-q">¿El modo invitado guarda mis saves?</div>
-              <div class="faq-a">No. Los saves en la nube requieren cuenta registrada. En modo invitado los saves se guardan localmente mientras la sesión esté activa.</div>
+              <div class="faq-q">Does guest mode save my progress?</div>
+              <div class="faq-a">No. Cloud saves require a registered account. In guest mode, saves are stored locally for the duration of the session.</div>
             </div>
             <div class="faq-item">
-              <div class="faq-q">¿Qué pasa si la beta se cierra?</div>
-              <div class="faq-a">Recibirás una notificación dentro de la app con anticipación. Tus saves en la nube permanecerán seguros.</div>
+              <div class="faq-q">What happens if the beta closes?</div>
+              <div class="faq-a">You will receive an advance notification inside the app. Your cloud saves will remain safe.</div>
             </div>
           </div>
         </section>
@@ -1345,11 +1340,11 @@
       <div class="footer-bottom">
         <span>&copy; 2026 RevsGaming &middot; RUC 20613365045</span>
         <span class="footer-sep">|</span>
-        <a href="../legal/privacy.html">Privacidad</a>
+        <a href="../legal/privacy.html">Privacy</a>
         <span class="footer-sep">|</span>
-        <a href="../legal/terms.html">Términos</a>
+        <a href="../legal/terms.html">Terms</a>
         <span class="footer-sep">|</span>
-        <a href="../libro-reclamaciones.html">Libro de Reclamaciones</a>
+        <a href="../libro-reclamaciones.html">Complaints Book</a>
       </div>
     </div>
   </footer>
@@ -1417,15 +1412,15 @@
     function copyCode(btn) {
       const pre = btn.closest('.code-block').querySelector('pre');
       navigator.clipboard.writeText(pre.textContent).then(() => {
-        btn.textContent = 'Copiado';
+        btn.textContent = 'Copied';
         btn.classList.add('copied');
         setTimeout(() => {
-          btn.textContent = 'Copiar';
+          btn.textContent = 'Copy';
           btn.classList.remove('copied');
         }, 2000);
       }).catch(() => {
         btn.textContent = 'Error';
-        setTimeout(() => { btn.textContent = 'Copiar'; }, 1500);
+        setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
       });
     }
   </script>
