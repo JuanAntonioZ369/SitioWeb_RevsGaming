@@ -6,8 +6,6 @@ function openRevsGamingApp(redirectAfter) {
   window.location.href = 'revsgaming://login'
   setTimeout(() => {
     // If still here, app not installed — show toast
-    const lang = window._rvgLang || localStorage.getItem('revsgaming-lang') || 'en'
-    const isEs = lang === 'es'
     const existing = document.getElementById('rvg-app-toast')
     if (existing) existing.remove()
 
@@ -23,19 +21,19 @@ function openRevsGamingApp(redirectAfter) {
 
     toast.innerHTML = `
       <p style="margin-bottom:14px;font-size:0.9rem;line-height:1.5">
-        ${isEs ? '¿No tienes RevsGaming instalado?' : "Don't have RevsGaming installed?"}
+        Don't have RevsGaming installed?
       </p>
       <a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tag/v0.84.0"
          target="_blank" rel="noopener"
          style="background:var(--green,#7EC8A0);color:#0d1117;padding:10px 22px;border-radius:7px;
                 font-weight:700;text-decoration:none;font-family:'Space Grotesk',sans-serif;
                 display:inline-block;font-size:0.9rem;">
-        ${isEs ? '⬇ Descargar ahora' : '⬇ Download now'}
+        ⬇ Download now
       </a>
       <button onclick="document.getElementById('rvg-app-toast').remove()" style="
         display:block;margin:12px auto 0;background:none;border:none;
         color:var(--text-muted,#8f98a0);cursor:pointer;font-size:0.8rem;">
-        ${isEs ? 'Cerrar' : 'Close'}
+        Close
       </button>
     `
     document.body.appendChild(toast)
