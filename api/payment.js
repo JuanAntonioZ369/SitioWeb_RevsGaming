@@ -36,16 +36,16 @@
 // ---------------------------------------------------------------------------
 const PLANS = {
   monthly: {
-    amount:      1180,                                 // S/10.00 + IGV 18% = S/11.80 PEN
+    amount:      999,                                  // $9.99 USD
     days:        30,
-    description: 'RevsGaming — Acceso mensual',
-    label:       'mensual'
+    description: 'RevsGaming — Monthly Access',
+    label:       'monthly'
   },
   annual: {
-    amount:      11800,                                // S/100.00 + IGV 18% = S/118.00 PEN
+    amount:      9999,                                 // $99.99 USD
     days:        365,
-    description: 'RevsGaming — Acceso anual',
-    label:       'anual'
+    description: 'RevsGaming — Annual Access',
+    label:       'annual'
   }
 }
 
@@ -259,7 +259,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         amount:        plan.amount,        // hardcodeado según plan — NUNCA del cliente
-        currency_code: 'PEN',
+        currency_code: 'USD',
         email,
         source_id:     token,
         capture:       true,

@@ -44,16 +44,16 @@
       {
         "@type": "Offer",
         "name": "Monthly Plan",
-        "price": "11.80",
-        "priceCurrency": "PEN",
-        "description": "Monthly access to RevsGaming (includes IGV)"
+        "price": "9.99",
+        "priceCurrency": "USD",
+        "description": "Monthly access to RevsGaming"
       },
       {
         "@type": "Offer",
         "name": "Annual Plan",
-        "price": "118.00",
-        "priceCurrency": "PEN",
-        "description": "Annual access to RevsGaming (includes IGV) — 2 months free"
+        "price": "99.99",
+        "priceCurrency": "USD",
+        "description": "Annual access to RevsGaming — 2 months free"
       }
     ],
     "author": {
@@ -109,7 +109,7 @@
         "name": "How much does RevsGaming cost?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "RevsGaming offers a 2-month free trial. After that, plans start at S/11.80/month (including IGV) or S/118.00/year — saving 2 months vs monthly."
+          "text": "RevsGaming offers a 2-month free trial. After that, plans start at $9.99/month or $99.99/year — saving 2 months vs monthly."
         }
       },
       {
@@ -2664,19 +2664,18 @@
         <div class="plan-selector" id="planSelector">
           <div class="plan-tabs">
             <button class="plan-tab" id="tab-monthly" type="button" onclick="selectPlan('monthly')">
-              <span data-i18n="price.monthly">Monthly</span> &nbsp;<strong>S/10</strong>
+              <span data-i18n="price.monthly">Monthly</span> &nbsp;<strong>$9.99</strong>
             </button>
             <button class="plan-tab active" id="tab-annual" type="button" onclick="selectPlan('annual')">
-              <span data-i18n="price.annual">Annual</span> &nbsp;<strong>S/100</strong>
+              <span data-i18n="price.annual">Annual</span> &nbsp;<strong>$99.99</strong>
               <span class="plan-tab-badge" data-i18n="price.free">2 months free</span>
             </button>
           </div>
 
           <div class="price-card">
             <div class="price-amount">
-              <span class="price-currency">S/</span>
-              <span class="price-number" id="priceNumber">100</span>
-              <span style="font-size:1rem;color:var(--text-muted);align-self:flex-end;padding-bottom:6px;" id="priceIgv">&nbsp;<span style="font-size:0.8rem;">+ IGV</span></span>
+              <span class="price-currency">$</span>
+              <span class="price-number" id="priceNumber">99.99</span>
               <span class="price-period" id="pricePeriod" data-i18n="price.period.annual">/ year</span>
             </div>
             <div class="price-includes">
@@ -2693,7 +2692,7 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/>
           </svg>
-          <span id="btnCulqiLabel" data-i18n="price.pay.annual">Pay S/ 118.00 annually</span>
+          <span id="btnCulqiLabel" data-i18n="price.pay.annual">Pay $99.99 annually</span>
         </button>
 
         <div class="support-fine" data-i18n="pricing.secure">
@@ -2894,7 +2893,7 @@
        PLAN SELECTOR
     ---------------------------------------------------------- */
     var selectedPlan = 'annual';
-    var planAmounts = { monthly: 1180, annual: 11800 };
+    var planAmounts = { monthly: 999, annual: 9999 };
 
     function selectPlan(plan) {
       selectedPlan = plan;
@@ -2903,15 +2902,15 @@
       document.getElementById('tab-annual').classList.toggle('active', plan === 'annual');
 
       if (plan === 'annual') {
-        document.getElementById('priceNumber').textContent = '100';
+        document.getElementById('priceNumber').textContent = '99.99';
         document.getElementById('pricePeriod').textContent = '/ year';
         document.getElementById('planSavings').classList.add('visible');
-        document.getElementById('btnCulqiLabel').textContent = 'Pay S/ 118.00 annually';
+        document.getElementById('btnCulqiLabel').textContent = 'Pay $99.99 annually';
       } else {
-        document.getElementById('priceNumber').textContent = '10';
+        document.getElementById('priceNumber').textContent = '9.99';
         document.getElementById('pricePeriod').textContent = '/ month';
         document.getElementById('planSavings').classList.remove('visible');
-        document.getElementById('btnCulqiLabel').textContent = 'Pay S/ 11.80 monthly';
+        document.getElementById('btnCulqiLabel').textContent = 'Pay $9.99 monthly';
       }
     }
 
@@ -2944,7 +2943,7 @@
       if (loading) {
         btn.innerHTML = 'Processing...';
       } else {
-        var label = selectedPlan === 'annual' ? 'Pay S/ 118.00 annually' : 'Pay S/ 11.80 monthly';
+        var label = selectedPlan === 'annual' ? 'Pay $99.99 annually' : 'Pay $9.99 monthly';
         btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> <span id="btnCulqiLabel">' + label + '</span>';
       }
     }
@@ -2955,7 +2954,7 @@
         culqi = new Culqi({
           settings: {
             title: 'RevsGaming',
-            currency: 'PEN',
+            currency: 'USD',
             description: 'RevsGaming — Full Access',
             amount: planAmounts[selectedPlan]
           }
@@ -3001,7 +3000,7 @@
           hidePaymentError();
           culqi.settings({
             title: 'RevsGaming',
-            currency: 'PEN',
+            currency: 'USD',
             description: selectedPlan === 'annual' ? 'RevsGaming — Annual Access' : 'RevsGaming — Monthly Access',
             amount: planAmounts[selectedPlan]
           });
