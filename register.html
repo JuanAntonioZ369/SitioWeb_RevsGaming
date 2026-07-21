@@ -1467,6 +1467,24 @@
         registeredEmail = email
         registeredUserId = data.user?.id || ''
 
+        // El trigger on_auth_user_created crea el profile automáticamente.
+        // Este upsert es un safety net para race conditions en username.
+        if (data.user?.id) {
+          const { error: profileError } = await supabaseClient
+            .from('profiles')
+            .upsert({ id: data.user.id, username }, { onConflict: 'id', ignoreDuplicates: true })
+
+          if (profileError && profileError.code === '23505') {
+            // Unique constraint violation en username — race condition
+            showFieldError('username-error', 'This username was just taken. Please choose another.')
+            setButtonLoading('register-btn', false)
+            return
+          }
+          if (profileError) {
+            console.warn('Profile upsert (non-fatal):', profileError.message)
+          }
+        }
+
         // Activar trial gratuito
         try {
           const trialRes = await fetch('/api/activate-trial', {
