@@ -681,29 +681,37 @@
     /* ── Parse structured release notes (## NEW / ## FIX / ## IMPROVEMENT / ## NOTES) ── */
     function parseReleaseBody(body) {
       const TAG_MAP = {
-        'NEW':         { dataType: 'NUEVO',  cssClass: 'tag-nuevo',  label: 'NEW' },
-        'FIX':         { dataType: 'FIX',    cssClass: 'tag-fix',    label: 'FIX' },
-        'IMPROVEMENT': { dataType: 'MEJORA', cssClass: 'tag-mejora', label: 'IMPROVEMENT' },
-        'NOTES':       { dataType: 'NOTA',   cssClass: 'tag-mejora', label: 'NOTE' },
+        'NEW':          { dataType: 'NUEVO',  cssClass: 'tag-nuevo',  label: 'NEW' },
+        'FIX':          { dataType: 'FIX',    cssClass: 'tag-fix',    label: 'FIX' },
+        'IMPROVEMENT':  { dataType: 'MEJORA', cssClass: 'tag-mejora', label: 'IMPROVEMENT' },
+        'NOTES':        { dataType: 'NOTA',   cssClass: 'tag-mejora', label: 'NOTE' },
+        'REQUIREMENTS': { dataType: 'NOTA',   cssClass: 'tag-mejora', label: 'NOTE' },
       };
       const items = [];
-      let currentTag = TAG_MAP['NEW']; // default if no section header
-      const lines = (body || '').split('\n');
-      for (const raw of lines) {
+      let currentTag = TAG_MAP['NEW'];
+      for (const raw of (body || '').split('\n')) {
         const line = raw.trim();
         if (!line) continue;
-        // Section header like "## NEW" or "## FIX"
-        const headerMatch = line.match(/^##\s+(\w+)/);
-        if (headerMatch) {
-          const key = headerMatch[1].toUpperCase();
+        // Section header ## NEW, ## FIX, etc.
+        const hdr = line.match(/^##\s+(\w+)/);
+        if (hdr) {
+          const key = hdr[1].toUpperCase();
           currentTag = TAG_MAP[key] || { dataType: 'NOTA', cssClass: 'tag-mejora', label: key };
           continue;
         }
-        // Bullet line
-        if (line.startsWith('-') || line.startsWith('*') || line.startsWith('•')) {
-          const text = line.replace(/^[-*•]\s*/, '').trim();
-          if (text) items.push({ ...currentTag, text });
-        }
+        // Skip separator lines (-- --- ──)
+        if (/^[-─]{2,}$/.test(line)) continue;
+        // Bullet: "- text" or "* text" or "• text" — requires space after marker
+        const bullet = line.match(/^[-*•]\s+(.+)/);
+        if (!bullet) continue;
+        let text = bullet[1].trim();
+        // Strip markdown: **bold**, *italic*, `code`
+        text = text.replace(/\*\*(.+?)\*\*/g, '$1')
+                   .replace(/\*(.+?)\*/g, '$1')
+                   .replace(/`(.+?)`/g, '$1');
+        // Skip if it's just a URL or empty after cleanup
+        if (!text || /^https?:\/\//.test(text)) continue;
+        items.push({ ...currentTag, text });
       }
       return items;
     }

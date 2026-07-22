@@ -958,16 +958,21 @@
           const wnList = document.getElementById('whatsNewList');
           if (wnList && rel.body) {
             const bullets = [];
-            let section = '';
+            let section = 'NEW';
             for (const raw of rel.body.split('\n')) {
               const line = raw.trim();
               if (!line) continue;
               const hdr = line.match(/^##\s+(\w+)/);
               if (hdr) { section = hdr[1].toUpperCase(); continue; }
-              if (line.startsWith('-') || line.startsWith('*') || line.startsWith('•')) {
-                const text = line.replace(/^[-*•]\s*/, '').trim();
-                if (text) bullets.push({ section, text });
-              }
+              if (/^[-─]{2,}$/.test(line)) continue; // skip separators
+              const bullet = line.match(/^[-*•]\s+(.+)/);
+              if (!bullet) continue;
+              let text = bullet[1].trim()
+                .replace(/\*\*(.+?)\*\*/g, '$1')
+                .replace(/\*(.+?)\*/g, '$1')
+                .replace(/`(.+?)`/g, '$1');
+              if (!text || /^https?:\/\//.test(text)) continue;
+              bullets.push({ section, text });
             }
             if (bullets.length) {
               wnList.innerHTML = bullets.slice(0, 8).map(b => {
