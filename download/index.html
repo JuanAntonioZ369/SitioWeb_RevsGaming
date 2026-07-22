@@ -954,14 +954,26 @@
           const wnTitle = document.getElementById('whatsNewTitle');
           if (wnTitle) wnTitle.textContent = `What's new in ${ver}`;
 
-          // Parse release notes into bullet points
+          // Parse structured release notes (## NEW / ## FIX / ## IMPROVEMENT)
           const wnList = document.getElementById('whatsNewList');
           if (wnList && rel.body) {
-            const lines = rel.body.split('\n')
-              .map(l => l.replace(/^[-*•]\s*/, '').trim())
-              .filter(l => l.length > 0 && !l.startsWith('#'));
-            if (lines.length) {
-              wnList.innerHTML = lines.slice(0, 8).map(l => `<li>${l}</li>`).join('');
+            const bullets = [];
+            let section = '';
+            for (const raw of rel.body.split('\n')) {
+              const line = raw.trim();
+              if (!line) continue;
+              const hdr = line.match(/^##\s+(\w+)/);
+              if (hdr) { section = hdr[1].toUpperCase(); continue; }
+              if (line.startsWith('-') || line.startsWith('*') || line.startsWith('•')) {
+                const text = line.replace(/^[-*•]\s*/, '').trim();
+                if (text) bullets.push({ section, text });
+              }
+            }
+            if (bullets.length) {
+              wnList.innerHTML = bullets.slice(0, 8).map(b => {
+                const label = b.section === 'FIX' ? '[FIX] ' : b.section === 'IMPROVEMENT' ? '[+] ' : '';
+                return `<li>${label}${b.text.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</li>`;
+              }).join('');
             }
           }
 

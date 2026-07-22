@@ -357,10 +357,12 @@
     }
     .tag-nuevo     { background: rgba(126,200,160,0.18); color: var(--green); border: 1px solid rgba(126,200,160,0.3); }
     .tag-mejora    { background: rgba(102,192,244,0.15); color: var(--accent); border: 1px solid rgba(102,192,244,0.25); }
+    .tag-fix       { background: rgba(196,126,126,0.18); color: var(--red);    border: 1px solid rgba(196,126,126,0.3); }
     .tag-corrección { background: rgba(196,126,126,0.15); color: var(--red); border: 1px solid rgba(196,126,126,0.25); }
 
     html.light-mode .tag-nuevo     { background: rgba(46,125,80,0.1); border-color: rgba(46,125,80,0.25); }
     html.light-mode .tag-mejora    { background: rgba(26,111,168,0.1); border-color: rgba(26,111,168,0.2); }
+    html.light-mode .tag-fix       { background: rgba(176,58,58,0.1); border-color: rgba(176,58,58,0.2); }
     html.light-mode .tag-corrección { background: rgba(176,58,58,0.1); border-color: rgba(176,58,58,0.2); }
 
     /* card oculta si todos sus items están ocultos */
@@ -676,23 +678,51 @@
   </footer>
 
   <script>
+    /* ── Parse structured release notes (## NEW / ## FIX / ## IMPROVEMENT / ## NOTES) ── */
+    function parseReleaseBody(body) {
+      const TAG_MAP = {
+        'NEW':         { dataType: 'NUEVO',  cssClass: 'tag-nuevo',  label: 'NEW' },
+        'FIX':         { dataType: 'FIX',    cssClass: 'tag-fix',    label: 'FIX' },
+        'IMPROVEMENT': { dataType: 'MEJORA', cssClass: 'tag-mejora', label: 'IMPROVEMENT' },
+        'NOTES':       { dataType: 'NOTA',   cssClass: 'tag-mejora', label: 'NOTE' },
+      };
+      const items = [];
+      let currentTag = TAG_MAP['NEW']; // default if no section header
+      const lines = (body || '').split('\n');
+      for (const raw of lines) {
+        const line = raw.trim();
+        if (!line) continue;
+        // Section header like "## NEW" or "## FIX"
+        const headerMatch = line.match(/^##\s+(\w+)/);
+        if (headerMatch) {
+          const key = headerMatch[1].toUpperCase();
+          currentTag = TAG_MAP[key] || { dataType: 'NOTA', cssClass: 'tag-mejora', label: key };
+          continue;
+        }
+        // Bullet line
+        if (line.startsWith('-') || line.startsWith('*') || line.startsWith('•')) {
+          const text = line.replace(/^[-*•]\s*/, '').trim();
+          if (text) items.push({ ...currentTag, text });
+        }
+      }
+      return items;
+    }
+
     /* ── Latest release via API proxy (handles private repo auth server-side) ── */
-    const REPO = 'JuanAntonioZ369/RetroGamingRevs_2.0';
     fetch('/api/releases?type=latest')
       .then(r => r.json())
       .then(rel => {
         if (!rel || !rel.tag_name) return;
-        const ver = rel.tag_name; // e.g. "v1.0.0"
-        const verClean = ver.replace(/^v/, ''); // "1.0.0"
+        const ver = rel.tag_name;
+        const verClean = ver.replace(/^v/, '');
 
         // Update header badge
         const headerBadge = document.querySelector('.badge-current');
         if (headerBadge) headerBadge.textContent = 'Current version: ' + ver;
 
-        // If this version already has a static card, just mark it current and stop
+        // If a static card for this version already exists, just badge it and stop
         const existingCard = document.querySelector('[data-version="' + verClean + '"]');
         if (existingCard) {
-          // Remove CURRENT badge from old cards
           document.querySelectorAll('.badge-actual').forEach(b => b.remove());
           const hdr = existingCard.querySelector('.card-header');
           if (hdr) {
@@ -704,20 +734,21 @@
           return;
         }
 
-        // Remove CURRENT badge from old static cards
+        // Remove CURRENT badge from all static cards
         document.querySelectorAll('.badge-actual').forEach(b => b.remove());
 
         const date = rel.published_at
           ? new Date(rel.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })
           : '';
 
-        // Parse release body into list items
-        const lines = (rel.body || '').split('\n')
-          .map(l => l.replace(/^[-*•]\s*/, '').trim())
-          .filter(l => l.length > 0 && !l.startsWith('#') && !l.startsWith('<!--'));
-
-        const itemsHtml = lines.length > 0
-          ? lines.map(l => '<li class="change-item" data-type="NUEVO"><span class="tag tag-nuevo">NEW</span><span>' + l.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</span></li>').join('')
+        const items = parseReleaseBody(rel.body);
+        const itemsHtml = items.length > 0
+          ? items.map(i =>
+              '<li class="change-item" data-type="' + i.dataType + '">' +
+              '<span class="tag ' + i.cssClass + '">' + i.label + '</span>' +
+              '<span>' + i.text.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</span>' +
+              '</li>'
+            ).join('')
           : '<li class="change-item" data-type="NUEVO"><span class="tag tag-nuevo">NEW</span><span>See GitHub release notes for details.</span></li>';
 
         document.getElementById('latestVersionCard').innerHTML =
@@ -732,7 +763,7 @@
           '<div class="card-body"><ul class="change-list">' + itemsHtml + '</ul></div>' +
           '</div></article>';
 
-        // Re-run filter if one is active
+        // Re-run active filter if any
         const activeFilter = document.querySelector('.filter-btn.active');
         if (activeFilter && activeFilter.dataset.filter !== 'TODOS') {
           activeFilter.click();
