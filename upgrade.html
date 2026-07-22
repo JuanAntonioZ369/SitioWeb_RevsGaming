@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upgrade Plan — RevsGaming</title>
+  <meta name="description" content="Upgrade your RevsGaming account and activate full access after your trial." />
+  <script>if(localStorage.getItem('revsgaming-theme')==='light')document.documentElement.classList.add('light-mode')</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://checkout.culqi.com/js/v4"></script>
+  <script src="/js/i18n.js"></script>
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-deep:     #0d1117;
+      --bg-main:     #1b2838;
+      --bg-card:     #16202d;
+      --bg-panel:    #1e2d3d;
+      --green:       #7EC8A0;
+      --green-light: #a8d8b8;
+      --red:         #C47E7E;
+      --accent:      #66c0f4;
+      --text:        #c6d4df;
+      --text-muted:  #8f98a0;
+      --border:      rgba(102,192,244,0.15);
+      --glass:       rgba(22,32,45,0.9);
+    }
+
+    html.light-mode {
+      --bg-deep:    #f5f7fa;
+      --bg-main:    #ffffff;
+      --bg-card:    #ffffff;
+      --bg-panel:   #f0f4f8;
+      --green:      #2e7d50;
+      --green-light:#38966a;
+      --red:        #b03a3a;
+      --accent:     #1565a8;
+      --text:       #1a2332;
+      --text-muted: #546678;
+      --border:     rgba(20,40,80,0.1);
+      --glass:      rgba(255,255,255,0.95);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background-color: var(--bg-deep);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background 0.25s, color 0.25s;
+      padding-top: 72px;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    button {
+      cursor: pointer;
+      font-family: inherit;
+      border: none;
+      outline: none;
+    }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 14px 0;
+      transition: background 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      border-bottom: 1px solid transparent;
+    }
+    .navbar.scrolled {
+      background: var(--glass);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(102,192,244,0.18);
+      box-shadow: 0 1px 40px rgba(0,0,0,0.45), 0 0 0 0.5px rgba(102,192,244,0.08);
+    }
+    .navbar .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .nav-logo img {
+      height: 44px;
+      width: auto;
+      filter: drop-shadow(0 0 8px rgba(126,200,160,0.25));
+    }
+    .nav-logo-fallback {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #ffffff;
+      display: none;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+      margin-left: auto;
+    }
+    .nav-links a {
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-links a:hover { color: #ffffff; background: rgba(255,255,255,0.06); }
+    .btn-nav-cta {
+      background: var(--green);
+      color: #0d1117;
+      padding: 9px 20px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: background 0.2s, transform 0.15s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .btn-nav-cta:hover { background: var(--green-light); transform: translateY(-1px); }
+    .btn-nav-register {
+      background: transparent;
+      color: var(--green);
+      border: 1px solid var(--green);
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+    .btn-nav-register:hover { background: var(--green); color: #0d1117; }
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      border-radius: 6px;
+      padding: 6px 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover { color: var(--text); border-color: var(--green); background: rgba(126,200,160,0.08); }
+    html:not(.light-mode) .icon-moon { display: none; }
+    html.light-mode .icon-sun { display: none; }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      padding: 6px;
+      margin-left: auto;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-mobile {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      padding: 12px 24px 20px;
+      background: var(--bg-main);
+      border-top: 1px solid var(--border);
+    }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a {
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-mobile a:hover { color: #ffffff; background: rgba(255,255,255,0.06); }
+    .nav-mobile .btn-nav-cta { text-align: center; margin-top: 8px; }
+    @media (max-width: 640px) {
+      .nav-links, .btn-nav-cta, .btn-nav-register { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(180deg, var(--bg-main) 0%, var(--bg-deep) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 48px 24px 40px;
+      text-align: center;
+    }
+    .hero-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .hero h1 {
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .hero-sub {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    /* ── MAIN ── */
+    .main {
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 48px 16px 80px;
+    }
+
+    /* ── FORM CARD ── */
+    .form-card {
+      width: 100%;
+      max-width: 460px;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 36px 32px;
+    }
+    @media (max-width: 540px) {
+      .form-card {
+        padding: 28px 20px;
+        border-radius: 12px;
+      }
+    }
+
+    /* ── PLAN TABS ── */
+    .plan-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 24px;
+    }
+    .plan-tab {
+      flex: 1;
+      position: relative;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-muted);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      padding: 12px 10px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      line-height: 1.3;
+      text-align: center;
+    }
+    .plan-tab:hover:not(.active) {
+      background: rgba(255,255,255,0.07);
+      color: var(--text);
+    }
+    .plan-tab.active {
+      background: rgba(126,200,160,0.08);
+      border-color: var(--green);
+      color: var(--green);
+    }
+    .plan-tab-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+    }
+    .plan-tab-price {
+      font-size: 0.78rem;
+      color: inherit;
+      opacity: 0.85;
+    }
+    .plan-tab-badge {
+      background: var(--green);
+      color: #0d1117;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-top: 2px;
+    }
+    .plan-tab:not(.active) .plan-tab-badge {
+      background: var(--text-muted);
+      opacity: 0.6;
+    }
+
+    /* ── FIELD ── */
+    .field {
+      margin-bottom: 16px;
+    }
+    .field label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      letter-spacing: 0.01em;
+    }
+    .field input[type="email"] {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .field input[type="email"]:focus {
+      border-color: var(--accent);
+      background: rgba(102,192,244,0.04);
+    }
+    .field input[type="email"]::placeholder {
+      color: rgba(143,152,160,0.5);
+    }
+    .field input[type="email"].error-input {
+      border-color: var(--red);
+    }
+
+    /* ── ALERT ERROR ── */
+    #alert-error {
+      display: none;
+      background: rgba(196,126,126,0.1);
+      border: 1px solid rgba(196,126,126,0.3);
+      border-radius: 8px;
+      padding: 12px 14px;
+      color: var(--red);
+      font-size: 0.83rem;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+    #alert-error.visible {
+      display: block;
+    }
+
+    /* ── PAY BUTTON ── */
+    .btn-pay {
+      width: 100%;
+      padding: 14px 20px;
+      background: linear-gradient(135deg, var(--green), #5aad82);
+      color: #0d1117;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      letter-spacing: 0.01em;
+      margin-bottom: 12px;
+    }
+    .btn-pay:hover:not(:disabled) {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+    .btn-pay:active:not(:disabled) {
+      transform: translateY(0);
+    }
+    .btn-pay:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .btn-pay svg {
+      flex-shrink: 0;
+    }
+
+    /* ── SECURE NOTE ── */
+    .secure-note {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 0;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 22px 0;
+    }
+
+    /* ── BACK LINK ── */
+    .back-link {
+      display: block;
+      text-align: center;
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+    .back-link:hover {
+      color: var(--accent);
+    }
+
+    /* ── LIGHT MODE OVERRIDES ── */
+    html.light-mode .form-card {
+      background: #ffffff;
+      border-color: rgba(0,0,0,0.08);
+    }
+    html.light-mode .field input[type="email"] {
+      background: #f8fafc;
+      border-color: rgba(0,0,0,0.12);
+      color: #1e293b;
+    }
+    html.light-mode .field input[type="email"]:focus {
+      border-color: #2d8a5e;
+    }
+    html.light-mode .navbar {
+      background: rgba(255,255,255,0.95);
+      border-bottom-color: rgba(0,0,0,0.08);
+    }
+    html.light-mode .hero h1 {
+      color: #0f172a;
+    }
+    html.light-mode .btn-pay {
+      color: #fff;
+    }
+    html.light-mode .plan-tab.active {
+      background: rgba(46,125,80,0.08);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg-main);
+      border-top: 1px solid var(--border);
+      padding: 20px 24px;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      transition: background 0.25s, border-color 0.25s;
+    }
+    footer a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    footer a:hover { color: var(--accent); }
+    .footer-sep {
+      margin: 0 8px;
+      opacity: 0.4;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAVBAR ── -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a class="nav-logo" href="/">
+        <img
+          src="/logoPrimary.png"
+          alt="RevsGaming"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+        />
+        <span class="nav-logo-fallback">RevsGaming</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="/#features" data-i18n="nav.features">Features</a></li>
+        <li><a href="/#consolas" data-i18n="nav.consoles">Consoles</a></li>
+        <li><a href="/#netplay" data-i18n="nav.multiplayer">Multiplayer</a></li>
+        <li><a href="/changelog/">Changelog</a></li>
+      </ul>
+
+      <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+
+      <a href="/register.html" class="btn-nav-register" data-i18n="nav.signup">Sign up</a>
+      <a class="btn-nav-cta" href="/download/" data-i18n="nav.download">Download Beta</a>
+
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <div class="nav-mobile" id="navMobile">
+      <a href="/#features" data-i18n="nav.features">Features</a>
+      <a href="/#consolas" data-i18n="nav.consoles">Consoles</a>
+      <a href="/#netplay" data-i18n="nav.multiplayer">Multiplayer</a>
+      <a href="/changelog/">Changelog</a>
+      <a href="/register.html" class="btn-nav-register" style="text-align:center;" data-i18n="nav.signup">Sign up</a>
+      <a class="btn-nav-cta" href="/download/" style="text-align:center;" data-i18n="nav.download">Download Beta</a>
+      <div style="display:flex;justify-content:center;gap:8px;margin-top:4px;">
+        <button id="themeToggleMobile" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <p class="hero-label">Full Access</p>
+    <h1>Upgrade your plan</h1>
+    <p class="hero-sub">Enter your account email and choose a plan to activate full access</p>
+  </section>
+
+  <!-- ── MAIN ── -->
+  <main class="main">
+    <div class="form-card">
+
+      <!-- Plan tabs -->
+      <div class="plan-tabs" role="tablist" aria-label="Select plan">
+        <button
+          id="tab-monthly"
+          class="plan-tab"
+          role="tab"
+          aria-selected="false"
+          onclick="selectPlan('monthly')"
+        >
+          <span class="plan-tab-name">Monthly</span>
+          <span class="plan-tab-price">$2.99/month</span>
+        </button>
+        <button
+          id="tab-annual"
+          class="plan-tab active"
+          role="tab"
+          aria-selected="true"
+          onclick="selectPlan('annual')"
+        >
+          <span class="plan-tab-name">Annual</span>
+          <span class="plan-tab-price">$29.99/year</span>
+          <span class="plan-tab-badge">Save 2 months</span>
+        </button>
+      </div>
+
+      <!-- Email field -->
+      <div class="field">
+        <label for="upgradeEmail">Your account email</label>
+        <input
+          type="email"
+          id="upgradeEmail"
+          name="email"
+          placeholder="you@email.com"
+          autocomplete="email"
+          required
+        />
+      </div>
+
+      <!-- Error alert -->
+      <div id="alert-error" role="alert" aria-live="polite"></div>
+
+      <!-- Pay button -->
+      <button type="button" id="btnPay" class="btn-pay">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+          <line x1="1" y1="10" x2="23" y2="10"/>
+        </svg>
+        <span id="btnPayLabel">Pay $29.99 — Annual</span>
+      </button>
+
+      <!-- Secure note -->
+      <p class="secure-note">
+        🔒 Secure payment via Culqi &middot; SSL &middot; No recurring charges without consent
+      </p>
+
+      <hr class="divider" />
+
+      <a href="/" class="back-link">&larr; Back to home</a>
+
+    </div>
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <span>© 2026 RevsGaming &middot; RUC 20613365045</span>
+    <span class="footer-sep">|</span>
+    <a href="/legal/privacy.html">Privacy Policy</a>
+    <span class="footer-sep">|</span>
+    <a href="/legal/terms.html">Terms of Use</a>
+    <span class="footer-sep">|</span>
+    <a href="/libro-reclamaciones.html">Complaints Book</a>
+  </footer>
+
+  <script>
+    /* ================================================================
+       CONFIG
+    ================================================================ */
+    // Replace with pk_live_XXXX in production
+    const CULQI_PUBLIC_KEY = 'pk_test_XXXXXXXXXXXXXXXX'
+
+    const planAmounts = { monthly: 299, annual: 2999 }
+
+    // Read ?plan=monthly|annual from URL and pre-select
+    const _urlPlan = new URLSearchParams(window.location.search).get('plan')
+    let selectedPlan = (_urlPlan === 'monthly' || _urlPlan === 'annual') ? _urlPlan : 'annual'
+
+    /* ================================================================
+       PLAN SELECTION
+    ================================================================ */
+    function selectPlan(plan) {
+      selectedPlan = plan
+
+      const tabMonthly = document.getElementById('tab-monthly')
+      const tabAnnual  = document.getElementById('tab-annual')
+
+      tabMonthly.classList.toggle('active', plan === 'monthly')
+      tabAnnual.classList.toggle('active',  plan === 'annual')
+      tabMonthly.setAttribute('aria-selected', String(plan === 'monthly'))
+      tabAnnual.setAttribute('aria-selected',  String(plan === 'annual'))
+
+      document.getElementById('btnPayLabel').textContent =
+        plan === 'annual' ? 'Pay $29.99 — Annual' : 'Pay $2.99 — Monthly'
+    }
+
+    /* ================================================================
+       NAVBAR SCROLL
+    ================================================================ */
+    const navbar = document.getElementById('navbar')
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40)
+    }, { passive: true })
+
+    /* ================================================================
+       THEME TOGGLE
+    ================================================================ */
+    function applyThemeToggle() {
+      const isLight = document.documentElement.classList.toggle('light-mode')
+      localStorage.setItem('revsgaming-theme', isLight ? 'light' : 'dark')
+    }
+    const themeToggle       = document.getElementById('themeToggle')
+    const themeToggleMobile = document.getElementById('themeToggleMobile')
+    if (themeToggle)       themeToggle.addEventListener('click', applyThemeToggle)
+    if (themeToggleMobile) themeToggleMobile.addEventListener('click', applyThemeToggle)
+
+    /* ================================================================
+       HAMBURGER MENU
+    ================================================================ */
+    const hamburger = document.getElementById('hamburger')
+    const navMobile = document.getElementById('navMobile')
+    if (hamburger && navMobile) {
+      hamburger.addEventListener('click', () => {
+        const open = navMobile.classList.toggle('open')
+        hamburger.setAttribute('aria-expanded', String(open))
+        hamburger.classList.toggle('open', open)
+      })
+    }
+
+    /* ================================================================
+       HELPERS
+    ================================================================ */
+    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+    function showError(message) {
+      const el = document.getElementById('alert-error')
+      el.textContent = message
+      el.classList.add('visible')
+    }
+
+    function clearError() {
+      const el = document.getElementById('alert-error')
+      el.textContent = ''
+      el.classList.remove('visible')
+    }
+
+    function getEmail() {
+      return document.getElementById('upgradeEmail').value.trim()
+    }
+
+    /* ================================================================
+       PAY BUTTON CLICK
+    ================================================================ */
+    document.getElementById('btnPay').addEventListener('click', () => {
+      clearError()
+
+      const email = getEmail()
+      const emailInput = document.getElementById('upgradeEmail')
+
+      if (!EMAIL_RE.test(email)) {
+        emailInput.classList.add('error-input')
+        showError('Please enter a valid email address.')
+        emailInput.focus()
+        return
+      }
+      emailInput.classList.remove('error-input')
+
+      openCulqi(email)
+    })
+
+    document.getElementById('upgradeEmail').addEventListener('input', () => {
+      clearError()
+      document.getElementById('upgradeEmail').classList.remove('error-input')
+    })
+
+    /* ================================================================
+       CULQI INTEGRATION
+    ================================================================ */
+    function openCulqi(email) {
+      Culqi.publicKey = CULQI_PUBLIC_KEY
+
+      Culqi.settings({
+        title: 'RevsGaming',
+        currency: 'USD',
+        description: selectedPlan === 'annual'
+          ? 'Annual Access — RevsGaming'
+          : 'Monthly Access — RevsGaming',
+        amount: planAmounts[selectedPlan],
+        order: null
+      })
+
+      Culqi.options({
+        lang: 'en',
+        installments: false,
+        customButton: '',
+        style: {
+          logo: window.location.origin + '/logoPrimary.png',
+          maincolor: '#7EC8A0',
+          buttontext: '#0d1117',
+          maintext: '#c6d4df',
+          desctext: '#8f98a0'
+        }
+      })
+
+      Culqi.open()
+    }
+
+    // Global Culqi callback — fires when the user completes the payment form
+    window.culqi = async function () {
+      if (Culqi.token) {
+        const token = Culqi.token
+        Culqi.close()
+
+        const btnPay = document.getElementById('btnPay')
+        btnPay.disabled = true
+        btnPay.style.opacity = '0.6'
+
+        const email = getEmail()
+
+        try {
+          const response = await fetch('/api/payment', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              token: token.id,
+              email,
+              plan: selectedPlan
+            })
+          })
+
+          if (response.ok) {
+            window.location.href = '/success.html'
+          } else {
+            const body = await response.json().catch(() => ({}))
+            showError(body.message || 'Payment could not be processed. Please try again.')
+            btnPay.disabled = false
+            btnPay.style.opacity = ''
+          }
+        } catch (err) {
+          console.error(err)
+          showError('Connection error while processing payment. Please try again.')
+          btnPay.disabled = false
+          btnPay.style.opacity = ''
+        }
+
+      } else if (Culqi.error) {
+        showError(Culqi.error.user_message || 'An error occurred while processing your payment.')
+      }
+    }
+
+    /* Apply plan from URL on load */
+    selectPlan(selectedPlan)
+  </script>
+
+  <script src="/js/ui-effects.js" defer></script>
+</body>
+</html>

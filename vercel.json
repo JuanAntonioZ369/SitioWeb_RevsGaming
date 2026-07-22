@@ -35,6 +35,7 @@
     { "source": "/legal/terms",    "destination": "/legal/terms.html" },
     { "source": "/forgot-password", "destination": "/forgot-password.html" },
     { "source": "/reset-password",  "destination": "/reset-password.html" },
-    { "source": "/libro-reclamaciones", "destination": "/libro-reclamaciones.html" }
+    { "source": "/libro-reclamaciones", "destination": "/libro-reclamaciones.html" },
+    { "source": "/upgrade",             "destination": "/upgrade.html" }
   ]
 }
