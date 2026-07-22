@@ -441,7 +441,7 @@
 
       <a href="/register.html" class="btn-nav-register" data-i18n="nav.signup">Sign up</a>
 
-      <a class="btn-nav-cta" href="/download/" data-i18n="nav.download">Download Beta</a>
+      <a class="btn-nav-cta" href="/download/" data-i18n="nav.download">Download</a>
 
       <button class="hamburger" id="hamburger" aria-label="Menú" aria-expanded="false">
         <span></span>
@@ -456,7 +456,7 @@
       <a href="/#netplay" data-i18n="nav.multiplayer">Multiplayer</a>
       <a href="/changelog/">Changelog</a>
       <a href="/register.html" class="btn-nav-register" style="text-align:center;" data-i18n="nav.signup">Sign up</a>
-      <a class="btn-nav-cta" href="/download/" style="text-align:center;" data-i18n="nav.download">Download Beta</a>
+      <a class="btn-nav-cta" href="/download/" style="text-align:center;" data-i18n="nav.download">Download</a>
       <div style="display:flex;justify-content:center;gap:8px;margin-top:4px;">
         <button id="themeToggleMobile" class="theme-toggle" aria-label="Cambiar tema" title="Cambiar tema">
           <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -474,7 +474,7 @@
   <section class="hero">
     <h1 data-i18n="changelog.title">Changelog</h1>
     <p data-i18n="changelog.subtitle">Version history of RevsGaming</p>
-    <span class="badge-current" data-i18n="changelog.current">Current version: v0.84.0 Beta</span>
+    <span class="badge-current" data-i18n="changelog.current">Current version: v1.0.0</span>
   </section>
 
   <!-- FILTROS -->
@@ -676,9 +676,9 @@
   </footer>
 
   <script>
-    /* ── Latest release from GitHub API ── */
+    /* ── Latest release via API proxy (handles private repo auth server-side) ── */
     const REPO = 'JuanAntonioZ369/RetroGamingRevs_2.0';
-    fetch('https://api.github.com/repos/' + REPO + '/releases/latest')
+    fetch('/api/releases?type=latest')
       .then(r => r.json())
       .then(rel => {
         if (!rel || !rel.tag_name) return;

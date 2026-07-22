@@ -3,7 +3,8 @@
   "functions": {
     "api/payment.js":        { "maxDuration": 10, "memory": 128 },
     "api/activate-trial.js": { "maxDuration": 10, "memory": 128 },
-    "api/reclamacion.js":    { "maxDuration": 10, "memory": 128 }
+    "api/reclamacion.js":    { "maxDuration": 10, "memory": 128 },
+    "api/releases.js":       { "maxDuration": 10, "memory": 128 }
   },
   "headers": [
     {
