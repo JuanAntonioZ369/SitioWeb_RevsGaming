@@ -2916,111 +2916,13 @@
     }
 
     /* ----------------------------------------------------------
-       CULQI CHECKOUT
+       PAY BUTTON — redirige a register.html con el plan elegido
     ---------------------------------------------------------- */
-    var culqi;
-
-    function showPaymentError(msg) {
-      var errEl = document.getElementById('culqi-error');
-      if (!errEl) {
-        errEl = document.createElement('p');
-        errEl.id = 'culqi-error';
-        errEl.style.cssText = 'color:var(--red);font-size:0.85rem;margin-top:12px;text-align:center;';
-        var btn = document.getElementById('btnCulqi');
-        btn.parentNode.insertBefore(errEl, btn.nextSibling);
-      }
-      errEl.textContent = msg;
-      errEl.style.display = 'block';
-    }
-
-    function hidePaymentError() {
-      var errEl = document.getElementById('culqi-error');
-      if (errEl) errEl.style.display = 'none';
-    }
-
-    function setButtonLoading(loading) {
-      var btn = document.getElementById('btnCulqi');
-      btn.disabled = loading;
-      if (loading) {
-        btn.innerHTML = 'Processing...';
-      } else {
-        var label = selectedPlan === 'annual' ? 'Pay $39.99 annually' : 'Pay $3.99 monthly';
-        btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> <span id="btnCulqiLabel">' + label + '</span>';
-      }
-    }
-
-    function initCulqi() {
-      try {
-        /* REPLACE pk_test_XXXX with your pk_live_XXXX when you have Culqi production credentials */
-        culqi = new Culqi({
-          settings: {
-            title: 'RevsGaming',
-            currency: 'USD',
-            description: 'RevsGaming — Full Access',
-            amount: planAmounts[selectedPlan]
-          }
-        });
-
-        culqi.options({ lang: 'en', installments: false });
-
-        /* Callback que Culqi invoca tras generar el token en el checkout */
-        window.culqi = async function() {
-          if (!Culqi.token) return;
-
-          var token = Culqi.token.id;
-          var email = Culqi.token.email;
-
-          hidePaymentError();
-          setButtonLoading(true);
-
-          try {
-            var response = await fetch('/api/payment', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ token: token, email: email, plan: selectedPlan })
-            });
-
-            var data = await response.json();
-
-            if (!response.ok || !data.success) {
-              showPaymentError(data.error || 'Payment could not be processed. Please try again.');
-              setButtonLoading(false);
-              return;
-            }
-
-            /* Payment successful — redirect to confirmation page */
-            window.location.href = '/success.html';
-
-          } catch (fetchErr) {
-            showPaymentError('Connection error. Check your network and try again.');
-            setButtonLoading(false);
-          }
-        };
-
-        document.getElementById('btnCulqi').addEventListener('click', function() {
-          hidePaymentError();
-          culqi.settings({
-            title: 'RevsGaming',
-            currency: 'USD',
-            description: selectedPlan === 'annual' ? 'RevsGaming — Annual Access' : 'RevsGaming — Monthly Access',
-            amount: planAmounts[selectedPlan]
-          });
-          culqi.open();
-        });
-
-      } catch (err) {
-        console.warn('[RevsGaming] Culqi SDK not available:', err.message);
-        document.getElementById('btnCulqi').addEventListener('click', function() {
-          showPaymentError('The payment system is not available right now. Please try again later.');
-        });
-      }
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initCulqi);
-    } else {
-      initCulqi();
-    }
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('btnCulqi').addEventListener('click', function() {
+        window.location.href = '/register.html?plan=' + selectedPlan;
+      });
+    });
   </script>
 
   <script>

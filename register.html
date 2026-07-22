@@ -1253,9 +1253,12 @@
 
     let registeredEmail = ''
     let registeredUserId = ''
-    let selectedPlan = 'annual'
     let trialExpiresAt = ''
     const planAmounts = { monthly: 399, annual: 3999 }
+
+    // Pre-select plan from URL ?plan=monthly|annual
+    const _urlPlan = new URLSearchParams(window.location.search).get('plan')
+    let selectedPlan = (_urlPlan === 'monthly' || _urlPlan === 'annual') ? _urlPlan : 'annual'
 
     function regSelectPlan(plan) {
       selectedPlan = plan
@@ -1527,6 +1530,9 @@
       document.getElementById('panel-payment').classList.add('active')
 
       setButtonLoading('register-btn', false)
+
+      // Aplicar plan pre-seleccionado desde URL
+      regSelectPlan(selectedPlan)
 
       // Mostrar fecha de expiración del trial
       if (trialExpiresAt) {
