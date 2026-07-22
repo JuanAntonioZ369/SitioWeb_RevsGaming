@@ -621,7 +621,7 @@
       <div class="page-header">
         <div class="version-badge">
           <span class="dot-live"></span>
-          LATEST STABLE &nbsp;·&nbsp; v0.84.0 Beta
+          LATEST STABLE &nbsp;·&nbsp; <span id="versionBadge">v0.84.0</span>
         </div>
         <h1 class="page-title" data-i18n="dl.title">Download RevsGaming</h1>
         <p class="page-subtitle" data-i18n="dl.subtitle">
@@ -698,8 +698,8 @@
                 </svg>
               </div>
               <div class="dl-file-info">
-                <div class="dl-file-name">RevsGaming-Setup-0.84.0.exe</div>
-                <div class="dl-file-meta">Installer · Windows 10/11 · 64-bit</div>
+                <div class="dl-file-name" id="dlFileName">RevsGaming-Setup.exe</div>
+                <div class="dl-file-meta" id="dlFileMeta">Installer · Windows 10/11 · 64-bit</div>
               </div>
               <a
                 id="dlBtnWin"
@@ -780,11 +780,11 @@
             <div class="sidebar-title" data-i18n="dl.sidebar.version">Version Info</div>
             <div class="version-info-row">
               <span class="version-info-label" data-i18n="dl.ver.version">Version</span>
-              <span class="version-info-value green">v0.84.0 Beta</span>
+              <span class="version-info-value green" id="verNumber">v0.84.0</span>
             </div>
             <div class="version-info-row">
               <span class="version-info-label" data-i18n="dl.ver.released">Released</span>
-              <span class="version-info-value">2026</span>
+              <span class="version-info-value" id="verDate">2026</span>
             </div>
             <div class="version-info-row">
               <span class="version-info-label" data-i18n="dl.ver.license">License</span>
@@ -802,8 +802,8 @@
 
           <!-- What's new -->
           <div class="sidebar-card" style="margin-top:16px;">
-            <div class="sidebar-title" data-i18n="dl.sidebar.whats_new">What's new in v0.84.0</div>
-            <ul class="whats-new-list">
+            <div class="sidebar-title" id="whatsNewTitle">What's new in v0.84.0</div>
+            <ul class="whats-new-list" id="whatsNewList">
               <li data-i18n="dl.new.1">RetroArch netplay up to 4 players (MITM server)</li>
               <li data-i18n="dl.new.2">Cloud saves sync on game exit (Supabase Storage)</li>
               <li data-i18n="dl.new.3">Friends system with real-time online presence</li>
@@ -839,6 +839,15 @@
       </div><!-- /download-grid -->
 
     </div><!-- /container -->
+
+    <!-- Previous versions -->
+    <div class="container" style="margin-top:48px;padding-bottom:64px;">
+      <div id="prevVersionsSection" style="display:none;">
+        <h2 style="font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:700;color:var(--text-muted);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:16px;">Previous versions</h2>
+        <div id="prevVersionsList"></div>
+      </div>
+    </div>
+
   </main>
 
   <!-- ── FOOTER ── -->
@@ -919,36 +928,105 @@
         notice.style.display = 'inline-flex';
       }
 
-      // If Windows, try to get direct download link from GitHub API
-      // and update button href (graceful degradation to releases page)
-      if (os === 'windows') {
-        fetch('https://api.github.com/repos/JuanAntonioZ369/RetroGamingRevs_2.0/releases/tags/v0.84.0')
-          .then(r => r.json())
-          .then(data => {
-            if (!data.assets || !data.assets.length) return;
-            // Find the .exe installer
-            const exe = data.assets.find(a =>
-              a.name.endsWith('.exe') && a.browser_download_url
-            );
-            if (exe) {
-              const btn = document.getElementById('dlBtnWin');
-              if (btn) {
-                btn.href = exe.browser_download_url;
-                btn.removeAttribute('target');
-                btn.removeAttribute('rel');
-                // Update file meta
-                const meta = btn.closest('.dl-file-row')?.querySelector('.dl-file-meta');
-                if (meta) {
-                  const mb = (exe.size / 1024 / 1024).toFixed(0);
-                  meta.textContent = `Installer · Windows 10/11 · 64-bit · ${mb} MB`;
-                }
-                const name = btn.closest('.dl-file-row')?.querySelector('.dl-file-name');
-                if (name) name.textContent = exe.name;
-              }
+      // Fetch latest release from GitHub API — updates version, date, download link
+      const REPO = 'JuanAntonioZ369/RetroGamingRevs_2.0';
+
+      // ── Latest release ──
+      fetch(`https://api.github.com/repos/${REPO}/releases/latest`)
+        .then(r => r.json())
+        .then(rel => {
+          if (!rel || !rel.tag_name) return;
+
+          const ver = rel.tag_name;  // e.g. "v1.0.0"
+          const date = rel.published_at
+            ? new Date(rel.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+            : '2026';
+
+          // Update badge + sidebar version
+          const badge = document.getElementById('versionBadge');
+          if (badge) badge.textContent = ver;
+          const verNum = document.getElementById('verNumber');
+          if (verNum) verNum.textContent = ver;
+          const verDate = document.getElementById('verDate');
+          if (verDate) verDate.textContent = date;
+
+          // Update "What's new" title
+          const wnTitle = document.getElementById('whatsNewTitle');
+          if (wnTitle) wnTitle.textContent = `What's new in ${ver}`;
+
+          // Parse release notes into bullet points
+          const wnList = document.getElementById('whatsNewList');
+          if (wnList && rel.body) {
+            const lines = rel.body.split('\n')
+              .map(l => l.replace(/^[-*•]\s*/, '').trim())
+              .filter(l => l.length > 0 && !l.startsWith('#'));
+            if (lines.length) {
+              wnList.innerHTML = lines.slice(0, 8).map(l => `<li>${l}</li>`).join('');
             }
-          })
-          .catch(() => {/* keep fallback GitHub releases URL */});
-      }
+          }
+
+          // Update document title
+          document.title = `Download RevsGaming — ${ver}`;
+
+          // Find .exe asset and update download button
+          const exe = rel.assets && rel.assets.find(a =>
+            a.name.toLowerCase().endsWith('.exe') && a.browser_download_url
+          );
+          const btn = document.getElementById('dlBtnWin');
+          if (btn) {
+            if (exe) {
+              btn.href = exe.browser_download_url;
+              btn.removeAttribute('target');
+              btn.removeAttribute('rel');
+              const mb = (exe.size / 1024 / 1024).toFixed(0);
+              const dlMeta = document.getElementById('dlFileMeta');
+              if (dlMeta) dlMeta.textContent = `Installer · Windows 10/11 · 64-bit · ${mb} MB`;
+              const dlName = document.getElementById('dlFileName');
+              if (dlName) dlName.textContent = exe.name;
+            } else {
+              // No exe asset — point to releases page
+              btn.href = `https://github.com/${REPO}/releases/tag/${ver}`;
+              btn.setAttribute('target', '_blank');
+              btn.setAttribute('rel', 'noopener');
+            }
+          }
+        })
+        .catch(() => { /* keep static fallback */ });
+
+      // ── All releases — show previous versions ──
+      fetch(`https://api.github.com/repos/${REPO}/releases?per_page=10`)
+        .then(r => r.json())
+        .then(releases => {
+          if (!Array.isArray(releases) || releases.length < 2) return;
+          const prev = releases.slice(1); // skip latest (index 0)
+          const list = document.getElementById('prevVersionsList');
+          const section = document.getElementById('prevVersionsSection');
+          if (!list || !section) return;
+
+          list.innerHTML = prev.map(rel => {
+            const date = rel.published_at
+              ? new Date(rel.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+              : '';
+            const exe = rel.assets && rel.assets.find(a => a.name.toLowerCase().endsWith('.exe'));
+            const href = exe ? exe.browser_download_url : `https://github.com/${REPO}/releases/tag/${rel.tag_name}`;
+            return `
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;
+                background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;
+                margin-bottom:8px;gap:12px;flex-wrap:wrap;">
+                <div>
+                  <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--text);font-size:0.9rem;">${rel.tag_name}</span>
+                  ${date ? `<span style="color:var(--text-muted);font-size:0.78rem;margin-left:10px;">${date}</span>` : ''}
+                </div>
+                <a href="${href}" ${exe ? '' : 'target="_blank" rel="noopener"'}
+                   style="font-size:0.8rem;color:var(--accent);text-decoration:underline;text-underline-offset:3px;white-space:nowrap;">
+                  ${exe ? '⬇ Download' : 'View on GitHub'}
+                </a>
+              </div>`;
+          }).join('');
+
+          section.style.display = 'block';
+        })
+        .catch(() => {});
     })();
 
     /* ── i18n page keys ── */

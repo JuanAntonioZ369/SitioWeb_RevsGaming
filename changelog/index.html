@@ -489,8 +489,11 @@
   <main class="timeline-wrap" id="timeline">
     <div class="timeline-line" aria-hidden="true"></div>
 
+    <!-- Latest version — injected dynamically from GitHub API -->
+    <div id="latestVersionCard"></div>
+
     <!-- v0.84.0 -->
-    <article class="version-card" data-version="0.84.0">
+    <article class="version-card" data-version="0.84.0" id="card-0840">
       <div class="timeline-dot" aria-hidden="true"></div>
       <div class="card-inner">
         <div class="card-header">
@@ -673,6 +676,70 @@
   </footer>
 
   <script>
+    /* ── Latest release from GitHub API ── */
+    const REPO = 'JuanAntonioZ369/RetroGamingRevs_2.0';
+    fetch('https://api.github.com/repos/' + REPO + '/releases/latest')
+      .then(r => r.json())
+      .then(rel => {
+        if (!rel || !rel.tag_name) return;
+        const ver = rel.tag_name; // e.g. "v1.0.0"
+        const verClean = ver.replace(/^v/, ''); // "1.0.0"
+
+        // Update header badge
+        const headerBadge = document.querySelector('.badge-current');
+        if (headerBadge) headerBadge.textContent = 'Current version: ' + ver;
+
+        // If this version already has a static card, just mark it current and stop
+        const existingCard = document.querySelector('[data-version="' + verClean + '"]');
+        if (existingCard) {
+          // Remove CURRENT badge from old cards
+          document.querySelectorAll('.badge-actual').forEach(b => b.remove());
+          const hdr = existingCard.querySelector('.card-header');
+          if (hdr) {
+            const badge = document.createElement('span');
+            badge.className = 'badge-actual';
+            badge.textContent = 'CURRENT';
+            hdr.appendChild(badge);
+          }
+          return;
+        }
+
+        // Remove CURRENT badge from old static cards
+        document.querySelectorAll('.badge-actual').forEach(b => b.remove());
+
+        const date = rel.published_at
+          ? new Date(rel.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })
+          : '';
+
+        // Parse release body into list items
+        const lines = (rel.body || '').split('\n')
+          .map(l => l.replace(/^[-*•]\s*/, '').trim())
+          .filter(l => l.length > 0 && !l.startsWith('#') && !l.startsWith('<!--'));
+
+        const itemsHtml = lines.length > 0
+          ? lines.map(l => '<li class="change-item" data-type="NUEVO"><span class="tag tag-nuevo">NEW</span><span>' + l.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</span></li>').join('')
+          : '<li class="change-item" data-type="NUEVO"><span class="tag tag-nuevo">NEW</span><span>See GitHub release notes for details.</span></li>';
+
+        document.getElementById('latestVersionCard').innerHTML =
+          '<article class="version-card" data-version="' + verClean + '">' +
+          '<div class="timeline-dot" aria-hidden="true"></div>' +
+          '<div class="card-inner">' +
+          '<div class="card-header">' +
+          '<span class="version-num">' + ver + '</span>' +
+          (date ? '<span class="version-date">' + date + '</span>' : '') +
+          '<span class="badge-actual">CURRENT</span>' +
+          '</div>' +
+          '<div class="card-body"><ul class="change-list">' + itemsHtml + '</ul></div>' +
+          '</div></article>';
+
+        // Re-run filter if one is active
+        const activeFilter = document.querySelector('.filter-btn.active');
+        if (activeFilter && activeFilter.dataset.filter !== 'TODOS') {
+          activeFilter.click();
+        }
+      })
+      .catch(() => {});
+
     /* ── Navbar scroll ── */
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
