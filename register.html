@@ -1213,11 +1213,11 @@
           <div class="trial-upgrade">
             <p>Want to continue after the trial? Activate your plan now:</p>
             <div class="plan-tabs-mini">
-              <button id="reg-tab-monthly" class="plan-tab" onclick="regSelectPlan('monthly')">Monthly · $3.99</button>
-              <button id="reg-tab-annual" class="plan-tab active" onclick="regSelectPlan('annual')">Annual · $39.99 <span class="badge-rec">2 months free</span></button>
+              <button id="reg-tab-monthly" class="plan-tab" onclick="regSelectPlan('monthly')">Monthly · $2.99</button>
+              <button id="reg-tab-annual" class="plan-tab active" onclick="regSelectPlan('annual')">Annual · $29.99 <span class="badge-rec">2 months free</span></button>
             </div>
             <button class="btn-pay-upgrade" id="btnRegPay" onclick="openCulqi()">
-              <span id="reg-pay-label">Activate annual plan — $39.99</span>
+              <span id="reg-pay-label">Activate annual plan — $29.99</span>
             </button>
             <p class="trial-skip">Or continue with the free trial for now. Your access is already active.</p>
           </div>
@@ -1254,7 +1254,7 @@
     let registeredEmail = ''
     let registeredUserId = ''
     let trialExpiresAt = ''
-    const planAmounts = { monthly: 399, annual: 3999 }
+    const planAmounts = { monthly: 299, annual: 2999 }
 
     // Pre-select plan from URL ?plan=monthly|annual
     const _urlPlan = new URLSearchParams(window.location.search).get('plan')
@@ -1266,7 +1266,7 @@
       document.getElementById('reg-tab-annual').classList.toggle('active', plan === 'annual')
 
       document.getElementById('reg-pay-label').textContent =
-        plan === 'annual' ? 'Activate annual plan — $39.99' : 'Activate monthly plan — $3.99'
+        plan === 'annual' ? 'Activate annual plan — $29.99' : 'Activate monthly plan — $2.99'
     }
 
     /* ================================================================
