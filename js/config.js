@@ -10,7 +10,7 @@ window.RVGConfig = {
   brand:       'RevsGaming',
   year:        '2026',
   downloadUrl: '/download/',
-  version:     'v0.84.0',
+  version:     'v1.0.0',
 }
 
 ;(function () {
