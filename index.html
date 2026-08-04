@@ -2161,8 +2161,32 @@
       }
     }
 
+    /* ── REVS PART HEADERS (within showcase) ─────────────────── */
+    .revs-part-header {
+      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .revs-part-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
+      color: var(--green, #7EC8A0); text-transform: uppercase;
+      background: rgba(126,200,160,0.1); border: 1px solid rgba(126,200,160,0.25);
+      padding: 4px 10px; border-radius: 6px; flex-shrink: 0;
+    }
+    .revs-part-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem; font-weight: 600;
+      color: var(--text, #c6d4df); margin: 0; flex-shrink: 0;
+    }
+    .revs-part-line {
+      flex: 1; height: 1px;
+      background: linear-gradient(to right, rgba(102,192,244,0.2), transparent);
+    }
+    html.light-mode .revs-part-num { color: #2d8a5e; background: rgba(45,138,94,0.08); border-color: rgba(45,138,94,0.2); }
+    html.light-mode .revs-part-title { color: #1a2030; }
+
     /* ── HOW TO PLAY ─────────────────────────────────────────── */
-    .how-to-play { padding: 6rem 0; background: var(--bg-deep, #0d1117); }
+    .how-to-play { padding: 0; background: var(--bg-deep, #0d1117); }
     .htp-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -2459,66 +2483,202 @@
     <div class="container">
       <div class="section-header fade-in">
         <h2 class="section-title">This is RevsGaming</h2>
-        <p class="section-subtitle">An interface designed to get you into your games in seconds</p>
+        <p class="section-subtitle">Everything you need to play retro games online — from setup to your first online match</p>
       </div>
 
-      <!-- Main panel -->
-      <div class="showcase-main fade-in" id="showcaseMain">
-        <!-- Panel 1: Game Library -->
-        <div class="showcase-panel showcase-panel-1 active" id="panel1">
-          <img src="screenshot1.png" alt="Game Library in RevsGaming" class="showcase-img" />
-          <div class="showcase-caption">
-            <div class="showcase-caption-badges">
-              <span class="showcase-badge showcase-badge-blue">Library</span>
-              <span class="showcase-badge showcase-badge-green">Auto-detect</span>
-            </div>
-            <span class="showcase-caption-title">Game Library</span>
-            <span class="showcase-caption-desc">Detects your ROMs automatically. List/grid view, search and filter by system.</span>
-          </div>
-        </div>
-
-        <!-- Panel 2: Multiplayer Lobby -->
-        <div class="showcase-panel showcase-panel-2" id="panel2">
-          <img src="screenshot2.png" alt="Multiplayer Lobby in RevsGaming" class="showcase-img" />
-          <div class="showcase-caption">
-            <div class="showcase-caption-badges">
-              <span class="showcase-badge showcase-badge-green">Netplay</span>
-              <span class="showcase-badge showcase-badge-blue">2–4 players</span>
-            </div>
-            <span class="showcase-caption-title">Multiplayer Lobby</span>
-            <span class="showcase-caption-desc">Create a room with a 6-letter code for PS1, or up to 4 players with RetroArch. No setup required.</span>
-          </div>
-        </div>
-
-        <!-- Panel 3: Friends + Join (2 in 1) -->
-        <div class="showcase-panel showcase-panel-3" id="panel3">
-          <img src="screenshot3.png" alt="Friends System and Join in RevsGaming" class="showcase-img" />
-          <div class="showcase-caption">
-            <div class="showcase-caption-badges">
-              <span class="showcase-badge showcase-badge-green">Online Friends</span>
-              <span class="showcase-badge showcase-badge-red">Join &amp; Invite</span>
-            </div>
-            <span class="showcase-caption-title">Friends &amp; Join Sessions</span>
-            <span class="showcase-caption-desc">See who's online in real time and invite them directly. Join active sessions with one click from your friends list.</span>
-          </div>
-        </div>
+      <!-- PART 01: How to get started -->
+      <div class="revs-part-header fade-in">
+        <span class="revs-part-num">01</span>
+        <h3 class="revs-part-title">How to get started</h3>
+        <div class="revs-part-line"></div>
       </div>
 
-      <!-- Thumbnails -->
-      <div class="showcase-thumbs fade-in">
-        <button class="showcase-thumb thumb-1 active" onclick="switchPanel(1, this)" aria-label="View game library">
-          <div class="showcase-thumb-icon">&#127918;</div>
-          <div class="showcase-thumb-label">Game Library</div>
+      <div class="htp-grid">
+
+        <div class="htp-card fade-in">
+          <div class="htp-num">01</div>
+          <div class="htp-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="28" height="28">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <h3 class="htp-title">Create your account</h3>
+          <p class="htp-desc">Sign up at <a href="/register.html" style="color:var(--green);text-decoration:none;">revsgaming.com/register</a> to get 2 months free trial. Confirm your email and you're ready.</p>
+        </div>
+
+        <div class="htp-card fade-in">
+          <div class="htp-num">02</div>
+          <div class="htp-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="28" height="28">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+          </div>
+          <h3 class="htp-title">Download &amp; install</h3>
+          <p class="htp-desc">Download the <code style="background:rgba(255,255,255,0.08);padding:2px 6px;border-radius:4px;font-size:0.8em;">.exe</code> installer from the <a href="/download/" style="color:var(--green);text-decoration:none;">Download page</a>. Run it as Administrator and RevsGaming installs in under a minute.</p>
+        </div>
+
+        <div class="htp-card fade-in">
+          <div class="htp-num">03</div>
+          <div class="htp-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="28" height="28">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+          </div>
+          <h3 class="htp-title">Log in &amp; set your games folder</h3>
+          <p class="htp-desc">Open the app, log in with your credentials, and click the folder icon to select where your ROM files are stored. The library loads automatically.</p>
+        </div>
+
+        <div class="htp-card fade-in">
+          <div class="htp-num">04</div>
+          <div class="htp-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="28" height="28">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+          </div>
+          <h3 class="htp-title">Play solo</h3>
+          <p class="htp-desc">Click any game → choose <strong>Solo Mode</strong>. The emulator launches instantly. Your save states sync to the cloud automatically — never lose progress.</p>
+        </div>
+
+        <div class="htp-card fade-in">
+          <div class="htp-num">05</div>
+          <div class="htp-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="28" height="28">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <h3 class="htp-title">Play online (2 players)</h3>
+          <p class="htp-desc">Select a PS1 game → <strong>Online Mode</strong> → <strong>Create Room</strong>. Share the 6-digit code with your friend. When they join, the game starts automatically.</p>
+        </div>
+
+        <div class="htp-card fade-in">
+          <div class="htp-num">06</div>
+          <div class="htp-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="28" height="28">
+              <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+          <h3 class="htp-title">Play online (up to 4 players)</h3>
+          <p class="htp-desc">For multi-system 4-player sessions, select a RetroArch-compatible game → Online → <strong>4-Player Mode</strong>. Up to 4 friends simultaneously.</p>
+        </div>
+
+        <div class="htp-card fade-in">
+          <div class="htp-num">07</div>
+          <div class="htp-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="28" height="28">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="23" y1="11" x2="17" y2="11"/><line x1="20" y1="8" x2="20" y2="14"/>
+            </svg>
+          </div>
+          <h3 class="htp-title">Add friends</h3>
+          <p class="htp-desc">In the Friends panel (right sidebar), search by username and send a request. See who is online, what they're playing, and invite them to your session with one click.</p>
+        </div>
+
+        <div class="htp-card fade-in">
+          <div class="htp-num">08</div>
+          <div class="htp-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="28" height="28">
+              <rect x="6" y="2" width="12" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12" y2="18"/>
+            </svg>
+          </div>
+          <h3 class="htp-title">Gamepad support</h3>
+          <p class="htp-desc">Connect any USB or Bluetooth gamepad. Navigate the library with the D-Pad, launch games with A, toggle views with Y. Use the built-in <strong>Gamepad Detector</strong> to test your controller.</p>
+        </div>
+
+      </div>
+
+      <!-- PART 02: See it in action -->
+      <div class="revs-part-header fade-in" style="margin-top:4rem;">
+        <span class="revs-part-num">02</span>
+        <h3 class="revs-part-title">See it in action</h3>
+        <div class="revs-part-line"></div>
+      </div>
+
+      <div class="tut-stage fade-in" id="tutStage">
+        <div class="tut-slide active" data-index="0">
+          <img src="/tutorial/img/01.jpg" alt="Step 1 – Login screen">
+          <div class="tut-caption">
+            <div class="tut-caption-step">Step 01</div>
+            <div class="tut-caption-text">Log in with your email and password, or create a free account</div>
+          </div>
+        </div>
+        <div class="tut-slide" data-index="1">
+          <img src="/tutorial/img/02.jpg" alt="Step 2 – Set your games folder">
+          <div class="tut-caption">
+            <div class="tut-caption-step">Step 02</div>
+            <div class="tut-caption-text">Click the folder icon to select where your ROMs are stored — the library loads automatically</div>
+          </div>
+        </div>
+        <div class="tut-slide" data-index="2">
+          <img src="/tutorial/img/03.jpg" alt="Step 3 – Game library">
+          <div class="tut-caption">
+            <div class="tut-caption-step">Step 03</div>
+            <div class="tut-caption-text">Browse your library in list or grid view, search and filter by console</div>
+          </div>
+        </div>
+        <div class="tut-slide" data-index="3">
+          <img src="/tutorial/img/04.jpg" alt="Step 4 – Select game mode">
+          <div class="tut-caption">
+            <div class="tut-caption-step">Step 04</div>
+            <div class="tut-caption-text">Click a game to choose Solo or Online mode</div>
+          </div>
+        </div>
+        <div class="tut-slide" data-index="4">
+          <img src="/tutorial/img/05.jpg" alt="Step 5 – Solo play">
+          <div class="tut-caption">
+            <div class="tut-caption-step">Step 05</div>
+            <div class="tut-caption-text">Solo mode launches the emulator instantly with automatic cloud save sync</div>
+          </div>
+        </div>
+        <div class="tut-slide" data-index="5">
+          <img src="/tutorial/img/06.jpg" alt="Step 6 – Create online room">
+          <div class="tut-caption">
+            <div class="tut-caption-step">Step 06</div>
+            <div class="tut-caption-text">Create a room and share the 6-digit code with your friend to start a netplay session</div>
+          </div>
+        </div>
+        <div class="tut-slide" data-index="6">
+          <img src="/tutorial/img/07.jpg" alt="Step 7 – Friends panel">
+          <div class="tut-caption">
+            <div class="tut-caption-step">Step 07</div>
+            <div class="tut-caption-text">See which friends are online, what they're playing, and invite them directly</div>
+          </div>
+        </div>
+        <div class="tut-slide" data-index="7">
+          <img src="/tutorial/img/08.jpg" alt="Step 8 – Gamepad detector">
+          <div class="tut-caption">
+            <div class="tut-caption-step">Step 08</div>
+            <div class="tut-caption-text">Test your controller with the built-in Gamepad Detector — every button mapped in real time</div>
+          </div>
+        </div>
+        <button class="tut-arrow tut-arrow-prev" id="tutPrev" aria-label="Previous screenshot">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
-        <button class="showcase-thumb thumb-2" onclick="switchPanel(2, this)" aria-label="View multiplayer lobby">
-          <div class="showcase-thumb-icon">&#127760;</div>
-          <div class="showcase-thumb-label">Multiplayer Lobby</div>
-        </button>
-        <button class="showcase-thumb thumb-3" onclick="switchPanel(3, this)" aria-label="View friends and join sessions">
-          <div class="showcase-thumb-icon">&#128101;</div>
-          <div class="showcase-thumb-label">Friends &amp; Join</div>
+        <button class="tut-arrow tut-arrow-next" id="tutNext" aria-label="Next screenshot">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
         </button>
       </div>
+
+      <div class="tut-dots" id="tutDots" role="tablist" aria-label="Screenshot navigation">
+        <button class="tut-dot active" data-slide="0" aria-label="Screenshot 1" role="tab"></button>
+        <button class="tut-dot" data-slide="1" aria-label="Screenshot 2" role="tab"></button>
+        <button class="tut-dot" data-slide="2" aria-label="Screenshot 3" role="tab"></button>
+        <button class="tut-dot" data-slide="3" aria-label="Screenshot 4" role="tab"></button>
+        <button class="tut-dot" data-slide="4" aria-label="Screenshot 5" role="tab"></button>
+        <button class="tut-dot" data-slide="5" aria-label="Screenshot 6" role="tab"></button>
+        <button class="tut-dot" data-slide="6" aria-label="Screenshot 7" role="tab"></button>
+        <button class="tut-dot" data-slide="7" aria-label="Screenshot 8" role="tab"></button>
+      </div>
+
+      <div class="tut-thumbs" id="tutThumbs" aria-label="Screenshot thumbnails">
+        <div class="tut-thumb active" data-slide="0"><img src="/tutorial/img/01.jpg" alt="Step 1"></div>
+        <div class="tut-thumb" data-slide="1"><img src="/tutorial/img/02.jpg" alt="Step 2"></div>
+        <div class="tut-thumb" data-slide="2"><img src="/tutorial/img/03.jpg" alt="Step 3"></div>
+        <div class="tut-thumb" data-slide="3"><img src="/tutorial/img/04.jpg" alt="Step 4"></div>
+        <div class="tut-thumb" data-slide="4"><img src="/tutorial/img/05.jpg" alt="Step 5"></div>
+        <div class="tut-thumb" data-slide="5"><img src="/tutorial/img/06.jpg" alt="Step 6"></div>
+        <div class="tut-thumb" data-slide="6"><img src="/tutorial/img/07.jpg" alt="Step 7"></div>
+        <div class="tut-thumb" data-slide="7"><img src="/tutorial/img/08.jpg" alt="Step 8"></div>
+      </div>
+
     </div>
   </section>
 
@@ -2762,221 +2922,6 @@
           <div class="install-step-title" data-i18n="install.step3.title">Add your games</div>
           <div class="install-step-desc" data-i18n="install.step3.desc">Put your ROMs in any folder and point RevsGaming to it. Games appear automatically — ready to play.</div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       HOW TO PLAY
-  ============================================================ -->
-  <section class="how-to-play" id="how-to-play">
-    <div class="container">
-      <div class="section-header fade-in">
-        <h2 class="section-title">How to Play</h2>
-        <p class="section-subtitle">From download to your first match in minutes</p>
-      </div>
-
-      <div class="htp-grid">
-
-        <div class="htp-card fade-in">
-          <div class="htp-num">01</div>
-          <div class="htp-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="28" height="28">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-            </svg>
-          </div>
-          <h3 class="htp-title">Create your account</h3>
-          <p class="htp-desc">Sign up at <a href="/register.html" style="color:var(--green);text-decoration:none;">revsgaming.com/register</a> to get 2 months free trial. Confirm your email and you're ready.</p>
-        </div>
-
-        <div class="htp-card fade-in">
-          <div class="htp-num">02</div>
-          <div class="htp-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="28" height="28">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
-            </svg>
-          </div>
-          <h3 class="htp-title">Download &amp; install</h3>
-          <p class="htp-desc">Download the <code style="background:rgba(255,255,255,0.08);padding:2px 6px;border-radius:4px;font-size:0.8em;">.exe</code> installer from the <a href="/download/" style="color:var(--green);text-decoration:none;">Download page</a>. Run it as Administrator and RevsGaming installs in under a minute.</p>
-        </div>
-
-        <div class="htp-card fade-in">
-          <div class="htp-num">03</div>
-          <div class="htp-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="28" height="28">
-              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
-            </svg>
-          </div>
-          <h3 class="htp-title">Log in &amp; set your games folder</h3>
-          <p class="htp-desc">Open the app, log in with your credentials, and click the folder icon to select where your ROM files are stored. The library loads automatically.</p>
-        </div>
-
-        <div class="htp-card fade-in">
-          <div class="htp-num">04</div>
-          <div class="htp-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="28" height="28">
-              <polygon points="5 3 19 12 5 21 5 3"/>
-            </svg>
-          </div>
-          <h3 class="htp-title">Play solo</h3>
-          <p class="htp-desc">Click any game → choose <strong>Solo Mode</strong>. The emulator launches instantly. Your save states sync to the cloud automatically — never lose progress.</p>
-        </div>
-
-        <div class="htp-card fade-in">
-          <div class="htp-num">05</div>
-          <div class="htp-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="28" height="28">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-            </svg>
-          </div>
-          <h3 class="htp-title">Play online (2 players)</h3>
-          <p class="htp-desc">Select a PS1 game → <strong>Online Mode</strong> → <strong>Create Room</strong>. Share the 6-digit code with your friend. When they join, the game starts automatically.</p>
-        </div>
-
-        <div class="htp-card fade-in">
-          <div class="htp-num">06</div>
-          <div class="htp-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="28" height="28">
-              <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-            </svg>
-          </div>
-          <h3 class="htp-title">Play online (up to 4 players)</h3>
-          <p class="htp-desc">For multi-system 4-player sessions, select a RetroArch-compatible game → Online → <strong>4-Player Mode</strong>. The Multitap emulation lets you play with up to 4 friends simultaneously.</p>
-        </div>
-
-        <div class="htp-card fade-in">
-          <div class="htp-num">07</div>
-          <div class="htp-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="28" height="28">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="23" y1="11" x2="17" y2="11"/><line x1="20" y1="8" x2="20" y2="14"/>
-            </svg>
-          </div>
-          <h3 class="htp-title">Add friends</h3>
-          <p class="htp-desc">In the Friends panel (right sidebar), search by username and send a request. See who is online, what they're playing, and invite them to your session with one click.</p>
-        </div>
-
-        <div class="htp-card fade-in">
-          <div class="htp-num">08</div>
-          <div class="htp-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="28" height="28">
-              <rect x="6" y="2" width="12" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12" y2="18"/>
-            </svg>
-          </div>
-          <h3 class="htp-title">Gamepad support</h3>
-          <p class="htp-desc">Connect any USB or Bluetooth gamepad. Navigate the library with the D-Pad, launch games with A, toggle views with Y. Use the built-in <strong>Gamepad Detector</strong> to test your controller.</p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       TUTORIAL SCREENSHOTS CAROUSEL
-  ============================================================ -->
-  <section class="tut-carousel" id="tutorial-screenshots">
-    <div class="container">
-      <div class="section-header fade-in">
-        <h2 class="section-title" style="font-size:1.6rem;">See it in action</h2>
-        <p class="section-subtitle">Step-by-step screenshots of the app</p>
-      </div>
-
-      <div class="tut-stage fade-in" id="tutStage">
-        <!-- Slide 1 -->
-        <div class="tut-slide active" data-index="0">
-          <img src="/tutorial/img/01.jpg" alt="Step 1 – Login screen" onerror="this.closest('.tut-slide').querySelector('.tut-caption-step').textContent='Step 01'">
-          <div class="tut-caption">
-            <div class="tut-caption-step">Step 01</div>
-            <div class="tut-caption-text">Log in with your email and password, or create a free account</div>
-          </div>
-        </div>
-        <!-- Slide 2 -->
-        <div class="tut-slide" data-index="1">
-          <img src="/tutorial/img/02.jpg" alt="Step 2 – Set your games folder">
-          <div class="tut-caption">
-            <div class="tut-caption-step">Step 02</div>
-            <div class="tut-caption-text">Click the folder icon to select where your ROMs are stored — the library loads automatically</div>
-          </div>
-        </div>
-        <!-- Slide 3 -->
-        <div class="tut-slide" data-index="2">
-          <img src="/tutorial/img/03.jpg" alt="Step 3 – Game library">
-          <div class="tut-caption">
-            <div class="tut-caption-step">Step 03</div>
-            <div class="tut-caption-text">Browse your library in list or grid view, search and filter by console</div>
-          </div>
-        </div>
-        <!-- Slide 4 -->
-        <div class="tut-slide" data-index="3">
-          <img src="/tutorial/img/04.jpg" alt="Step 4 – Select game mode">
-          <div class="tut-caption">
-            <div class="tut-caption-step">Step 04</div>
-            <div class="tut-caption-text">Click a game to choose Solo or Online mode</div>
-          </div>
-        </div>
-        <!-- Slide 5 -->
-        <div class="tut-slide" data-index="4">
-          <img src="/tutorial/img/05.jpg" alt="Step 5 – Solo play">
-          <div class="tut-caption">
-            <div class="tut-caption-step">Step 05</div>
-            <div class="tut-caption-text">Solo mode launches the emulator instantly with automatic cloud save sync</div>
-          </div>
-        </div>
-        <!-- Slide 6 -->
-        <div class="tut-slide" data-index="5">
-          <img src="/tutorial/img/06.jpg" alt="Step 6 – Create online room">
-          <div class="tut-caption">
-            <div class="tut-caption-step">Step 06</div>
-            <div class="tut-caption-text">Create a room and share the 6-digit code with your friend to start a netplay session</div>
-          </div>
-        </div>
-        <!-- Slide 7 -->
-        <div class="tut-slide" data-index="6">
-          <img src="/tutorial/img/07.jpg" alt="Step 7 – Friends panel">
-          <div class="tut-caption">
-            <div class="tut-caption-step">Step 07</div>
-            <div class="tut-caption-text">See which friends are online, what they're playing, and invite them directly</div>
-          </div>
-        </div>
-        <!-- Slide 8 -->
-        <div class="tut-slide" data-index="7">
-          <img src="/tutorial/img/08.jpg" alt="Step 8 – Gamepad detector">
-          <div class="tut-caption">
-            <div class="tut-caption-step">Step 08</div>
-            <div class="tut-caption-text">Test your controller with the built-in Gamepad Detector — every button mapped in real time</div>
-          </div>
-        </div>
-
-        <!-- Navigation arrows -->
-        <button class="tut-arrow tut-arrow-prev" id="tutPrev" aria-label="Previous screenshot">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-        </button>
-        <button class="tut-arrow tut-arrow-next" id="tutNext" aria-label="Next screenshot">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
-      </div>
-
-      <!-- Dot indicators -->
-      <div class="tut-dots" id="tutDots" role="tablist" aria-label="Screenshot navigation">
-        <button class="tut-dot active" data-slide="0" aria-label="Screenshot 1" role="tab"></button>
-        <button class="tut-dot" data-slide="1" aria-label="Screenshot 2" role="tab"></button>
-        <button class="tut-dot" data-slide="2" aria-label="Screenshot 3" role="tab"></button>
-        <button class="tut-dot" data-slide="3" aria-label="Screenshot 4" role="tab"></button>
-        <button class="tut-dot" data-slide="4" aria-label="Screenshot 5" role="tab"></button>
-        <button class="tut-dot" data-slide="5" aria-label="Screenshot 6" role="tab"></button>
-        <button class="tut-dot" data-slide="6" aria-label="Screenshot 7" role="tab"></button>
-        <button class="tut-dot" data-slide="7" aria-label="Screenshot 8" role="tab"></button>
-      </div>
-
-      <!-- Thumbnail strip -->
-      <div class="tut-thumbs" id="tutThumbs" aria-label="Screenshot thumbnails">
-        <div class="tut-thumb active" data-slide="0"><img src="/tutorial/img/01.jpg" alt="Step 1"></div>
-        <div class="tut-thumb" data-slide="1"><img src="/tutorial/img/02.jpg" alt="Step 2"></div>
-        <div class="tut-thumb" data-slide="2"><img src="/tutorial/img/03.jpg" alt="Step 3"></div>
-        <div class="tut-thumb" data-slide="3"><img src="/tutorial/img/04.jpg" alt="Step 4"></div>
-        <div class="tut-thumb" data-slide="4"><img src="/tutorial/img/05.jpg" alt="Step 5"></div>
-        <div class="tut-thumb" data-slide="5"><img src="/tutorial/img/06.jpg" alt="Step 6"></div>
-        <div class="tut-thumb" data-slide="6"><img src="/tutorial/img/07.jpg" alt="Step 7"></div>
-        <div class="tut-thumb" data-slide="7"><img src="/tutorial/img/08.jpg" alt="Step 8"></div>
       </div>
     </div>
   </section>
@@ -3562,8 +3507,13 @@
       slides[current].classList.add('active')
       dots[current].classList.add('active')
       thumbs[current].classList.add('active')
-      // keep active thumb visible
-      thumbs[current].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+      // Only scroll the thumbnail strip horizontally, never the page
+      var strip = document.getElementById('tutThumbs')
+      if (strip && thumbs[current]) {
+        var th = thumbs[current]
+        var offset = th.offsetLeft - (strip.clientWidth - th.clientWidth) / 2
+        strip.scrollLeft = Math.max(0, offset)
+      }
     }
 
     function startAuto() {
