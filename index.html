@@ -2211,6 +2211,81 @@
     html.light-mode .htp-title{ color: #1a2030; }
     html.light-mode .htp-desc { color: #4a5568; }
     html.light-mode .htp-card:hover { border-color: rgba(0,120,80,0.3); }
+
+    /* ── TUTORIAL CAROUSEL ───────────────────────────────────── */
+    .tut-carousel { padding: 0 0 5rem; background: var(--bg-deep, #0d1117); }
+    .tut-carousel .section-header { margin-bottom: 2.5rem; }
+    .tut-stage {
+      position: relative;
+      background: var(--bg-card, #16202d);
+      border: 1px solid var(--border, rgba(102,192,244,0.12));
+      border-radius: 18px;
+      overflow: hidden;
+      aspect-ratio: 16/9;
+      max-height: 520px;
+    }
+    .tut-slide {
+      position: absolute; inset: 0;
+      display: none;
+      align-items: center; justify-content: center;
+      flex-direction: column;
+    }
+    .tut-slide.active { display: flex; }
+    .tut-slide img {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      background: #0a0f16;
+    }
+    .tut-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(10,15,22,0.92));
+      padding: 2rem 1.5rem 1.25rem;
+      text-align: center;
+    }
+    .tut-caption-step {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+      color: var(--green, #7EC8A0); text-transform: uppercase; margin-bottom: 4px;
+    }
+    .tut-caption-text {
+      font-size: 0.9rem; color: #c6d4df; line-height: 1.4;
+    }
+    .tut-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(22,32,45,0.85); border: 1px solid rgba(102,192,244,0.2);
+      color: var(--text, #c6d4df); width: 42px; height: 42px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: background 0.2s, border-color 0.2s; z-index: 2;
+    }
+    .tut-arrow:hover { background: rgba(126,200,160,0.2); border-color: rgba(126,200,160,0.4); }
+    .tut-arrow-prev { left: 14px; }
+    .tut-arrow-next { right: 14px; }
+    .tut-dots {
+      display: flex; justify-content: center; gap: 8px; margin-top: 1.25rem;
+    }
+    .tut-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(102,192,244,0.2); cursor: pointer;
+      transition: background 0.2s, transform 0.2s; border: none;
+    }
+    .tut-dot.active { background: var(--green, #7EC8A0); transform: scale(1.3); }
+    .tut-thumbs {
+      display: flex; gap: 8px; margin-top: 1rem; overflow-x: auto;
+      scrollbar-width: thin; scrollbar-color: rgba(126,200,160,0.3) transparent;
+      padding-bottom: 4px;
+    }
+    .tut-thumb {
+      flex-shrink: 0; width: 80px; height: 52px; border-radius: 8px; overflow: hidden;
+      border: 2px solid transparent; cursor: pointer; transition: border-color 0.2s;
+      background: var(--bg-card, #16202d);
+    }
+    .tut-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .tut-thumb.active { border-color: var(--green, #7EC8A0); }
+    html.light-mode .tut-stage { background: #f0f4f8; border-color: rgba(0,0,0,0.08); }
+    html.light-mode .tut-caption { background: linear-gradient(transparent, rgba(240,244,248,0.95)); }
+    html.light-mode .tut-caption-text { color: #1a2030; }
+    html.light-mode .tut-arrow { background: rgba(255,255,255,0.9); border-color: rgba(0,0,0,0.12); color: #1a2030; }
+    html.light-mode .tut-thumb { background: #e2e8f0; }
   </style>
 </head>
 <body>
@@ -2796,6 +2871,117 @@
   </section>
 
   <!-- ============================================================
+       TUTORIAL SCREENSHOTS CAROUSEL
+  ============================================================ -->
+  <section class="tut-carousel" id="tutorial-screenshots">
+    <div class="container">
+      <div class="section-header fade-in">
+        <h2 class="section-title" style="font-size:1.6rem;">See it in action</h2>
+        <p class="section-subtitle">Step-by-step screenshots of the app</p>
+      </div>
+
+      <div class="tut-stage fade-in" id="tutStage">
+        <!-- Slide 1 -->
+        <div class="tut-slide active" data-index="0">
+          <img src="/tutorial/img/01.jpg" alt="Step 1 – Login screen" onerror="this.closest('.tut-slide').querySelector('.tut-caption-step').textContent='Step 01'">
+          <div class="tut-caption">
+            <div class="tut-caption-step">Step 01</div>
+            <div class="tut-caption-text">Log in with your email and password, or create a free account</div>
+          </div>
+        </div>
+        <!-- Slide 2 -->
+        <div class="tut-slide" data-index="1">
+          <img src="/tutorial/img/02.jpg" alt="Step 2 – Set your games folder">
+          <div class="tut-caption">
+            <div class="tut-caption-step">Step 02</div>
+            <div class="tut-caption-text">Click the folder icon to select where your ROMs are stored — the library loads automatically</div>
+          </div>
+        </div>
+        <!-- Slide 3 -->
+        <div class="tut-slide" data-index="2">
+          <img src="/tutorial/img/03.jpg" alt="Step 3 – Game library">
+          <div class="tut-caption">
+            <div class="tut-caption-step">Step 03</div>
+            <div class="tut-caption-text">Browse your library in list or grid view, search and filter by console</div>
+          </div>
+        </div>
+        <!-- Slide 4 -->
+        <div class="tut-slide" data-index="3">
+          <img src="/tutorial/img/04.jpg" alt="Step 4 – Select game mode">
+          <div class="tut-caption">
+            <div class="tut-caption-step">Step 04</div>
+            <div class="tut-caption-text">Click a game to choose Solo or Online mode</div>
+          </div>
+        </div>
+        <!-- Slide 5 -->
+        <div class="tut-slide" data-index="4">
+          <img src="/tutorial/img/05.jpg" alt="Step 5 – Solo play">
+          <div class="tut-caption">
+            <div class="tut-caption-step">Step 05</div>
+            <div class="tut-caption-text">Solo mode launches the emulator instantly with automatic cloud save sync</div>
+          </div>
+        </div>
+        <!-- Slide 6 -->
+        <div class="tut-slide" data-index="5">
+          <img src="/tutorial/img/06.jpg" alt="Step 6 – Create online room">
+          <div class="tut-caption">
+            <div class="tut-caption-step">Step 06</div>
+            <div class="tut-caption-text">Create a room and share the 6-digit code with your friend to start a netplay session</div>
+          </div>
+        </div>
+        <!-- Slide 7 -->
+        <div class="tut-slide" data-index="6">
+          <img src="/tutorial/img/07.jpg" alt="Step 7 – Friends panel">
+          <div class="tut-caption">
+            <div class="tut-caption-step">Step 07</div>
+            <div class="tut-caption-text">See which friends are online, what they're playing, and invite them directly</div>
+          </div>
+        </div>
+        <!-- Slide 8 -->
+        <div class="tut-slide" data-index="7">
+          <img src="/tutorial/img/08.jpg" alt="Step 8 – Gamepad detector">
+          <div class="tut-caption">
+            <div class="tut-caption-step">Step 08</div>
+            <div class="tut-caption-text">Test your controller with the built-in Gamepad Detector — every button mapped in real time</div>
+          </div>
+        </div>
+
+        <!-- Navigation arrows -->
+        <button class="tut-arrow tut-arrow-prev" id="tutPrev" aria-label="Previous screenshot">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="tut-arrow tut-arrow-next" id="tutNext" aria-label="Next screenshot">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+
+      <!-- Dot indicators -->
+      <div class="tut-dots" id="tutDots" role="tablist" aria-label="Screenshot navigation">
+        <button class="tut-dot active" data-slide="0" aria-label="Screenshot 1" role="tab"></button>
+        <button class="tut-dot" data-slide="1" aria-label="Screenshot 2" role="tab"></button>
+        <button class="tut-dot" data-slide="2" aria-label="Screenshot 3" role="tab"></button>
+        <button class="tut-dot" data-slide="3" aria-label="Screenshot 4" role="tab"></button>
+        <button class="tut-dot" data-slide="4" aria-label="Screenshot 5" role="tab"></button>
+        <button class="tut-dot" data-slide="5" aria-label="Screenshot 6" role="tab"></button>
+        <button class="tut-dot" data-slide="6" aria-label="Screenshot 7" role="tab"></button>
+        <button class="tut-dot" data-slide="7" aria-label="Screenshot 8" role="tab"></button>
+      </div>
+
+      <!-- Thumbnail strip -->
+      <div class="tut-thumbs" id="tutThumbs" aria-label="Screenshot thumbnails">
+        <div class="tut-thumb active" data-slide="0"><img src="/tutorial/img/01.jpg" alt="Step 1"></div>
+        <div class="tut-thumb" data-slide="1"><img src="/tutorial/img/02.jpg" alt="Step 2"></div>
+        <div class="tut-thumb" data-slide="2"><img src="/tutorial/img/03.jpg" alt="Step 3"></div>
+        <div class="tut-thumb" data-slide="3"><img src="/tutorial/img/04.jpg" alt="Step 4"></div>
+        <div class="tut-thumb" data-slide="4"><img src="/tutorial/img/05.jpg" alt="Step 5"></div>
+        <div class="tut-thumb" data-slide="5"><img src="/tutorial/img/06.jpg" alt="Step 6"></div>
+        <div class="tut-thumb" data-slide="6"><img src="/tutorial/img/07.jpg" alt="Step 7"></div>
+        <div class="tut-thumb" data-slide="7"><img src="/tutorial/img/08.jpg" alt="Step 8"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
        CULQI / SUPPORT
   ============================================================ -->
   <!-- Developer note:
@@ -3357,5 +3543,57 @@
   <script src="/js/config.js"></script>
   <script src="/js/i18n.js"></script>
   <script src="/js/app-link.js"></script>
+
+  <!-- Tutorial carousel -->
+  <script>
+  (function () {
+    var slides  = document.querySelectorAll('.tut-slide')
+    var dots    = document.querySelectorAll('.tut-dot')
+    var thumbs  = document.querySelectorAll('.tut-thumb')
+    var current = 0
+    var total   = slides.length
+    var timer
+
+    function goTo(n) {
+      slides[current].classList.remove('active')
+      dots[current].classList.remove('active')
+      thumbs[current].classList.remove('active')
+      current = (n + total) % total
+      slides[current].classList.add('active')
+      dots[current].classList.add('active')
+      thumbs[current].classList.add('active')
+      // keep active thumb visible
+      thumbs[current].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+    }
+
+    function startAuto() {
+      clearInterval(timer)
+      timer = setInterval(function () { goTo(current + 1) }, 5000)
+    }
+
+    var prev = document.getElementById('tutPrev')
+    var next = document.getElementById('tutNext')
+    if (prev) prev.addEventListener('click', function () { goTo(current - 1); startAuto() })
+    if (next) next.addEventListener('click', function () { goTo(current + 1); startAuto() })
+
+    dots.forEach(function (dot) {
+      dot.addEventListener('click', function () { goTo(+this.dataset.slide); startAuto() })
+    })
+    thumbs.forEach(function (th) {
+      th.addEventListener('click', function () { goTo(+this.dataset.slide); startAuto() })
+    })
+
+    // Keyboard navigation when stage is focused/hovered
+    var stage = document.getElementById('tutStage')
+    if (stage) {
+      stage.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowLeft')  { goTo(current - 1); startAuto() }
+        if (e.key === 'ArrowRight') { goTo(current + 1); startAuto() }
+      })
+    }
+
+    startAuto()
+  })()
+  </script>
 </body>
 </html>
