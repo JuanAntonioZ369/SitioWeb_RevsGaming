@@ -984,6 +984,10 @@
     html.light-mode .form-panel-title { color: #0f172a; }
     html.light-mode .price-card-name { color: #0f172a; }
     html.light-mode .btn-primary { color: #fff; }
+    .pw-strength-bar { height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; margin-bottom: 4px; }
+    .pw-strength-fill { height: 100%; border-radius: 2px; transition: width 0.3s, background 0.3s; width: 0%; }
+    .pw-strength-label { font-size: 0.75rem; color: var(--text-muted, #8f98a0); }
+    html.light-mode .pw-strength-bar { background: rgba(0,0,0,0.08); }
   </style>
 </head>
 <body>
@@ -1114,7 +1118,7 @@
                 type="password"
                 id="password"
                 name="password"
-                placeholder="At least 6 characters"
+                placeholder="At least 8 characters"
                 autocomplete="new-password"
                 class="has-toggle"
                 required
@@ -1128,6 +1132,12 @@
                   <path d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>
                 </svg>
               </button>
+            </div>
+            <div class="pw-strength-wrap" id="pw-strength-wrap" style="display:none;margin-top:8px;">
+              <div class="pw-strength-bar">
+                <div class="pw-strength-fill" id="pw-strength-fill"></div>
+              </div>
+              <span class="pw-strength-label" id="pw-strength-label"></span>
             </div>
             <p class="field-error" id="password-error"></p>
           </div>
@@ -1319,6 +1329,32 @@
     setupToggle('toggle-password', 'password', 'eye-icon-1', 'eye-off-icon-1')
     setupToggle('toggle-confirm', 'confirm-password', 'eye-icon-2', 'eye-off-icon-2')
 
+    // Indicador de fortaleza de contraseña
+    document.getElementById('password').addEventListener('input', function() {
+      const val = this.value
+      const wrap = document.getElementById('pw-strength-wrap')
+      const fill = document.getElementById('pw-strength-fill')
+      const label = document.getElementById('pw-strength-label')
+      if (!val) { wrap.style.display = 'none'; return; }
+      wrap.style.display = 'block'
+      let score = 0
+      if (val.length >= 8) score++
+      if (/[A-Z]/.test(val)) score++
+      if (/[0-9]/.test(val)) score++
+      if (/[^A-Za-z0-9]/.test(val)) score++
+      const levels = [
+        { pct: '25%', color: '#e85d5d', text: 'Weak' },
+        { pct: '50%', color: '#f0a442', text: 'Fair' },
+        { pct: '75%', color: '#66c0f4', text: 'Good' },
+        { pct: '100%', color: '#7EC8A0', text: 'Strong' }
+      ]
+      const lvl = levels[score - 1] || levels[0]
+      fill.style.width = lvl.pct
+      fill.style.background = lvl.color
+      label.textContent = lvl.text
+      label.style.color = lvl.color
+    })
+
     /* ================================================================
        HELPERS UI
     ================================================================ */
@@ -1397,8 +1433,12 @@
         valid = false
       }
 
-      if (password.length < 6) {
-        showFieldError('password-error', 'Password must be at least 6 characters')
+      const pwStrong = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}$/
+      if (password.length < 8) {
+        showFieldError('password-error', 'Password must be at least 8 characters')
+        valid = false
+      } else if (!pwStrong.test(password)) {
+        showFieldError('password-error', 'Password must include at least one uppercase letter, one number and one special character')
         valid = false
       }
 
@@ -1528,6 +1568,19 @@
       // Cambiar paneles
       document.getElementById('panel-register').classList.remove('active')
       document.getElementById('panel-payment').classList.add('active')
+
+      // Banner de confirmación de email
+      const existingBanner = document.getElementById('email-confirm-banner')
+      if (!existingBanner) {
+        const banner = document.createElement('div')
+        banner.id = 'email-confirm-banner'
+        banner.style.cssText = 'background:rgba(126,200,160,0.12);border:1px solid rgba(126,200,160,0.3);border-radius:10px;padding:14px 18px;margin-bottom:20px;display:flex;align-items:flex-start;gap:12px;'
+        banner.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="#7EC8A0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" style="flex-shrink:0;margin-top:2px;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><div><strong style="color:#7EC8A0;font-size:0.9rem;">Confirm your email</strong><p style="margin:4px 0 0;font-size:0.82rem;color:#8f98a0;line-height:1.5;">We sent a confirmation link to <strong id="confirm-email-display" style="color:#c6d4df;"></strong>. Click it to activate your account before logging in.</p></div>'
+        const panel = document.getElementById('panel-payment')
+        panel.insertBefore(banner, panel.firstChild)
+        const emailDisplay = document.getElementById('confirm-email-display')
+        if (emailDisplay) emailDisplay.textContent = registeredEmail
+      }
 
       setButtonLoading('register-btn', false)
 

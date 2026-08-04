@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Game Library — RevsGaming</title>
+  <meta name="description" content="Browse and download ROMs from our curated archive. PS1, NES, SNES, GBA, N64 and more." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://revsgaming.com/games/" />
+
+  <!-- Liberal CSP for Archive.org -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com;
+    font-src 'self' https://fonts.gstatic.com;
+    connect-src 'self' https://archive.org https://kyoyunuwfuujqdomdmlh.supabase.co;
+    img-src 'self' data: https://archive.org https://*.archive.org https://ia800100.us.archive.org https://ia800200.us.archive.org https://ia800300.us.archive.org https://ia800400.us.archive.org https://ia800500.us.archive.org https://ia800600.us.archive.org https://ia800700.us.archive.org https://ia800800.us.archive.org https://ia800900.us.archive.org https://ia600100.us.archive.org https://ia600200.us.archive.org https://ia600300.us.archive.org https://ia600400.us.archive.org https://ia600500.us.archive.org https://ia600600.us.archive.org https://ia600700.us.archive.org https://ia600800.us.archive.org https://ia600900.us.archive.org https://ia400100.us.archive.org https://ia400200.us.archive.org https://ia400300.us.archive.org https://ia400400.us.archive.org https://ia400500.us.archive.org https://ia400600.us.archive.org https://ia400700.us.archive.org https://ia400800.us.archive.org https://ia400900.us.archive.org https://services.archive.org;
+    frame-src 'none';
+  ">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       RESET & VARIABLES
+    ============================================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-deep:     #0d1117;
+      --bg-main:     #1b2838;
+      --bg-card:     #16202d;
+      --bg-panel:    #1e2d3d;
+      --green:       #7EC8A0;
+      --green-light: #a8d8b8;
+      --red:         #C47E7E;
+      --accent:      #66c0f4;
+      --text:        #c6d4df;
+      --text-muted:  #8f98a0;
+      --border:      rgba(102,192,244,0.15);
+      --glass:       rgba(22,32,45,0.85);
+    }
+
+    html.light-mode {
+      --bg-deep:    #f0f4f8;
+      --bg-main:    #e2e8f0;
+      --bg-card:    #ffffff;
+      --bg-panel:   #f8fafc;
+      --green:      #2d8a5e;
+      --green-light:#3aab76;
+      --accent:     #1a6fa8;
+      --text:       #1e293b;
+      --text-muted: #64748b;
+      --border:     rgba(0,0,0,0.1);
+      --glass:      rgba(255,255,255,0.85);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background-color: var(--bg-deep);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ============================================================
+       UTILITIES
+    ============================================================ */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ============================================================
+       NAVBAR
+    ============================================================ */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 14px 0;
+      transition: background 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      border-bottom: 1px solid transparent;
+    }
+
+    .navbar.scrolled {
+      background: var(--glass);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(102,192,244,0.18);
+      box-shadow: 0 1px 40px rgba(0,0,0,0.45), 0 0 0 0.5px rgba(102,192,244,0.08);
+    }
+
+    .navbar .container {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .nav-logo img {
+      height: 44px;
+      width: auto;
+      filter: drop-shadow(0 0 8px rgba(126,200,160,0.25));
+    }
+
+    .nav-logo-fallback {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #ffffff;
+      display: none;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+      margin-left: auto;
+    }
+
+    .nav-links a {
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #ffffff;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .nav-links a.active {
+      color: var(--green);
+      background: rgba(126,200,160,0.08);
+    }
+
+    .btn-nav-cta {
+      background: var(--green);
+      color: #0d1117;
+      padding: 9px 20px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: background 0.2s, transform 0.15s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .btn-nav-cta:hover {
+      background: var(--green-light);
+      transform: translateY(-1px);
+    }
+
+    .btn-nav-register {
+      background: transparent;
+      color: var(--green);
+      border: 1px solid var(--green);
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-nav-register:hover {
+      background: var(--green);
+      color: #0d1117;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      border-radius: 6px;
+      padding: 6px 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .theme-toggle:hover {
+      color: var(--text);
+      border-color: var(--green);
+      background: rgba(126,200,160,0.08);
+    }
+
+    html:not(.light-mode) .icon-moon { display: none; }
+    html.light-mode .icon-sun { display: none; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      padding: 6px;
+      margin-left: auto;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav-mobile {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      padding: 12px 24px 20px;
+      background: var(--bg-main);
+      border-top: 1px solid var(--border);
+    }
+
+    .nav-mobile.open { display: flex; }
+
+    .nav-mobile a {
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-mobile a:hover {
+      color: #ffffff;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .nav-mobile a.active {
+      color: var(--green);
+    }
+
+    /* ============================================================
+       HERO SECTION
+    ============================================================ */
+    .page-hero {
+      padding: 130px 24px 64px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% 0%, rgba(126,200,160,0.10) 0%, transparent 65%),
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(102,192,244,0.07) 0%, transparent 70%),
+        linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-main) 100%);
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(102,192,244,0.07) 1px, transparent 1px);
+      background-size: 30px 30px;
+      pointer-events: none;
+    }
+
+    .page-hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 120px;
+      background: linear-gradient(to bottom, transparent, var(--bg-main));
+      pointer-events: none;
+    }
+
+    .page-hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(126,200,160,0.10);
+      border: 1px solid rgba(126,200,160,0.28);
+      color: var(--green);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+      animation: fadeInUp 0.5s ease both;
+    }
+
+    .page-hero-title {
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #ffffff 40%, var(--green-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeInUp 0.55s ease 0.1s both;
+    }
+
+    .page-hero-subtitle {
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      color: var(--text-muted);
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.7;
+      animation: fadeInUp 0.6s ease 0.2s both;
+    }
+
+    /* ============================================================
+       GAMES SECTION
+    ============================================================ */
+    .games-section {
+      background: var(--bg-main);
+      padding: 48px 0 80px;
+      min-height: 60vh;
+    }
+
+    /* Controls bar */
+    .games-controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 36px;
+    }
+
+    .search-wrapper {
+      flex: 1;
+      min-width: 220px;
+      position: relative;
+    }
+
+    .search-wrapper svg {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      padding: 11px 14px 11px 42px;
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-input::placeholder { color: var(--text-muted); }
+
+    .search-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(102,192,244,0.12);
+    }
+
+    .filter-select {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      padding: 11px 36px 11px 14px;
+      border-radius: 8px;
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238f98a0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      transition: border-color 0.2s;
+      min-width: 160px;
+    }
+
+    .filter-select:focus {
+      border-color: var(--accent);
+    }
+
+    .results-count {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      align-self: center;
+    }
+
+    /* Grid */
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    /* Game card */
+    .game-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+      animation: fadeInUp 0.4s ease both;
+    }
+
+    .game-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 36px rgba(0,0,0,0.4), 0 0 0 1px rgba(126,200,160,0.2);
+      border-color: rgba(126,200,160,0.25);
+    }
+
+    .game-card-thumb {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      background: var(--bg-deep);
+      display: block;
+    }
+
+    .game-card-thumb-fallback {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, var(--bg-deep) 0%, var(--bg-panel) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+    }
+
+    .game-card-thumb-fallback svg {
+      opacity: 0.35;
+    }
+
+    .game-card-body {
+      padding: 14px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .game-card-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .game-card-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      flex: 1;
+    }
+
+    .game-card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .game-card-tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(102,192,244,0.10);
+      color: var(--accent);
+      border: 1px solid rgba(102,192,244,0.18);
+      letter-spacing: 0.02em;
+    }
+
+    .game-card-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      color: var(--green);
+      border: 1px solid rgba(126,200,160,0.3);
+      background: rgba(126,200,160,0.07);
+      border-radius: 6px;
+      padding: 7px 12px;
+      margin-top: 10px;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      text-decoration: none;
+    }
+
+    .game-card-action:hover {
+      background: var(--green);
+      color: #0d1117;
+      border-color: var(--green);
+    }
+
+    /* Loading state */
+    .loading-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 80px 24px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border);
+      border-top-color: var(--green);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    /* Skeleton cards */
+    .skeleton-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .skeleton-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .skeleton-thumb {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: linear-gradient(90deg, var(--bg-panel) 25%, rgba(102,192,244,0.06) 50%, var(--bg-panel) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s ease infinite;
+    }
+
+    .skeleton-body {
+      padding: 14px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .skeleton-line {
+      height: 12px;
+      border-radius: 4px;
+      background: linear-gradient(90deg, var(--bg-panel) 25%, rgba(102,192,244,0.06) 50%, var(--bg-panel) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s ease infinite;
+    }
+
+    .skeleton-line.short { width: 60%; }
+    .skeleton-line.medium { width: 80%; }
+
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* Error state */
+    .error-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 80px 24px;
+      text-align: center;
+    }
+
+    .error-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(196,126,126,0.12);
+      border: 1px solid rgba(196,126,126,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--red);
+    }
+
+    .error-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .error-desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      max-width: 340px;
+    }
+
+    .retry-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .retry-btn:hover {
+      border-color: var(--green);
+      background: rgba(126,200,160,0.08);
+    }
+
+    /* Empty state */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 80px 24px;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .empty-state svg {
+      opacity: 0.3;
+      margin-bottom: 4px;
+    }
+
+    .empty-state p {
+      font-size: 0.9rem;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .footer {
+      background: var(--bg-deep);
+      padding: 0 0 32px;
+      position: relative;
+    }
+
+    .footer::before {
+      content: '';
+      display: block;
+      height: 1px;
+      background: linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(102,192,244,0.2) 25%,
+        rgba(126,200,160,0.28) 50%,
+        rgba(102,192,244,0.2) 75%,
+        transparent 100%
+      );
+      margin-bottom: 60px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .footer-brand-logo img { height: 30px; width: auto; }
+
+    .footer-brand-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .footer-brand-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .footer-col-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      font-size: 0.875rem;
+      color: var(--text);
+      transition: color 0.2s;
+      position: relative;
+      display: inline-block;
+    }
+
+    .footer-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.25s ease;
+    }
+
+    .footer-links a:hover { color: var(--accent); }
+    .footer-links a:hover::after { width: 100%; }
+
+    .footer-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(102,192,244,0.25) 30%,
+        rgba(126,200,160,0.3) 50%,
+        rgba(102,192,244,0.25) 70%,
+        transparent 100%
+      );
+      margin-bottom: 24px;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 900px) {
+      .nav-links,
+      .btn-nav-register,
+      .btn-nav-cta,
+      .theme-toggle {
+        display: none;
+      }
+
+      .hamburger { display: flex; }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .games-controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .filter-select {
+        width: 100%;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .page-hero {
+        padding: 110px 16px 48px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVBAR
+  ============================================================ -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a class="nav-logo" href="/">
+        <img
+          src="/logoPrimary.png"
+          alt="RevsGaming"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+        />
+        <span class="nav-logo-fallback">RevsGaming</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="/#features">Features</a></li>
+        <li><a href="/#consolas">Consoles</a></li>
+        <li><a href="/#netplay">Multiplayer</a></li>
+        <li><a href="/games/" class="active">Games</a></li>
+        <li><a href="/forums/">Forums</a></li>
+        <li><a href="/changelog/">Changelog</a></li>
+      </ul>
+
+      <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+
+      <a href="/register.html" class="btn-nav-register">Sign up</a>
+      <a href="/download/" class="btn-nav-cta">Download</a>
+
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <div class="nav-mobile" id="navMobile">
+      <a href="/#features">Features</a>
+      <a href="/#consolas">Consoles</a>
+      <a href="/#netplay">Multiplayer</a>
+      <a href="/games/" class="active">Games</a>
+      <a href="/forums/">Forums</a>
+      <a href="/changelog/">Changelog</a>
+      <a href="/register.html" class="btn-nav-register" style="text-align:center;margin-top:4px;">Sign up</a>
+      <a href="/download/" class="btn-nav-cta" style="text-align:center;margin-top:4px;">Download</a>
+      <div style="display:flex;justify-content:center;gap:8px;margin-top:8px;">
+        <button id="themeToggleMobile" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section class="page-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+        </svg>
+        Archive Library
+      </div>
+      <h1 class="page-hero-title">Game Library</h1>
+      <p class="page-hero-subtitle">Browse and download ROMs from our curated archive</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       GAMES SECTION
+  ============================================================ -->
+  <section class="games-section" id="games">
+    <div class="container">
+
+      <!-- Controls -->
+      <div class="games-controls">
+        <div class="search-wrapper">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input
+            type="search"
+            id="searchInput"
+            class="search-input"
+            placeholder="Search games..."
+            aria-label="Search games"
+            autocomplete="off"
+          />
+        </div>
+
+        <select id="systemFilter" class="filter-select" aria-label="Filter by system">
+          <option value="">All Systems</option>
+          <option value="ps1">PS1</option>
+          <option value="nes">NES</option>
+          <option value="snes">SNES</option>
+          <option value="gba">GBA</option>
+          <option value="n64">N64</option>
+          <option value="mega drive">Mega Drive</option>
+          <option value="genesis">Genesis</option>
+          <option value="game boy">Game Boy</option>
+          <option value="gbc">GBC</option>
+          <option value="psx">PSX</option>
+        </select>
+
+        <span class="results-count" id="resultsCount" aria-live="polite"></span>
+      </div>
+
+      <!-- Content area -->
+      <div id="gamesContent">
+        <!-- Skeleton loader -->
+        <div class="skeleton-grid" id="skeletonGrid">
+          <!-- 12 skeleton cards -->
+          <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line medium"></div><div class="skeleton-line short"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line medium"></div><div class="skeleton-line short"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line medium"></div><div class="skeleton-line short"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line medium"></div><div class="skeleton-line short"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line medium"></div><div class="skeleton-line short"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line medium"></div><div class="skeleton-line short"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line medium"></div><div class="skeleton-line short"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line medium"></div><div class="skeleton-line short"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line medium"></div><div class="skeleton-line short"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line medium"></div><div class="skeleton-line short"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line medium"></div><div class="skeleton-line short"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line medium"></div><div class="skeleton-line short"></div></div></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand -->
+        <div>
+          <div class="footer-brand-logo">
+            <img
+              src="/logoPrimary.png"
+              alt="RevsGaming"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+            />
+            <span class="footer-brand-name" style="display:none;">RevsGaming</span>
+          </div>
+          <p class="footer-brand-desc">
+            Retro game launcher for Windows with online netplay, automatic library and cloud saves.
+          </p>
+          <p class="footer-copy">&copy; 2026 RevsGaming</p>
+        </div>
+
+        <!-- Resources -->
+        <div>
+          <div class="footer-col-title">Resources</div>
+          <ul class="footer-links">
+            <li><a href="/download/">Download</a></li>
+            <li><a href="/changelog/">Changelog</a></li>
+            <li><a href="https://github.com/JuanAntonioZ369/RetroGamingRevs_2.0/issues" target="_blank" rel="noopener">Report Bug</a></li>
+          </ul>
+        </div>
+
+        <!-- Legal -->
+        <div>
+          <div class="footer-col-title">Legal</div>
+          <ul class="footer-links">
+            <li><a href="/legal/privacy.html">Privacy Policy</a></li>
+            <li><a href="/legal/terms.html">Terms of Use</a></li>
+            <li><a href="/libro-reclamaciones.html">Complaints Book</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <hr class="footer-divider" />
+
+      <div class="footer-bottom">
+        Made for the retro gaming community
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       SCRIPTS
+  ============================================================ -->
+  <script>
+    /* ----------------------------------------------------------
+       THEME
+    ---------------------------------------------------------- */
+    (function () {
+      var saved = localStorage.getItem('rvg-theme');
+      if (saved === 'light') document.documentElement.classList.add('light-mode');
+    })();
+
+    function toggleTheme() {
+      var isLight = document.documentElement.classList.toggle('light-mode');
+      localStorage.setItem('rvg-theme', isLight ? 'light' : 'dark');
+    }
+
+    var themeToggle = document.getElementById('themeToggle');
+    var themeToggleMobile = document.getElementById('themeToggleMobile');
+    if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+    if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleTheme);
+
+    /* ----------------------------------------------------------
+       NAVBAR
+    ---------------------------------------------------------- */
+    var navbar = document.getElementById('navbar');
+    var hamburger = document.getElementById('hamburger');
+    var navMobile = document.getElementById('navMobile');
+
+    window.addEventListener('scroll', function () {
+      if (window.scrollY > 40) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    hamburger.addEventListener('click', function () {
+      var open = hamburger.classList.toggle('open');
+      navMobile.classList.toggle('open', open);
+      hamburger.setAttribute('aria-expanded', String(open));
+    });
+
+    /* Close mobile nav on link click */
+    navMobile.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        hamburger.classList.remove('open');
+        navMobile.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    /* ----------------------------------------------------------
+       FADE-IN ON SCROLL
+    ---------------------------------------------------------- */
+    var fadeObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          fadeObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-in').forEach(function (el) {
+      fadeObserver.observe(el);
+    });
+
+    /* ----------------------------------------------------------
+       ARCHIVE.ORG — GAME LIBRARY
+    ---------------------------------------------------------- */
+    var API_URL = 'https://archive.org/advancedsearch.php?q=uploader%3Ajuan_antonio_zegarra_condori&fl[]=identifier,title,subject,description,mediatype&rows=200&output=json&page=1';
+
+    var allGames = [];
+    var searchInput = document.getElementById('searchInput');
+    var systemFilter = document.getElementById('systemFilter');
+    var resultsCount = document.getElementById('resultsCount');
+    var gamesContent = document.getElementById('gamesContent');
+    var skeletonGrid = document.getElementById('skeletonGrid');
+
+    /* Detect system from title/subject/description text */
+    function detectTags(item) {
+      var haystack = [
+        (item.title || ''),
+        (Array.isArray(item.subject) ? item.subject.join(' ') : (item.subject || '')),
+        (item.description || '')
+      ].join(' ').toLowerCase();
+
+      var SYSTEMS = ['ps1', 'psx', 'nes', 'snes', 'gba', 'n64', 'mega drive', 'genesis', 'game boy color', 'gbc', 'game boy', 'gameboy', 'atari', 'sega', 'saturn', 'dreamcast', 'mame', 'arcade'];
+      var found = [];
+      SYSTEMS.forEach(function (sys) {
+        if (haystack.indexOf(sys) !== -1) found.push(sys);
+      });
+      return found.slice(0, 3);
+    }
+
+    /* Short description from subject or description field */
+    function getDesc(item) {
+      if (item.subject) {
+        var sub = Array.isArray(item.subject) ? item.subject.join(', ') : item.subject;
+        if (sub.length > 0) return sub;
+      }
+      if (item.description) {
+        var d = String(item.description).replace(/<[^>]+>/g, '').trim();
+        return d.slice(0, 120);
+      }
+      return '';
+    }
+
+    /* Build a single game card element */
+    function buildCard(item, index) {
+      var card = document.createElement('article');
+      card.className = 'game-card';
+      card.style.animationDelay = Math.min(index * 0.04, 0.6) + 's';
+
+      var thumbUrl = 'https://archive.org/services/img/' + item.identifier;
+      var archiveUrl = 'https://archive.org/details/' + item.identifier;
+      var desc = getDesc(item);
+      var tags = detectTags(item);
+
+      /* Thumb with fallback */
+      var thumbImg = document.createElement('img');
+      thumbImg.className = 'game-card-thumb';
+      thumbImg.src = thumbUrl;
+      thumbImg.alt = item.title || item.identifier;
+      thumbImg.loading = 'lazy';
+      thumbImg.decoding = 'async';
+
+      var fallback = document.createElement('div');
+      fallback.className = 'game-card-thumb-fallback';
+      fallback.setAttribute('aria-hidden', 'true');
+      fallback.innerHTML = '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>';
+      fallback.style.display = 'none';
+
+      thumbImg.addEventListener('error', function () {
+        thumbImg.style.display = 'none';
+        fallback.style.display = 'flex';
+      });
+
+      /* Body */
+      var body = document.createElement('div');
+      body.className = 'game-card-body';
+
+      var title = document.createElement('h3');
+      title.className = 'game-card-title';
+      title.textContent = item.title || item.identifier;
+
+      body.appendChild(title);
+
+      if (desc) {
+        var descEl = document.createElement('p');
+        descEl.className = 'game-card-desc';
+        descEl.textContent = desc;
+        body.appendChild(descEl);
+      }
+
+      if (tags.length > 0) {
+        var tagsEl = document.createElement('div');
+        tagsEl.className = 'game-card-tags';
+        tags.forEach(function (tag) {
+          var span = document.createElement('span');
+          span.className = 'game-card-tag';
+          span.textContent = tag.toUpperCase();
+          tagsEl.appendChild(span);
+        });
+        body.appendChild(tagsEl);
+      }
+
+      var action = document.createElement('a');
+      action.className = 'game-card-action';
+      action.href = archiveUrl;
+      action.target = '_blank';
+      action.rel = 'noopener noreferrer';
+      action.setAttribute('aria-label', 'View ' + (item.title || item.identifier) + ' on Archive.org');
+      action.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>View on Archive.org';
+
+      body.appendChild(action);
+
+      card.appendChild(thumbImg);
+      card.appendChild(fallback);
+      card.appendChild(body);
+
+      return card;
+    }
+
+    /* Render the filtered list */
+    function renderGames(list) {
+      /* Remove skeleton */
+      if (skeletonGrid) {
+        skeletonGrid.remove();
+        skeletonGrid = null;
+      }
+
+      /* Clear previous cards */
+      var existingGrid = gamesContent.querySelector('.games-grid');
+      var existingEmpty = gamesContent.querySelector('.empty-state');
+      if (existingGrid) existingGrid.remove();
+      if (existingEmpty) existingEmpty.remove();
+
+      resultsCount.textContent = list.length + ' game' + (list.length !== 1 ? 's' : '') + ' found';
+
+      if (list.length === 0) {
+        var empty = document.createElement('div');
+        empty.className = 'empty-state';
+        empty.innerHTML = '<svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><p>No games match your search.</p>';
+        gamesContent.appendChild(empty);
+        return;
+      }
+
+      var grid = document.createElement('div');
+      grid.className = 'games-grid';
+
+      list.forEach(function (item, i) {
+        grid.appendChild(buildCard(item, i));
+      });
+
+      gamesContent.appendChild(grid);
+    }
+
+    /* Filter logic */
+    function applyFilters() {
+      var query = searchInput.value.trim().toLowerCase();
+      var system = systemFilter.value.toLowerCase();
+
+      var filtered = allGames.filter(function (item) {
+        var titleMatch = !query || (item.title || item.identifier).toLowerCase().indexOf(query) !== -1;
+
+        var haystack = [
+          (item.title || ''),
+          (Array.isArray(item.subject) ? item.subject.join(' ') : (item.subject || '')),
+          (item.description || '')
+        ].join(' ').toLowerCase();
+        var systemMatch = !system || haystack.indexOf(system) !== -1;
+
+        return titleMatch && systemMatch;
+      });
+
+      renderGames(filtered);
+    }
+
+    /* Show error state */
+    function showError() {
+      if (skeletonGrid) {
+        skeletonGrid.remove();
+        skeletonGrid = null;
+      }
+
+      var err = document.createElement('div');
+      err.className = 'error-state';
+      err.innerHTML = [
+        '<div class="error-icon">',
+          '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">',
+            '<circle cx="12" cy="12" r="10"/>',
+            '<line x1="12" y1="8" x2="12" y2="12"/>',
+            '<line x1="12" y1="16" x2="12.01" y2="16"/>',
+          '</svg>',
+        '</div>',
+        '<p class="error-title">Failed to load games</p>',
+        '<p class="error-desc">Could not connect to the archive. Please check your connection and try again.</p>',
+        '<button class="retry-btn" id="retryBtn">',
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>',
+          'Try again',
+        '</button>'
+      ].join('');
+
+      gamesContent.appendChild(err);
+
+      document.getElementById('retryBtn').addEventListener('click', function () {
+        err.remove();
+        /* Re-inject skeleton */
+        var newSkeleton = document.createElement('div');
+        newSkeleton.className = 'skeleton-grid';
+        newSkeleton.id = 'skeletonGrid';
+        for (var i = 0; i < 12; i++) {
+          newSkeleton.innerHTML += '<div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line medium"></div><div class="skeleton-line short"></div></div></div>';
+        }
+        gamesContent.appendChild(newSkeleton);
+        skeletonGrid = newSkeleton;
+        fetchGames();
+      });
+    }
+
+    /* Fetch from Archive.org */
+    function fetchGames() {
+      fetch(API_URL)
+        .then(function (res) {
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          return res.json();
+        })
+        .then(function (data) {
+          var docs = (data && data.response && data.response.docs) ? data.response.docs : [];
+
+          /* Filter out BIOS items and account items */
+          allGames = docs.filter(function (item) {
+            var id = (item.identifier || '').toLowerCase();
+            var title = (item.title || '').toLowerCase();
+            var hasBios = id.indexOf('bios') !== -1 || title.indexOf('bios') !== -1;
+            var isAccount = (item.mediatype || '').toLowerCase() === 'account';
+            return !hasBios && !isAccount;
+          });
+
+          applyFilters();
+        })
+        .catch(function () {
+          showError();
+        });
+    }
+
+    /* Debounce helper */
+    function debounce(fn, delay) {
+      var timer;
+      return function () {
+        clearTimeout(timer);
+        timer = setTimeout(fn, delay);
+      };
+    }
+
+    searchInput.addEventListener('input', debounce(applyFilters, 280));
+    systemFilter.addEventListener('change', applyFilters);
+
+    /* Kick off fetch */
+    fetchGames();
+  </script>
+
+  <!-- Shared UI effects (cursor + scroll progress) -->
+  <script src="../js/ui-effects.js"></script>
+
+</body>
+</html>

@@ -26,7 +26,7 @@
   <meta name="twitter:image" content="https://revsgaming.com/og-image.png" />
   <!-- SEO -->
   <meta name="keywords" content="retro launcher, PS1 emulator, online netplay, retro games, NES SNES N64 GBA online, cloud saves, RevsGaming" />
-  <meta name="author" content="Antonio" />
+  <meta name="author" content="RevsGaming" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://revsgaming.com/"/>
   <!-- JSON-LD — SoftwareApplication -->
@@ -57,10 +57,6 @@
         "description": "Annual access to RevsGaming — 2 months free"
       }
     ],
-    "author": {
-      "@type": "Person",
-      "name": "AntonioPCGamer"
-    },
     "featureList": [
       "Online netplay 2–4 players",
       "Automatic Cloud Saves",
@@ -85,7 +81,6 @@
       "contactType": "customer support",
       "availableLanguage": ["English"]
     },
-    "taxID": "20613365045",
     "areaServed": "Worldwide",
     "foundingDate": "2024"
   }
@@ -2165,6 +2160,57 @@
         gap: 8px;
       }
     }
+
+    /* ── HOW TO PLAY ─────────────────────────────────────────── */
+    .how-to-play { padding: 6rem 0; background: var(--bg-deep, #0d1117); }
+    .htp-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .htp-card {
+      background: var(--bg-card, #16202d);
+      border: 1px solid var(--border, rgba(102,192,244,0.1));
+      border-radius: 14px;
+      padding: 1.75rem;
+      position: relative;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .htp-card:hover {
+      border-color: rgba(126,200,160,0.35);
+      transform: translateY(-3px);
+    }
+    .htp-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: rgba(126,200,160,0.15);
+      line-height: 1;
+      margin-bottom: 0.75rem;
+    }
+    .htp-icon {
+      color: var(--green, #7EC8A0);
+      margin-bottom: 0.75rem;
+    }
+    .htp-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text, #c6d4df);
+      margin: 0 0 0.5rem;
+    }
+    .htp-desc {
+      font-size: 0.875rem;
+      color: var(--text-muted, #8f98a0);
+      line-height: 1.65;
+      margin: 0;
+    }
+    html.light-mode .htp-card { background: #fff; border-color: rgba(0,0,0,0.08); }
+    html.light-mode .htp-num  { color: rgba(0,100,60,0.12); }
+    html.light-mode .htp-title{ color: #1a2030; }
+    html.light-mode .htp-desc { color: #4a5568; }
+    html.light-mode .htp-card:hover { border-color: rgba(0,120,80,0.3); }
   </style>
 </head>
 <body>
@@ -2211,6 +2257,8 @@
         <li><a href="#features" data-i18n="nav.features">Features</a></li>
         <li><a href="#consolas" data-i18n="nav.consoles">Consoles</a></li>
         <li><a href="#netplay" data-i18n="nav.multiplayer">Multiplayer</a></li>
+        <li><a href="/games/">Games</a></li>
+        <li><a href="/forums/">Forums</a></li>
         <li><a href="/changelog/">Changelog</a></li>
       </ul>
 
@@ -2242,6 +2290,8 @@
       <a href="#features" data-i18n="nav.features">Features</a>
       <a href="#consolas" data-i18n="nav.consoles">Consoles</a>
       <a href="#netplay" data-i18n="nav.multiplayer">Multiplayer</a>
+      <a href="/games/">Games</a>
+      <a href="/forums/">Forums</a>
       <a href="/changelog/">Changelog</a>
       <a href="/register.html" class="btn-nav-register" style="text-align:center;" data-i18n="nav.signup">Sign up</a>
       <a
@@ -2452,7 +2502,7 @@
                 </svg>
               </div>
               <div class="feature-title" data-i18n="feat.netplay4.title">Netplay up to 4 Players</div>
-              <div class="feature-desc" data-i18n="feat.netplay4.desc">Using RetroArch and our own MITM server in Lima, Peru, you can play with up to 4 friends on most classic systems.</div>
+              <div class="feature-desc" data-i18n="feat.netplay4.desc">Using RetroArch and our own dedicated MITM servers, you can play with up to 4 friends on most classic systems.</div>
             </div>
 
             <!-- Card 4 -->
@@ -2601,7 +2651,7 @@
       </div>
 
       <div class="netplay-note fade-in">
-        Own server in Lima, Peru — optimized for Latin America
+        Dedicated servers — optimized for low latency
       </div>
     </div>
   </section>
@@ -2637,6 +2687,110 @@
           <div class="install-step-title" data-i18n="install.step3.title">Add your games</div>
           <div class="install-step-desc" data-i18n="install.step3.desc">Put your ROMs in any folder and point RevsGaming to it. Games appear automatically — ready to play.</div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       HOW TO PLAY
+  ============================================================ -->
+  <section class="how-to-play" id="how-to-play">
+    <div class="container">
+      <div class="section-header fade-in">
+        <h2 class="section-title">How to Play</h2>
+        <p class="section-subtitle">From download to your first match in minutes</p>
+      </div>
+
+      <div class="htp-grid">
+
+        <div class="htp-card fade-in">
+          <div class="htp-num">01</div>
+          <div class="htp-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="28" height="28">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <h3 class="htp-title">Create your account</h3>
+          <p class="htp-desc">Sign up at <a href="/register.html" style="color:var(--green);text-decoration:none;">revsgaming.com/register</a> to get 2 months free trial. Confirm your email and you're ready.</p>
+        </div>
+
+        <div class="htp-card fade-in">
+          <div class="htp-num">02</div>
+          <div class="htp-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="28" height="28">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+          </div>
+          <h3 class="htp-title">Download &amp; install</h3>
+          <p class="htp-desc">Download the <code style="background:rgba(255,255,255,0.08);padding:2px 6px;border-radius:4px;font-size:0.8em;">.exe</code> installer from the <a href="/download/" style="color:var(--green);text-decoration:none;">Download page</a>. Run it as Administrator and RevsGaming installs in under a minute.</p>
+        </div>
+
+        <div class="htp-card fade-in">
+          <div class="htp-num">03</div>
+          <div class="htp-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="28" height="28">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+          </div>
+          <h3 class="htp-title">Log in &amp; set your games folder</h3>
+          <p class="htp-desc">Open the app, log in with your credentials, and click the folder icon to select where your ROM files are stored. The library loads automatically.</p>
+        </div>
+
+        <div class="htp-card fade-in">
+          <div class="htp-num">04</div>
+          <div class="htp-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="28" height="28">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+          </div>
+          <h3 class="htp-title">Play solo</h3>
+          <p class="htp-desc">Click any game → choose <strong>Solo Mode</strong>. The emulator launches instantly. Your save states sync to the cloud automatically — never lose progress.</p>
+        </div>
+
+        <div class="htp-card fade-in">
+          <div class="htp-num">05</div>
+          <div class="htp-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="28" height="28">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <h3 class="htp-title">Play online (2 players)</h3>
+          <p class="htp-desc">Select a PS1 game → <strong>Online Mode</strong> → <strong>Create Room</strong>. Share the 6-digit code with your friend. When they join, the game starts automatically.</p>
+        </div>
+
+        <div class="htp-card fade-in">
+          <div class="htp-num">06</div>
+          <div class="htp-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="28" height="28">
+              <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+          <h3 class="htp-title">Play online (up to 4 players)</h3>
+          <p class="htp-desc">For multi-system 4-player sessions, select a RetroArch-compatible game → Online → <strong>4-Player Mode</strong>. The Multitap emulation lets you play with up to 4 friends simultaneously.</p>
+        </div>
+
+        <div class="htp-card fade-in">
+          <div class="htp-num">07</div>
+          <div class="htp-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="28" height="28">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="23" y1="11" x2="17" y2="11"/><line x1="20" y1="8" x2="20" y2="14"/>
+            </svg>
+          </div>
+          <h3 class="htp-title">Add friends</h3>
+          <p class="htp-desc">In the Friends panel (right sidebar), search by username and send a request. See who is online, what they're playing, and invite them to your session with one click.</p>
+        </div>
+
+        <div class="htp-card fade-in">
+          <div class="htp-num">08</div>
+          <div class="htp-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="28" height="28">
+              <rect x="6" y="2" width="12" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12" y2="18"/>
+            </svg>
+          </div>
+          <h3 class="htp-title">Gamepad support</h3>
+          <p class="htp-desc">Connect any USB or Bluetooth gamepad. Navigate the library with the D-Pad, launch games with A, toggle views with Y. Use the built-in <strong>Gamepad Detector</strong> to test your controller.</p>
+        </div>
+
       </div>
     </div>
   </section>
@@ -2753,7 +2907,7 @@
             Retro game launcher for Windows with online netplay, automatic library and cloud saves.
           </p>
           <p class="footer-copy">
-            &copy; 2026 RevsGaming &mdash; Antonio Zegarra
+            &copy; 2026 RevsGaming
           </p>
         </div>
 
@@ -2781,7 +2935,7 @@
       <hr class="footer-divider" />
 
       <div class="footer-bottom">
-        <span data-i18n="footer.bottom">Made with dedication for the Latin American retro community</span>
+        <span data-i18n="footer.bottom">Made for the retro gaming community</span>
       </div>
     </div>
   </footer>

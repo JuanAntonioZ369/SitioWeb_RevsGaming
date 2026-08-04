@@ -6,7 +6,7 @@
 
 window.RVGConfig = {
   email:       'jnntnzegarra369@gmail.com',
-  ruc:         '20613365045',
+  // ruc:         '20613365045',
   brand:       'RevsGaming',
   year:        '2026',
   downloadUrl: '/download/',

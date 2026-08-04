@@ -1,0 +1,1926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forums — RevsGaming</title>
+  <meta name="description" content="RevsGaming community forums. Discuss retro games, netplay sessions, get support, and connect with other players." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://revsgaming.com/forums/" />
+  <meta name="theme-color" content="#0d1117" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#f0f4f8" media="(prefers-color-scheme: light)" />
+
+  <script>if(localStorage.getItem('revsgaming-theme')==='light')document.documentElement.classList.add('light-mode')</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-deep:     #0d1117;
+      --bg-main:     #1b2838;
+      --bg-card:     #16202d;
+      --bg-panel:    #1e2d3d;
+      --green:       #7EC8A0;
+      --green-light: #a8d8b8;
+      --red:         #C47E7E;
+      --accent:      #66c0f4;
+      --text:        #c6d4df;
+      --text-muted:  #8f98a0;
+      --border:      rgba(102,192,244,0.15);
+      --glass:       rgba(22,32,45,0.85);
+    }
+
+    html.light-mode {
+      --bg-deep:     #f0f4f8;
+      --bg-main:     #e2e8f0;
+      --bg-card:     #ffffff;
+      --bg-panel:    #f8fafc;
+      --green:       #2d8a5e;
+      --green-light: #3aab76;
+      --accent:      #1a6fa8;
+      --text:        #1e293b;
+      --text-muted:  #64748b;
+      --border:      rgba(0,0,0,0.1);
+      --glass:       rgba(255,255,255,0.85);
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background-color: var(--bg-deep);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button { cursor: pointer; border: none; font-family: 'Inter', sans-serif; }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ============================================================
+       NAVBAR
+    ============================================================ */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 14px 0;
+      transition: background 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      border-bottom: 1px solid transparent;
+    }
+
+    .navbar.scrolled {
+      background: var(--glass);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(102,192,244,0.18);
+      box-shadow: 0 1px 40px rgba(0,0,0,0.45), 0 0 0 0.5px rgba(102,192,244,0.08);
+    }
+
+    .navbar .container {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .nav-logo img {
+      height: 44px;
+      width: auto;
+      filter: drop-shadow(0 0 8px rgba(126,200,160,0.25));
+    }
+
+    .nav-logo-fallback {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #ffffff;
+      display: none;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+      margin-left: auto;
+    }
+
+    .nav-links a {
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #ffffff;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .nav-links a.active {
+      color: var(--green);
+    }
+
+    .btn-nav-cta {
+      background: var(--green);
+      color: #0d1117;
+      padding: 9px 20px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: background 0.2s, transform 0.15s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .btn-nav-cta:hover {
+      background: var(--green-light);
+      transform: translateY(-1px);
+    }
+
+    .btn-nav-register {
+      background: transparent;
+      color: var(--green);
+      border: 1px solid var(--green);
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-nav-register:hover {
+      background: var(--green);
+      color: #0d1117;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      border-radius: 6px;
+      padding: 6px 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .theme-toggle:hover {
+      color: var(--text);
+      border-color: var(--green);
+      background: rgba(126,200,160,0.08);
+    }
+
+    html:not(.light-mode) .icon-moon { display: none; }
+    html.light-mode .icon-sun { display: none; }
+
+    .nav-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .nav-username {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--green);
+    }
+
+    .btn-logout {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-logout:hover {
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      padding: 6px;
+      margin-left: auto;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav-mobile {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      padding: 12px 24px 20px;
+      background: var(--bg-main);
+      border-top: 1px solid var(--border);
+    }
+
+    .nav-mobile.open { display: flex; }
+
+    .nav-mobile a {
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-mobile a:hover {
+      color: #ffffff;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .nav-mobile .btn-nav-cta { text-align: center; margin-top: 8px; }
+
+    html.light-mode .navbar.scrolled {
+      background: rgba(255,255,255,0.95);
+      border-bottom-color: rgba(0,0,0,0.08);
+    }
+
+    /* ============================================================
+       PAGE HEADER
+    ============================================================ */
+    .page-header {
+      padding: 110px 0 40px;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(102,192,244,0.07) 0%, transparent 70%),
+                  linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-main) 100%);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .page-header-inner {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .page-header h1 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .page-header p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .breadcrumb span { color: var(--border); }
+    .breadcrumb a { color: var(--accent); }
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    /* ============================================================
+       MAIN LAYOUT
+    ============================================================ */
+    .forums-main {
+      padding: 32px 0 80px;
+    }
+
+    /* ============================================================
+       BUTTONS
+    ============================================================ */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--green);
+      color: #0d1117;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: background 0.2s, transform 0.15s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background: var(--green-light);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--text);
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(102,192,244,0.06);
+    }
+
+    /* ============================================================
+       CATEGORIES VIEW
+    ============================================================ */
+    .view { display: none; }
+    .view.active { display: block; }
+
+    .categories-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .categories-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 0.8rem;
+    }
+
+    .category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .category-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    }
+
+    .category-row:hover {
+      border-color: rgba(102,192,244,0.3);
+      background: var(--bg-panel);
+      transform: translateX(3px);
+    }
+
+    .category-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .category-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(102,192,244,0.1);
+      border: 1px solid rgba(102,192,244,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .category-info h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+
+    .category-info p {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+    }
+
+    .category-stats {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .category-stats .count {
+      font-size: 1.1rem;
+      font-weight: 700;
+      font-family: 'Space Grotesk', sans-serif;
+      color: var(--accent);
+    }
+
+    .category-stats .label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ============================================================
+       TOPICS VIEW
+    ============================================================ */
+    .topics-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .topics-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .topics-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .topics-table {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .topics-table-header {
+      display: grid;
+      grid-template-columns: 1fr 80px 80px 140px;
+      gap: 0;
+      padding: 12px 20px;
+      background: var(--bg-panel);
+      border-bottom: 1px solid var(--border);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+    }
+
+    .topic-row {
+      display: grid;
+      grid-template-columns: 1fr 80px 80px 140px;
+      gap: 0;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.15s;
+      align-items: center;
+    }
+
+    .topic-row:last-child { border-bottom: none; }
+
+    .topic-row:hover { background: rgba(102,192,244,0.04); }
+
+    .topic-main {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .topic-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      font-family: 'Space Grotesk', sans-serif;
+      color: #fff;
+      flex-shrink: 0;
+      text-transform: uppercase;
+    }
+
+    .topic-info { min-width: 0; }
+
+    .topic-title-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .topic-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+
+    .badge-pinned {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(126,200,160,0.15);
+      border: 1px solid rgba(126,200,160,0.3);
+      color: var(--green);
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .badge-locked {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(196,126,126,0.12);
+      border: 1px solid rgba(196,126,126,0.3);
+      color: var(--red);
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .topic-meta {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .topic-stat {
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .topic-time {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-align: right;
+    }
+
+    .load-more-wrap {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    /* ============================================================
+       POSTS VIEW (Topic detail)
+    ============================================================ */
+    .posts-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .posts-topic-title {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.3;
+    }
+
+    .posts-meta {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .post-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .post-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .post-card.original {
+      border-color: rgba(126,200,160,0.25);
+    }
+
+    .post-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+      background: var(--bg-panel);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .post-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: 'Space Grotesk', sans-serif;
+      color: #fff;
+      flex-shrink: 0;
+      text-transform: uppercase;
+    }
+
+    .post-author-info { min-width: 0; }
+
+    .post-username {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .post-date {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .post-op-badge {
+      margin-left: auto;
+      font-size: 0.7rem;
+      font-weight: 600;
+      background: rgba(126,200,160,0.12);
+      color: var(--green);
+      border: 1px solid rgba(126,200,160,0.25);
+      padding: 2px 8px;
+      border-radius: 20px;
+      flex-shrink: 0;
+    }
+
+    .post-body {
+      padding: 20px;
+      font-size: 0.93rem;
+      line-height: 1.7;
+      color: var(--text);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* Reply form */
+    .reply-section {
+      margin-top: 28px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+    }
+
+    .reply-section h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+
+    .reply-section textarea {
+      width: 100%;
+      background: var(--bg-deep);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      padding: 12px 14px;
+      resize: vertical;
+      min-height: 120px;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+
+    .reply-section textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .reply-section textarea::placeholder { color: var(--text-muted); }
+
+    .reply-section .form-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 12px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .char-count {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .locked-notice {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(196,126,126,0.08);
+      border: 1px solid rgba(196,126,126,0.2);
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: var(--red);
+      font-size: 0.88rem;
+      margin-top: 28px;
+    }
+
+    /* ============================================================
+       MODAL
+    ============================================================ */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(4px);
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: var(--bg-main);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      width: 100%;
+      max-width: 560px;
+      transform: translateY(12px);
+      transition: transform 0.2s;
+    }
+
+    .modal-overlay.open .modal { transform: translateY(0); }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .modal-header h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.4rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 4px;
+      transition: color 0.2s;
+    }
+
+    .modal-close:hover { color: #fff; }
+
+    .form-group { margin-bottom: 16px; }
+
+    .form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      background: var(--bg-deep);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      padding: 10px 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus { border-color: var(--accent); }
+
+    .form-group textarea { resize: vertical; min-height: 110px; }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--text-muted); }
+
+    .form-group select option { background: var(--bg-main); }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    /* ============================================================
+       TOAST
+    ============================================================ */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+    }
+
+    .toast {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 18px;
+      font-size: 0.88rem;
+      color: var(--text);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      pointer-events: all;
+      animation: toast-in 0.25s ease;
+      max-width: 340px;
+    }
+
+    .toast.success { border-color: rgba(126,200,160,0.4); color: var(--green); }
+    .toast.error { border-color: rgba(196,126,126,0.4); color: var(--red); }
+    .toast.info { border-color: rgba(102,192,244,0.35); color: var(--accent); }
+
+    @keyframes toast-in {
+      from { opacity: 0; transform: translateX(20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    /* ============================================================
+       EMPTY & LOADING
+    ============================================================ */
+    .empty-state {
+      text-align: center;
+      padding: 48px 20px;
+      color: var(--text-muted);
+    }
+
+    .empty-state .empty-icon {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+    }
+
+    .empty-state p { font-size: 0.9rem; }
+
+    .loading-spinner {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 10px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .forum-footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+
+    .forum-footer a { color: var(--accent); }
+    .forum-footer a:hover { text-decoration: underline; }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 700px) {
+      .topics-table-header,
+      .topic-row {
+        grid-template-columns: 1fr 60px 100px;
+      }
+
+      .topics-table-header .col-views,
+      .topic-row .topic-views { display: none; }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links,
+      .btn-nav-cta { display: none; }
+
+      .hamburger { display: flex; }
+
+      .category-row {
+        grid-template-columns: 1fr;
+      }
+
+      .category-stats { text-align: left; }
+
+      .posts-header { flex-direction: column; }
+    }
+
+    @media (max-width: 480px) {
+      .topics-table-header,
+      .topic-row {
+        grid-template-columns: 1fr 90px;
+      }
+
+      .topics-table-header .col-replies,
+      .topic-row .topic-replies { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a class="nav-logo" href="/">
+        <img
+          src="/logoPrimary.png"
+          alt="RevsGaming"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+        />
+        <span class="nav-logo-fallback">RevsGaming</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="/#features">Features</a></li>
+        <li><a href="/games/">Games</a></li>
+        <li><a href="/forums/" class="active">Forums</a></li>
+        <li><a href="/changelog/">Changelog</a></li>
+        <li><a href="/download/">Download</a></li>
+      </ul>
+
+      <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+
+      <div class="nav-user" id="navUser">
+        <!-- Filled by JS -->
+      </div>
+
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <div class="nav-mobile" id="navMobile">
+      <a href="/#features">Features</a>
+      <a href="/games/">Games</a>
+      <a href="/forums/">Forums</a>
+      <a href="/changelog/">Changelog</a>
+      <a href="/download/">Download</a>
+      <div id="navMobileUser"></div>
+      <div style="display:flex;justify-content:center;gap:8px;margin-top:4px;">
+        <button id="themeToggleMobile" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="container">
+      <div id="breadcrumbWrap" class="breadcrumb">
+        <a href="/forums/">Forums</a>
+      </div>
+      <div class="page-header-inner">
+        <div>
+          <h1 id="pageTitle">Community Forums</h1>
+          <p id="pageSubtitle">Discussions, help, game requests and more</p>
+        </div>
+        <button class="btn-primary" id="btnNewTopic" style="display:none;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          New Topic
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="forums-main">
+    <div class="container">
+
+      <!-- VIEW 1: Categories -->
+      <div id="viewCategories" class="view active">
+        <div class="categories-header">
+          <span class="categories-title">All Categories</span>
+        </div>
+        <div id="categoryList" class="category-list">
+          <div class="loading-spinner">
+            <div class="spinner"></div>
+            <div>Loading categories...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 2: Topic List -->
+      <div id="viewTopics" class="view">
+        <div class="topics-header">
+          <div class="topics-header-left">
+            <button class="btn-secondary" id="btnBackToCategories">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              Back
+            </button>
+            <span class="topics-title" id="topicsViewTitle"></span>
+          </div>
+        </div>
+
+        <div class="topics-table">
+          <div class="topics-table-header">
+            <div>Topic</div>
+            <div class="col-replies" style="text-align:center;">Replies</div>
+            <div class="col-views" style="text-align:center;">Views</div>
+            <div style="text-align:right;">Last Activity</div>
+          </div>
+          <div id="topicList"></div>
+        </div>
+
+        <div class="load-more-wrap" id="loadMoreWrap" style="display:none;">
+          <button class="btn-secondary" id="btnLoadMore">Load more topics</button>
+        </div>
+      </div>
+
+      <!-- VIEW 3: Posts (Topic detail) -->
+      <div id="viewPosts" class="view">
+        <div class="posts-header">
+          <div>
+            <div class="posts-topic-title" id="postsTopicTitle"></div>
+            <div class="posts-meta" id="postsTopicMeta"></div>
+          </div>
+          <button class="btn-secondary" id="btnBackToTopics">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Back to list
+          </button>
+        </div>
+
+        <div id="postList" class="post-list"></div>
+
+        <div id="replySection"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="forum-footer">
+    <div class="container">
+      <p>RevsGaming Forums &mdash; <a href="/">Back to site</a> &middot; <a href="/legal/terms">Terms</a> &middot; <a href="/legal/privacy">Privacy</a></p>
+    </div>
+  </footer>
+
+  <!-- MODAL: New Topic -->
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modalTitle">New Topic</h2>
+        <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+      </div>
+
+      <form id="newTopicForm" novalidate>
+        <div class="form-group">
+          <label for="topicCategory">Category</label>
+          <select id="topicCategory" required></select>
+        </div>
+        <div class="form-group">
+          <label for="topicTitle">Title</label>
+          <input type="text" id="topicTitle" placeholder="Enter a clear, descriptive title" required maxlength="120" />
+        </div>
+        <div class="form-group">
+          <label for="topicBody">Content <span style="font-weight:400;color:var(--text-muted)">(min. 20 characters)</span></label>
+          <textarea id="topicBody" placeholder="Write your message here..." required minlength="20"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" id="modalCancel">Cancel</button>
+          <button type="submit" class="btn-primary" id="btnSubmitTopic">Post Topic</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script>
+    /* ============================================================
+       SUPABASE INIT
+    ============================================================ */
+    const SUPABASE_URL = 'https://kyoyunuwfuujqdomdmlh.supabase.co';
+    const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt5b3l1bnV3ZnV1anFkb21kbWxoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2MTY5MDksImV4cCI6MjA5NzE5MjkwOX0.AJfWxp7rcn9psHFZQpX9qmCw32rsYo9pYiIpxHfIX3I';
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+    /* ============================================================
+       STATE
+    ============================================================ */
+    const state = {
+      user: null,
+      username: null,
+      categories: [],
+      currentCategory: null,
+      currentTopic: null,
+      topicsOffset: 0,
+      topicsLimit: 30,
+      topicsTotal: 0,
+    };
+
+    /* ============================================================
+       UTILITIES
+    ============================================================ */
+    function avatarColor(username) {
+      let hash = 0;
+      for (let i = 0; i < username.length; i++) {
+        hash = username.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      const colors = [
+        '#5b7fa6','#7a5b9e','#9e5b5b','#5b9e7a',
+        '#9e845b','#5b8f9e','#9e5b84','#6b9e5b',
+      ];
+      return colors[Math.abs(hash) % colors.length];
+    }
+
+    function formatDate(iso) {
+      if (!iso) return '';
+      const d = new Date(iso);
+      const now = new Date();
+      const diff = (now - d) / 1000;
+      if (diff < 60) return 'just now';
+      if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+      if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+      if (diff < 604800) return `${Math.floor(diff / 86400)}d ago`;
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function showToast(msg, type = 'info', duration = 4000) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.textContent = msg;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), duration);
+    }
+
+    function setView(viewId) {
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      document.getElementById(viewId).classList.add('active');
+    }
+
+    /* ============================================================
+       AUTH
+    ============================================================ */
+    async function initAuth() {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        state.user = session.user;
+        const meta = session.user.user_metadata;
+        state.username = meta?.username || meta?.full_name || session.user.email?.split('@')[0] || 'User';
+      }
+      renderNavUser();
+    }
+
+    function renderNavUser() {
+      const navUser = document.getElementById('navUser');
+      const navMobileUser = document.getElementById('navMobileUser');
+
+      if (state.user) {
+        navUser.innerHTML = `
+          <span class="nav-username">Hi, ${escapeHtml(state.username)}</span>
+          <button class="btn-logout" id="btnLogout">Log out</button>
+        `;
+        navMobileUser.innerHTML = `
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;">
+            <span style="font-size:0.85rem;color:var(--green)">Hi, ${escapeHtml(state.username)}</span>
+            <button class="btn-logout" id="btnLogoutMobile">Log out</button>
+          </div>
+        `;
+        document.getElementById('btnLogout').addEventListener('click', doLogout);
+        document.getElementById('btnLogoutMobile').addEventListener('click', doLogout);
+      } else {
+        navUser.innerHTML = `<a href="/register.html" class="btn-nav-register">Sign in</a>`;
+        navMobileUser.innerHTML = `<a href="/register.html" class="btn-nav-register" style="text-align:center;display:block;margin:4px 12px;">Sign in</a>`;
+      }
+    }
+
+    async function doLogout() {
+      await supabase.auth.signOut();
+      state.user = null;
+      state.username = null;
+      renderNavUser();
+      showToast('Signed out successfully.', 'info');
+    }
+
+    function requireAuth(actionLabel) {
+      if (state.user) return true;
+      showToast(`Log in to ${actionLabel} → revsgaming.com/register`, 'info', 5000);
+      return false;
+    }
+
+    function escapeHtml(str) {
+      const d = document.createElement('div');
+      d.textContent = str;
+      return d.innerHTML;
+    }
+
+    /* ============================================================
+       VIEW 1: CATEGORIES
+    ============================================================ */
+    async function loadCategories() {
+      const { data, error } = await supabase
+        .from('forum_categories')
+        .select('*')
+        .order('sort_order', { ascending: true });
+
+      if (error) {
+        document.getElementById('categoryList').innerHTML =
+          `<div class="empty-state"><div class="empty-icon">⚠️</div><p>Could not load categories. Please try again.</p></div>`;
+        return;
+      }
+
+      state.categories = data || [];
+      renderCategories();
+    }
+
+    async function getCategoryTopicCounts() {
+      const ids = state.categories.map(c => c.id);
+      if (!ids.length) return {};
+      const { data } = await supabase
+        .from('forum_topics')
+        .select('category_id')
+        .in('category_id', ids);
+
+      const counts = {};
+      (data || []).forEach(row => {
+        counts[row.category_id] = (counts[row.category_id] || 0) + 1;
+      });
+      return counts;
+    }
+
+    async function renderCategories() {
+      const counts = await getCategoryTopicCounts();
+      const list = document.getElementById('categoryList');
+
+      if (!state.categories.length) {
+        list.innerHTML = `<div class="empty-state"><div class="empty-icon">💬</div><p>No categories yet.</p></div>`;
+        return;
+      }
+
+      list.innerHTML = state.categories.map(cat => `
+        <div class="category-row" data-id="${cat.id}" data-slug="${escapeHtml(cat.slug)}" data-name="${escapeHtml(cat.name)}">
+          <div class="category-left">
+            <div class="category-icon">${cat.icon || '💬'}</div>
+            <div class="category-info">
+              <h3>${escapeHtml(cat.name)}</h3>
+              <p>${escapeHtml(cat.description || '')}</p>
+            </div>
+          </div>
+          <div class="category-stats">
+            <div class="count">${counts[cat.id] || 0}</div>
+            <div class="label">topics</div>
+          </div>
+        </div>
+      `).join('');
+
+      list.querySelectorAll('.category-row').forEach(row => {
+        row.addEventListener('click', () => {
+          const id = parseInt(row.dataset.id);
+          const cat = state.categories.find(c => c.id === id);
+          openCategory(cat);
+        });
+      });
+
+      document.getElementById('btnNewTopic').style.display = 'flex';
+    }
+
+    /* ============================================================
+       VIEW 2: TOPICS
+    ============================================================ */
+    function openCategory(cat) {
+      state.currentCategory = cat;
+      state.topicsOffset = 0;
+      state.topicsTotal = 0;
+
+      updateBreadcrumb([{ label: escapeHtml(cat.name) }]);
+      document.getElementById('topicsViewTitle').textContent = `${cat.icon || ''} ${cat.name}`.trim();
+      document.getElementById('topicList').innerHTML =
+        `<div class="loading-spinner"><div class="spinner"></div><div>Loading topics...</div></div>`;
+      document.getElementById('loadMoreWrap').style.display = 'none';
+
+      setView('viewTopics');
+      updatePageHeader(cat.name, cat.description);
+      loadTopics();
+    }
+
+    async function loadTopics(append = false) {
+      const { data, error, count } = await supabase
+        .from('forum_topics')
+        .select('*', { count: 'exact' })
+        .eq('category_id', state.currentCategory.id)
+        .order('is_pinned', { ascending: false })
+        .order('last_reply_at', { ascending: false })
+        .range(state.topicsOffset, state.topicsOffset + state.topicsLimit - 1);
+
+      if (error) {
+        document.getElementById('topicList').innerHTML =
+          `<div class="empty-state"><div class="empty-icon">⚠️</div><p>Could not load topics.</p></div>`;
+        return;
+      }
+
+      state.topicsTotal = count || 0;
+      const topics = data || [];
+
+      if (!append) {
+        if (!topics.length) {
+          document.getElementById('topicList').innerHTML =
+            `<div class="empty-state"><div class="empty-icon">💬</div><p>No topics yet. Be the first to start a discussion!</p></div>`;
+          return;
+        }
+        document.getElementById('topicList').innerHTML = '';
+      }
+
+      renderTopicRows(topics, append);
+
+      const loaded = state.topicsOffset + topics.length;
+      if (loaded < state.topicsTotal) {
+        state.topicsOffset += topics.length;
+        document.getElementById('loadMoreWrap').style.display = 'block';
+      } else {
+        document.getElementById('loadMoreWrap').style.display = 'none';
+      }
+    }
+
+    function renderTopicRows(topics, append) {
+      const container = document.getElementById('topicList');
+      topics.forEach(topic => {
+        const row = document.createElement('div');
+        row.className = 'topic-row';
+        row.setAttribute('data-id', topic.id);
+
+        const color = avatarColor(topic.username);
+        const initial = topic.username.charAt(0);
+        const badges = [
+          topic.is_pinned ? `<span class="badge-pinned">📌 Pinned</span>` : '',
+          topic.is_locked ? `<span class="badge-locked">🔒 Locked</span>` : '',
+        ].filter(Boolean).join('');
+
+        row.innerHTML = `
+          <div class="topic-main">
+            <div class="topic-avatar" style="background:${color}">${initial}</div>
+            <div class="topic-info">
+              <div class="topic-title-row">
+                <span class="topic-title">${escapeHtml(topic.title)}</span>
+                ${badges}
+              </div>
+              <div class="topic-meta">by ${escapeHtml(topic.username)} &middot; ${formatDate(topic.created_at)}</div>
+            </div>
+          </div>
+          <div class="topic-stat topic-replies">${topic.reply_count || 0}</div>
+          <div class="topic-stat topic-views col-views">${topic.views || 0}</div>
+          <div class="topic-time">${formatDate(topic.last_reply_at || topic.created_at)}</div>
+        `;
+
+        row.addEventListener('click', () => openTopic(topic));
+        container.appendChild(row);
+      });
+    }
+
+    /* ============================================================
+       VIEW 3: POSTS
+    ============================================================ */
+    async function openTopic(topic) {
+      state.currentTopic = topic;
+
+      updateBreadcrumb([
+        { label: escapeHtml(state.currentCategory.name), action: () => openCategory(state.currentCategory) },
+        { label: escapeHtml(topic.title) },
+      ]);
+
+      document.getElementById('postsTopicTitle').textContent = topic.title;
+      document.getElementById('postsTopicMeta').textContent =
+        `Started by ${topic.username} · ${formatDate(topic.created_at)} · ${topic.reply_count || 0} replies`;
+
+      document.getElementById('postList').innerHTML =
+        `<div class="loading-spinner"><div class="spinner"></div><div>Loading posts...</div></div>`;
+      document.getElementById('replySection').innerHTML = '';
+
+      setView('viewPosts');
+      updatePageHeader(topic.title, state.currentCategory.name);
+
+      // Increment view count (fire and forget)
+      supabase.from('forum_topics')
+        .update({ views: (topic.views || 0) + 1 })
+        .eq('id', topic.id)
+        .then(() => {});
+
+      const { data: posts, error } = await supabase
+        .from('forum_posts')
+        .select('*')
+        .eq('topic_id', topic.id)
+        .order('created_at', { ascending: true });
+
+      if (error) {
+        document.getElementById('postList').innerHTML =
+          `<div class="empty-state"><div class="empty-icon">⚠️</div><p>Could not load posts.</p></div>`;
+        return;
+      }
+
+      renderPosts(topic, posts || []);
+      renderReplySection(topic);
+    }
+
+    function renderPosts(topic, posts) {
+      const container = document.getElementById('postList');
+      container.innerHTML = '';
+
+      // Original post
+      const opCard = buildPostCard({
+        username: topic.username,
+        body: topic.body,
+        created_at: topic.created_at,
+        isOp: true,
+      });
+      container.appendChild(opCard);
+
+      // Replies
+      posts.forEach(post => {
+        container.appendChild(buildPostCard({
+          username: post.username,
+          body: post.body,
+          created_at: post.created_at,
+          isOp: false,
+        }));
+      });
+
+      if (!posts.length) {
+        const notice = document.createElement('div');
+        notice.className = 'empty-state';
+        notice.style.padding = '24px 0';
+        notice.innerHTML = `<p>No replies yet. Be the first to reply!</p>`;
+        container.appendChild(notice);
+      }
+    }
+
+    function buildPostCard({ username, body, created_at, isOp }) {
+      const card = document.createElement('div');
+      card.className = `post-card${isOp ? ' original' : ''}`;
+
+      const color = avatarColor(username);
+      const initial = username.charAt(0);
+
+      card.innerHTML = `
+        <div class="post-header">
+          <div class="post-avatar" style="background:${color}">${initial}</div>
+          <div class="post-author-info">
+            <div class="post-username">${escapeHtml(username)}</div>
+            <div class="post-date">${formatDate(created_at)}</div>
+          </div>
+          ${isOp ? '<span class="post-op-badge">OP</span>' : ''}
+        </div>
+        <div class="post-body">${escapeHtml(body)}</div>
+      `;
+
+      return card;
+    }
+
+    function renderReplySection(topic) {
+      const section = document.getElementById('replySection');
+
+      if (topic.is_locked) {
+        section.innerHTML = `
+          <div class="locked-notice">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            This topic is locked. No new replies can be posted.
+          </div>
+        `;
+        return;
+      }
+
+      section.innerHTML = `
+        <div class="reply-section">
+          <h3>Post a Reply</h3>
+          <textarea id="replyBody" placeholder="Write your reply... (min. 20 characters)" maxlength="4000"></textarea>
+          <div class="form-footer">
+            <span class="char-count" id="replyCharCount">0 / 4000</span>
+            <button class="btn-primary" id="btnSubmitReply">Post Reply</button>
+          </div>
+        </div>
+      `;
+
+      const textarea = document.getElementById('replyBody');
+      const charCount = document.getElementById('replyCharCount');
+
+      textarea.addEventListener('input', () => {
+        charCount.textContent = `${textarea.value.length} / 4000`;
+      });
+
+      document.getElementById('btnSubmitReply').addEventListener('click', submitReply);
+    }
+
+    async function submitReply() {
+      if (!requireAuth('reply')) return;
+
+      const body = document.getElementById('replyBody').value.trim();
+      if (body.length < 20) {
+        showToast('Reply must be at least 20 characters.', 'error');
+        return;
+      }
+
+      const btn = document.getElementById('btnSubmitReply');
+      btn.disabled = true;
+      btn.textContent = 'Posting...';
+
+      const { error } = await supabase.from('forum_posts').insert({
+        topic_id: state.currentTopic.id,
+        user_id: state.user.id,
+        username: state.username,
+        body,
+      });
+
+      btn.disabled = false;
+      btn.textContent = 'Post Reply';
+
+      if (error) {
+        showToast('Failed to post reply. Please try again.', 'error');
+        return;
+      }
+
+      showToast('Reply posted!', 'success');
+      document.getElementById('replyBody').value = '';
+      document.getElementById('replyCharCount').textContent = '0 / 4000';
+
+      // Reload posts
+      const updatedTopic = { ...state.currentTopic, reply_count: (state.currentTopic.reply_count || 0) + 1 };
+      state.currentTopic = updatedTopic;
+      document.getElementById('postsTopicMeta').textContent =
+        `Started by ${updatedTopic.username} · ${formatDate(updatedTopic.created_at)} · ${updatedTopic.reply_count} replies`;
+
+      const { data: posts } = await supabase
+        .from('forum_posts')
+        .select('*')
+        .eq('topic_id', updatedTopic.id)
+        .order('created_at', { ascending: true });
+
+      renderPosts(updatedTopic, posts || []);
+      renderReplySection(updatedTopic);
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
+    /* ============================================================
+       MODAL: NEW TOPIC
+    ============================================================ */
+    function openModal(preselectedCategoryId) {
+      if (!requireAuth('create a topic')) return;
+
+      const select = document.getElementById('topicCategory');
+      select.innerHTML = state.categories.map(cat =>
+        `<option value="${cat.id}" ${cat.id === preselectedCategoryId ? 'selected' : ''}>${escapeHtml(cat.name)}</option>`
+      ).join('');
+
+      document.getElementById('topicTitle').value = '';
+      document.getElementById('topicBody').value = '';
+      document.getElementById('modalOverlay').classList.add('open');
+      document.getElementById('topicTitle').focus();
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('open');
+    }
+
+    document.getElementById('modalClose').addEventListener('click', closeModal);
+    document.getElementById('modalCancel').addEventListener('click', closeModal);
+    document.getElementById('modalOverlay').addEventListener('click', e => {
+      if (e.target === document.getElementById('modalOverlay')) closeModal();
+    });
+
+    document.getElementById('newTopicForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      if (!requireAuth('create a topic')) return;
+
+      const categoryId = parseInt(document.getElementById('topicCategory').value);
+      const title = document.getElementById('topicTitle').value.trim();
+      const body = document.getElementById('topicBody').value.trim();
+
+      if (!title) { showToast('Please enter a title.', 'error'); return; }
+      if (body.length < 20) { showToast('Content must be at least 20 characters.', 'error'); return; }
+
+      const btn = document.getElementById('btnSubmitTopic');
+      btn.disabled = true;
+      btn.textContent = 'Posting...';
+
+      const { data: inserted, error } = await supabase.from('forum_topics').insert({
+        category_id: categoryId,
+        user_id: state.user.id,
+        username: state.username,
+        title,
+        body,
+      }).select().single();
+
+      btn.disabled = false;
+      btn.textContent = 'Post Topic';
+
+      if (error) {
+        showToast('Failed to create topic. Please try again.', 'error');
+        return;
+      }
+
+      showToast('Topic created!', 'success');
+      closeModal();
+
+      const cat = state.categories.find(c => c.id === categoryId);
+      if (cat) {
+        openCategory(cat);
+      }
+    });
+
+    document.getElementById('btnNewTopic').addEventListener('click', () => {
+      const preselectedId = state.currentCategory ? state.currentCategory.id : null;
+      openModal(preselectedId);
+    });
+
+    /* ============================================================
+       NAVIGATION HELPERS
+    ============================================================ */
+    function updateBreadcrumb(segments) {
+      const wrap = document.getElementById('breadcrumbWrap');
+      let html = `<a href="/forums/">Forums</a>`;
+      segments.forEach((seg, i) => {
+        html += `<span>›</span>`;
+        if (seg.action && i < segments.length - 1) {
+          html += `<a href="#" class="breadcrumb-link" data-idx="${i}">${seg.label}</a>`;
+        } else {
+          html += `<span>${seg.label}</span>`;
+        }
+      });
+      wrap.innerHTML = html;
+      wrap.querySelectorAll('.breadcrumb-link').forEach(link => {
+        const idx = parseInt(link.dataset.idx);
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          segments[idx].action();
+        });
+      });
+    }
+
+    function updatePageHeader(title, subtitle) {
+      document.getElementById('pageTitle').textContent = title;
+      document.getElementById('pageSubtitle').textContent = subtitle || '';
+    }
+
+    document.getElementById('btnBackToCategories').addEventListener('click', () => {
+      state.currentCategory = null;
+      updateBreadcrumb([]);
+      setView('viewCategories');
+      updatePageHeader('Community Forums', 'Discussions, help, game requests and more');
+    });
+
+    document.getElementById('btnBackToTopics').addEventListener('click', () => {
+      if (state.currentCategory) {
+        openCategory(state.currentCategory);
+      } else {
+        setView('viewCategories');
+        updatePageHeader('Community Forums', 'Discussions, help, game requests and more');
+      }
+    });
+
+    document.getElementById('btnLoadMore').addEventListener('click', () => {
+      loadTopics(true);
+    });
+
+    /* ============================================================
+       NAVBAR SCROLL + HAMBURGER + THEME
+    ============================================================ */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    const hamburger = document.getElementById('hamburger');
+    const navMobile = document.getElementById('navMobile');
+    hamburger.addEventListener('click', () => {
+      const open = navMobile.classList.toggle('open');
+      hamburger.classList.toggle('open', open);
+      hamburger.setAttribute('aria-expanded', open);
+    });
+
+    function applyTheme(light) {
+      document.documentElement.classList.toggle('light-mode', light);
+      localStorage.setItem('revsgaming-theme', light ? 'light' : 'dark');
+    }
+
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      applyTheme(!document.documentElement.classList.contains('light-mode'));
+    });
+
+    document.getElementById('themeToggleMobile').addEventListener('click', () => {
+      applyTheme(!document.documentElement.classList.contains('light-mode'));
+    });
+
+    /* ============================================================
+       INIT
+    ============================================================ */
+    (async function init() {
+      await initAuth();
+      await loadCategories();
+    })();
+  </script>
+
+  <!--
+  ================================================================
+  SUPABASE SQL SETUP — Run this in the Supabase SQL Editor
+  ================================================================
+
+  CREATE TABLE IF NOT EXISTS forum_categories (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    slug TEXT UNIQUE NOT NULL,
+    description TEXT,
+    icon TEXT DEFAULT '💬',
+    sort_order INT DEFAULT 0
+  );
+
+  CREATE TABLE IF NOT EXISTS forum_topics (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    category_id INT REFERENCES forum_categories(id) ON DELETE CASCADE,
+    user_id UUID REFERENCES auth.users(id) ON DELETE SET NULL,
+    username TEXT NOT NULL,
+    title TEXT NOT NULL,
+    body TEXT NOT NULL,
+    views INT DEFAULT 0,
+    is_pinned BOOLEAN DEFAULT false,
+    is_locked BOOLEAN DEFAULT false,
+    reply_count INT DEFAULT 0,
+    created_at TIMESTAMPTZ DEFAULT now(),
+    last_reply_at TIMESTAMPTZ DEFAULT now()
+  );
+
+  CREATE TABLE IF NOT EXISTS forum_posts (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    topic_id UUID REFERENCES forum_topics(id) ON DELETE CASCADE,
+    user_id UUID REFERENCES auth.users(id) ON DELETE SET NULL,
+    username TEXT NOT NULL,
+    body TEXT NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT now()
+  );
+
+  ALTER TABLE forum_categories ENABLE ROW LEVEL SECURITY;
+  ALTER TABLE forum_topics ENABLE ROW LEVEL SECURITY;
+  ALTER TABLE forum_posts ENABLE ROW LEVEL SECURITY;
+
+  CREATE POLICY "public_read_categories" ON forum_categories FOR SELECT USING (true);
+  CREATE POLICY "public_read_topics" ON forum_topics FOR SELECT USING (true);
+  CREATE POLICY "public_read_posts" ON forum_posts FOR SELECT USING (true);
+
+  CREATE POLICY "auth_insert_topics" ON forum_topics FOR INSERT TO authenticated
+    WITH CHECK (auth.uid() = user_id);
+  CREATE POLICY "auth_insert_posts" ON forum_posts FOR INSERT TO authenticated
+    WITH CHECK (auth.uid() = user_id);
+
+  CREATE OR REPLACE FUNCTION update_topic_stats()
+  RETURNS TRIGGER AS $$
+  BEGIN
+    UPDATE forum_topics
+    SET reply_count = reply_count + 1,
+        last_reply_at = now()
+    WHERE id = NEW.topic_id;
+    RETURN NEW;
+  END;
+  $$ LANGUAGE plpgsql SECURITY DEFINER;
+
+  CREATE TRIGGER on_forum_post_created
+  AFTER INSERT ON forum_posts
+  FOR EACH ROW EXECUTE FUNCTION update_topic_stats();
+
+  INSERT INTO forum_categories (name, slug, description, icon, sort_order) VALUES
+    ('General', 'general', 'General discussions about RevsGaming', '💬', 1),
+    ('Help & Support', 'support', 'Get help with setup, netplay and issues', '🔧', 2),
+    ('Game Requests', 'game-requests', 'Request games you want to see added', '🎮', 3),
+    ('Multiplayer', 'multiplayer', 'Find players, organize matches and sessions', '🌐', 4),
+    ('Off Topic', 'off-topic', 'Anything not related to the above', '🎲', 5)
+  ON CONFLICT (slug) DO NOTHING;
+
+  ================================================================
+  -->
+
+</body>
+</html>
