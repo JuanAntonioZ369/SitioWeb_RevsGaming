@@ -1,36 +1,104 @@
 /**
- * /api/archive-games — Proxy for Archive.org search API
- * Avoids CORS issues by fetching server-side from Vercel.
+ * /api/archive-games
+ * 1. Fetches the uploader's items from archive.org
+ * 2. For each non-BIOS item, fetches its file list (individual ROMs)
+ * 3. Returns a flat array of game objects
  */
-export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Methods', 'GET')
+const UPLOADER = 'juan_antonio_zegarra_condori'
+const BASE     = 'https://archive.org'
+const HEADERS  = { 'User-Agent': 'revsgaming-site/1.0', Accept: 'application/json' }
 
-  const uploader = 'juan_antonio_zegarra_condori'
-  const url =
-    `https://archive.org/advancedsearch.php` +
-    `?q=uploader%3A${uploader}` +
-    `&fl[]=identifier,title,subject,description,mediatype` +
-    `&rows=300&output=json&page=1`
+// ROM file extensions we care about
+const ROM_EXT = /\.(iso|bin|cue|zip|7z|rar|rom|nes|sfc|smc|gba|n64|z64|v64|gb|gbc|gbs|md|gen|sg|smd|pce|ws|wsc|nds|3ds|pbp|chd|img|ccd)$/i
+
+function isBios (str) {
+  return /bios/i.test(str)
+}
+
+export default async function handler (req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=3600')
 
   try {
-    const r = await fetch(url, {
-      headers: { 'User-Agent': 'revsgaming-site/1.0' }
-    })
-    if (!r.ok) throw new Error('archive.org returned ' + r.status)
+    // ── Step 1: get all items uploaded by user ──────────────────
+    const searchUrl =
+      `${BASE}/advancedsearch.php` +
+      `?q=uploader:(${UPLOADER})` +
+      `&fl[]=identifier,title,mediatype,subject` +
+      `&rows=100&output=json&page=1`
 
-    const json = await r.json()
-    const docs = (json?.response?.docs) || []
+    const searchRes = await fetch(searchUrl, { headers: HEADERS })
+    if (!searchRes.ok) throw new Error(`Search failed: ${searchRes.status}`)
+    const searchJson = await searchRes.json()
 
-    // Filter out BIOS collections and account items
-    const games = docs.filter(item => {
+    const items = (searchJson?.response?.docs || []).filter(item => {
       const id    = (item.identifier || '').toLowerCase()
       const title = (item.title      || '').toLowerCase()
       const type  = (item.mediatype  || '').toLowerCase()
-      return type !== 'account' && !id.includes('bios') && !title.includes('bios')
+      return type !== 'account' && !isBios(id) && !isBios(title)
     })
 
-    res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=3600')
+    if (items.length === 0) {
+      return res.status(200).json({ games: [], collections: [] })
+    }
+
+    // ── Step 2: for each item, fetch its file list ──────────────
+    const results = await Promise.all(
+      items.map(async item => {
+        try {
+          const metaRes = await fetch(`${BASE}/metadata/${item.identifier}`, { headers: HEADERS })
+          if (!metaRes.ok) return []
+          const meta = await metaRes.json()
+
+          const files = (meta.files || []).filter(f => {
+            const name   = f.name || ''
+            const format = (f.format || '').toLowerCase()
+            return (
+              ROM_EXT.test(name) &&
+              !isBios(name) &&
+              format !== 'metadata' &&
+              !name.startsWith('_')
+            )
+          })
+
+          return files.map(f => {
+            const cleanTitle = f.name
+              .replace(ROM_EXT, '')           // remove extension
+              .replace(/[_-]/g, ' ')          // underscores/dashes → spaces
+              .replace(/\s+/g, ' ')
+              .trim()
+
+            return {
+              identifier:      item.identifier,
+              collectionTitle: item.title || item.identifier,
+              filename:        f.name,
+              title:           cleanTitle || f.name,
+              size:            f.size ? parseInt(f.size) : 0,
+              downloadUrl:     `${BASE}/download/${item.identifier}/${encodeURIComponent(f.name)}`,
+              thumbUrl:        `${BASE}/services/img/${item.identifier}`,
+              archiveUrl:      `${BASE}/details/${item.identifier}`
+            }
+          })
+        } catch (_) {
+          return []
+        }
+      })
+    )
+
+    const games = results.flat()
+
+    // If no individual files found, fall back to showing the collections themselves
+    if (games.length === 0) {
+      const collections = items.map(item => ({
+        identifier:  item.identifier,
+        title:       item.title || item.identifier,
+        thumbUrl:    `${BASE}/services/img/${item.identifier}`,
+        archiveUrl:  `${BASE}/details/${item.identifier}`,
+        isCollection: true
+      }))
+      return res.status(200).json({ games: collections, collections: true })
+    }
+
     return res.status(200).json({ games })
   } catch (err) {
     return res.status(502).json({ error: err.message })
