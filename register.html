@@ -1256,10 +1256,15 @@
     const SUPABASE_URL = 'https://kyoyunuwfuujqdomdmlh.supabase.co'
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt5b3l1bnV3ZnV1anFkb21kbWxoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2MTY5MDksImV4cCI6MjA5NzE5MjkwOX0.AJfWxp7rcn9psHFZQpX9qmCw32rsYo9pYiIpxHfIX3I'
 
-    // Reemplazar con pk_live_XXXX en producción
-    const CULQI_PUBLIC_KEY = 'pk_test_XXXXXXXXXXXXXXXX'
+    let CULQI_PUBLIC_KEY = ''
 
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+
+    // Load Culqi public key from server-side env var
+    fetch('/api/config')
+      .then(r => r.json())
+      .then(cfg => { if (cfg.culqiKey) CULQI_PUBLIC_KEY = cfg.culqiKey })
+      .catch(() => {})
 
     let registeredEmail = ''
     let registeredUserId = ''

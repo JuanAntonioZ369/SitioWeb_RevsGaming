@@ -666,8 +666,13 @@
     /* ================================================================
        CONFIG
     ================================================================ */
-    // Replace with pk_live_XXXX in production
-    const CULQI_PUBLIC_KEY = 'pk_test_XXXXXXXXXXXXXXXX'
+    let CULQI_PUBLIC_KEY = ''
+
+    // Load Culqi public key from server-side env var
+    fetch('/api/config')
+      .then(r => r.json())
+      .then(cfg => { if (cfg.culqiKey) CULQI_PUBLIC_KEY = cfg.culqiKey })
+      .catch(() => {})
 
     const planAmounts = { monthly: 299, annual: 2999 }
 

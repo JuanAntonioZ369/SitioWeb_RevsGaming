@@ -5,7 +5,9 @@
     "api/activate-trial.js": { "maxDuration": 10, "memory": 128 },
     "api/reclamacion.js":    { "maxDuration": 10, "memory": 128 },
     "api/releases.js":       { "maxDuration": 10, "memory": 128 },
-    "api/notify-expiry.js":  { "maxDuration": 10, "memory": 128 }
+    "api/notify-expiry.js":   { "maxDuration": 10, "memory": 128 },
+    "api/archive-games.js":   { "maxDuration": 10, "memory": 128 },
+    "api/config.js":          { "maxDuration": 5,  "memory": 128 }
   },
   "headers": [
     {

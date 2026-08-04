@@ -1176,7 +1176,7 @@
     /* ----------------------------------------------------------
        ARCHIVE.ORG — GAME LIBRARY
     ---------------------------------------------------------- */
-    var API_URL = 'https://archive.org/advancedsearch.php?q=uploader%3Ajuan_antonio_zegarra_condori&fl[]=identifier,title,subject,description,mediatype&rows=200&output=json&page=1';
+    var API_URL = '/api/archive-games';
 
     var allGames = [];
     var searchInput = document.getElementById('searchInput');
@@ -1395,17 +1395,7 @@
           return res.json();
         })
         .then(function (data) {
-          var docs = (data && data.response && data.response.docs) ? data.response.docs : [];
-
-          /* Filter out BIOS items and account items */
-          allGames = docs.filter(function (item) {
-            var id = (item.identifier || '').toLowerCase();
-            var title = (item.title || '').toLowerCase();
-            var hasBios = id.indexOf('bios') !== -1 || title.indexOf('bios') !== -1;
-            var isAccount = (item.mediatype || '').toLowerCase() === 'account';
-            return !hasBios && !isAccount;
-          });
-
+          allGames = (data && data.games) ? data.games : [];
           applyFilters();
         })
         .catch(function () {
