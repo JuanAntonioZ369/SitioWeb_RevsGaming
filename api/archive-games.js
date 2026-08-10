@@ -34,11 +34,14 @@ export default async function handler (req, res) {
             return ROM_EXT.test(name) && !name.startsWith('_') && (f.format || '') !== 'Metadata'
           })
 
+          const system = identifier.startsWith('ps1') ? 'ps1' : 'other'
+
           return files.map(f => ({
             identifier,
             collectionTitle,
             filename:    f.name,
             title:       f.name.replace(ROM_EXT, '').replace(/[_]/g, ' ').trim(),
+            system,
             size:        f.size ? parseInt(f.size) : 0,
             downloadUrl: `${BASE}/download/${identifier}/${encodeURIComponent(f.name)}`,
             thumbUrl:    `${BASE}/services/img/${identifier}`,

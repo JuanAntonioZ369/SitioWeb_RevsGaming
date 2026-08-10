@@ -1185,8 +1185,10 @@
     var gamesContent = document.getElementById('gamesContent');
     var skeletonGrid = document.getElementById('skeletonGrid');
 
-    /* Detect system from title/subject/description text */
+    /* Detect system from explicit field or title/subject/description text */
     function detectTags(item) {
+      if (item.system) return [item.system.toUpperCase()];
+
       var haystack = [
         (item.title || ''),
         (Array.isArray(item.subject) ? item.subject.join(' ') : (item.subject || '')),
@@ -1220,15 +1222,18 @@
       card.className = 'game-card';
       card.style.animationDelay = Math.min(index * 0.04, 0.6) + 's';
 
-      var thumbUrl = 'https://archive.org/services/img/' + item.identifier;
-      var archiveUrl = 'https://archive.org/details/' + item.identifier;
+      var archiveUrl = item.archiveUrl || ('https://archive.org/details/' + item.identifier);
+      var archiveThumb = item.thumbUrl || ('https://archive.org/services/img/' + item.identifier);
       var desc = getDesc(item);
       var tags = detectTags(item);
 
-      /* Thumb with fallback */
+      /* Try local cover first, fallback to archive.org thumbnail, then placeholder */
+      var coverTitle = (item.title || item.identifier).replace(/[<>:"/\\|?*]/g, '');
+      var localCoverUrl = '/covers/' + encodeURIComponent(coverTitle) + '.png';
+
       var thumbImg = document.createElement('img');
       thumbImg.className = 'game-card-thumb';
-      thumbImg.src = thumbUrl;
+      thumbImg.src = localCoverUrl;
       thumbImg.alt = item.title || item.identifier;
       thumbImg.loading = 'lazy';
       thumbImg.decoding = 'async';
@@ -1239,9 +1244,13 @@
       fallback.innerHTML = '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>';
       fallback.style.display = 'none';
 
-      thumbImg.addEventListener('error', function () {
-        thumbImg.style.display = 'none';
-        fallback.style.display = 'flex';
+      thumbImg.addEventListener('error', function onLocalErr() {
+        thumbImg.removeEventListener('error', onLocalErr);
+        thumbImg.src = archiveThumb;
+        thumbImg.addEventListener('error', function () {
+          thumbImg.style.display = 'none';
+          fallback.style.display = 'flex';
+        });
       });
 
       /* Body */
@@ -1332,12 +1341,13 @@
       var filtered = allGames.filter(function (item) {
         var titleMatch = !query || (item.title || item.identifier).toLowerCase().indexOf(query) !== -1;
 
-        var haystack = [
-          (item.title || ''),
-          (Array.isArray(item.subject) ? item.subject.join(' ') : (item.subject || '')),
-          (item.description || '')
-        ].join(' ').toLowerCase();
-        var systemMatch = !system || haystack.indexOf(system) !== -1;
+        var systemMatch = !system ||
+          (item.system && item.system.toLowerCase().indexOf(system) !== -1) ||
+          [
+            (item.title || ''),
+            (Array.isArray(item.subject) ? item.subject.join(' ') : (item.subject || '')),
+            (item.description || '')
+          ].join(' ').toLowerCase().indexOf(system) !== -1;
 
         return titleMatch && systemMatch;
       });
