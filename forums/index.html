@@ -1306,7 +1306,7 @@
 
       if (state.user) {
         navUser.innerHTML = `
-          <span class="nav-username">Hi, ${escapeHtml(state.username)}</span>
+          <a href="/dashboard" class="nav-username">Hi, ${escapeHtml(state.username)}</a>
           <button class="btn-logout" id="btnLogout">Log out</button>
         `;
         navMobileUser.innerHTML = `
