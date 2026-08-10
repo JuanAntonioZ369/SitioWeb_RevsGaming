@@ -1,24 +1,18 @@
 /**
  * /api/archive-games
- * 1. Fetches the uploader's items from archive.org
- * 2. For each non-BIOS item, fetches its file list (individual ROMs)
- * 3. Returns a flat array of game objects
+ * Fetches individual ROM files from known archive.org collection identifiers.
+ * Collections: ps1-1jugador, ps1-multijugador
  */
-const UPLOADER = 'juan_antonio_zegarra_condori'
-const BASE     = 'https://archive.org'
-const HEADERS  = { 'User-Agent': 'revsgaming-site/1.0', Accept: 'application/json' }
+const BASE       = 'https://archive.org'
+const HEADERS    = { 'User-Agent': 'revsgaming-site/1.0', Accept: 'application/json' }
+const COLLECTION_IDS = ['ps1-1jugador', 'ps1-multijugador']
 
-function fetchWithTimeout (url, ms = 6000) {
+const ROM_EXT = /\.(iso|bin|cue|zip|7z|rar|rom|nes|sfc|smc|gba|n64|z64|v64|gb|gbc|md|gen|pbp|chd|img|ccd|pce|ws|wsc)$/i
+
+function fetchWithTimeout (url, ms = 7000) {
   const ctrl = new AbortController()
   const t = setTimeout(() => ctrl.abort(), ms)
   return fetch(url, { headers: HEADERS, signal: ctrl.signal }).finally(() => clearTimeout(t))
-}
-
-// ROM file extensions we care about
-const ROM_EXT = /\.(iso|bin|cue|zip|7z|rar|rom|nes|sfc|smc|gba|n64|z64|v64|gb|gbc|gbs|md|gen|sg|smd|pce|ws|wsc|nds|3ds|pbp|chd|img|ccd)$/i
-
-function isBios (str) {
-  return /bios/i.test(str)
 }
 
 export default async function handler (req, res) {
@@ -26,65 +20,30 @@ export default async function handler (req, res) {
   res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=3600')
 
   try {
-    // ── Step 1: get all items uploaded by user ──────────────────
-    const searchUrl =
-      `${BASE}/advancedsearch.php` +
-      `?q=uploader:(${UPLOADER})` +
-      `&fl[]=identifier,title,mediatype,subject` +
-      `&rows=100&output=json&page=1`
-
-    const searchRes = await fetchWithTimeout(searchUrl, 7000)
-    if (!searchRes.ok) throw new Error(`Search failed: ${searchRes.status}`)
-    const searchJson = await searchRes.json()
-
-    const items = (searchJson?.response?.docs || []).filter(item => {
-      const id    = (item.identifier || '').toLowerCase()
-      const title = (item.title      || '').toLowerCase()
-      const type  = (item.mediatype  || '').toLowerCase()
-      return type !== 'account' && !isBios(id) && !isBios(title)
-    })
-
-    if (items.length === 0) {
-      return res.status(200).json({ games: [], collections: [] })
-    }
-
-    // ── Step 2: for each item, fetch its file list ──────────────
     const results = await Promise.all(
-      items.map(async item => {
+      COLLECTION_IDS.map(async identifier => {
         try {
-          const metaRes = await fetchWithTimeout(`${BASE}/metadata/${item.identifier}`, 5000)
-          if (!metaRes.ok) return []
-          const meta = await metaRes.json()
+          const r = await fetchWithTimeout(`${BASE}/metadata/${identifier}`)
+          if (!r.ok) return []
+          const meta = await r.json()
+
+          const collectionTitle = meta.metadata?.title || identifier
 
           const files = (meta.files || []).filter(f => {
-            const name   = f.name || ''
-            const format = (f.format || '').toLowerCase()
-            return (
-              ROM_EXT.test(name) &&
-              !isBios(name) &&
-              format !== 'metadata' &&
-              !name.startsWith('_')
-            )
+            const name = f.name || ''
+            return ROM_EXT.test(name) && !name.startsWith('_') && (f.format || '') !== 'Metadata'
           })
 
-          return files.map(f => {
-            const cleanTitle = f.name
-              .replace(ROM_EXT, '')           // remove extension
-              .replace(/[_-]/g, ' ')          // underscores/dashes → spaces
-              .replace(/\s+/g, ' ')
-              .trim()
-
-            return {
-              identifier:      item.identifier,
-              collectionTitle: item.title || item.identifier,
-              filename:        f.name,
-              title:           cleanTitle || f.name,
-              size:            f.size ? parseInt(f.size) : 0,
-              downloadUrl:     `${BASE}/download/${item.identifier}/${encodeURIComponent(f.name)}`,
-              thumbUrl:        `${BASE}/services/img/${item.identifier}`,
-              archiveUrl:      `${BASE}/details/${item.identifier}`
-            }
-          })
+          return files.map(f => ({
+            identifier,
+            collectionTitle,
+            filename:    f.name,
+            title:       f.name.replace(ROM_EXT, '').replace(/[_]/g, ' ').trim(),
+            size:        f.size ? parseInt(f.size) : 0,
+            downloadUrl: `${BASE}/download/${identifier}/${encodeURIComponent(f.name)}`,
+            thumbUrl:    `${BASE}/services/img/${identifier}`,
+            archiveUrl:  `${BASE}/details/${identifier}`
+          }))
         } catch (_) {
           return []
         }
@@ -93,16 +52,16 @@ export default async function handler (req, res) {
 
     const games = results.flat()
 
-    // If no individual files found, fall back to showing the collections themselves
+    // Fallback: if no individual files found, return the collections as cards
     if (games.length === 0) {
-      const collections = items.map(item => ({
-        identifier:  item.identifier,
-        title:       item.title || item.identifier,
-        thumbUrl:    `${BASE}/services/img/${item.identifier}`,
-        archiveUrl:  `${BASE}/details/${item.identifier}`,
+      const collections = COLLECTION_IDS.map(id => ({
+        identifier:   id,
+        title:        id === 'ps1-1jugador' ? 'PS1 ROMs – 1 Jugador' : 'PS1 ROMs – Multijugador',
+        thumbUrl:     `${BASE}/services/img/${id}`,
+        archiveUrl:   `${BASE}/details/${id}`,
         isCollection: true
       }))
-      return res.status(200).json({ games: collections, collections: true })
+      return res.status(200).json({ games: collections })
     }
 
     return res.status(200).json({ games })
