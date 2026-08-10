@@ -3144,19 +3144,6 @@
     });
 
     /* ----------------------------------------------------------
-       SHOWCASE panel switcher
-    ---------------------------------------------------------- */
-    function switchPanel(num, btn) {
-      // Hide all panels
-      document.querySelectorAll('.showcase-panel').forEach(p => p.classList.remove('active'));
-      // Deactivate all thumbs
-      document.querySelectorAll('.showcase-thumb').forEach(t => t.classList.remove('active'));
-      // Activate selected
-      document.getElementById('panel' + num).classList.add('active');
-      btn.classList.add('active');
-    }
-
-    /* ----------------------------------------------------------
        INTERSECTION OBSERVER — fade-in on scroll
     ---------------------------------------------------------- */
     const observerOptions = {

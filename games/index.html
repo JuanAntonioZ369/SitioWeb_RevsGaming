@@ -1113,13 +1113,13 @@
        THEME
     ---------------------------------------------------------- */
     (function () {
-      var saved = localStorage.getItem('rvg-theme');
+      var saved = localStorage.getItem('revsgaming-theme') || localStorage.getItem('rvg-theme');
       if (saved === 'light') document.documentElement.classList.add('light-mode');
     })();
 
     function toggleTheme() {
       var isLight = document.documentElement.classList.toggle('light-mode');
-      localStorage.setItem('rvg-theme', isLight ? 'light' : 'dark');
+      localStorage.setItem('revsgaming-theme', isLight ? 'light' : 'dark');
     }
 
     var themeToggle = document.getElementById('themeToggle');
@@ -1420,7 +1420,7 @@
   </script>
 
   <!-- Shared UI effects (cursor + scroll progress) -->
-  <script src="../js/ui-effects.js"></script>
+  <script src="/js/ui-effects.js"></script>
 
 </body>
 </html>

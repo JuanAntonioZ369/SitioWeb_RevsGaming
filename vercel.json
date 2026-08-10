@@ -43,6 +43,7 @@
     { "source": "/upgrade",             "destination": "/upgrade.html" },
     { "source": "/cancel",              "destination": "/cancel.html" },
     { "source": "/games",              "destination": "/games/index.html" },
-    { "source": "/forums",             "destination": "/forums/index.html" }
+    { "source": "/forums",             "destination": "/forums/index.html" },
+    { "source": "/success",            "destination": "/success.html" }
   ]
 }

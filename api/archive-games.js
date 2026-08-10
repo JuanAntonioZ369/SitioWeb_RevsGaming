@@ -8,6 +8,12 @@ const UPLOADER = 'juan_antonio_zegarra_condori'
 const BASE     = 'https://archive.org'
 const HEADERS  = { 'User-Agent': 'revsgaming-site/1.0', Accept: 'application/json' }
 
+function fetchWithTimeout (url, ms = 6000) {
+  const ctrl = new AbortController()
+  const t = setTimeout(() => ctrl.abort(), ms)
+  return fetch(url, { headers: HEADERS, signal: ctrl.signal }).finally(() => clearTimeout(t))
+}
+
 // ROM file extensions we care about
 const ROM_EXT = /\.(iso|bin|cue|zip|7z|rar|rom|nes|sfc|smc|gba|n64|z64|v64|gb|gbc|gbs|md|gen|sg|smd|pce|ws|wsc|nds|3ds|pbp|chd|img|ccd)$/i
 
@@ -27,7 +33,7 @@ export default async function handler (req, res) {
       `&fl[]=identifier,title,mediatype,subject` +
       `&rows=100&output=json&page=1`
 
-    const searchRes = await fetch(searchUrl, { headers: HEADERS })
+    const searchRes = await fetchWithTimeout(searchUrl, 7000)
     if (!searchRes.ok) throw new Error(`Search failed: ${searchRes.status}`)
     const searchJson = await searchRes.json()
 
@@ -46,7 +52,7 @@ export default async function handler (req, res) {
     const results = await Promise.all(
       items.map(async item => {
         try {
-          const metaRes = await fetch(`${BASE}/metadata/${item.identifier}`, { headers: HEADERS })
+          const metaRes = await fetchWithTimeout(`${BASE}/metadata/${item.identifier}`, 5000)
           if (!metaRes.ok) return []
           const meta = await metaRes.json()
 
