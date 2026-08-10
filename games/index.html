@@ -936,7 +936,10 @@
         </svg>
       </button>
 
-      <a href="/register.html" class="btn-nav-register">Sign up</a>
+      <div id="navAuthDesktop" style="display:flex;align-items:center;gap:8px;">
+        <a href="/register?login=1" class="btn-nav-register">Sign in</a>
+        <a href="/register.html" class="btn-nav-register">Sign up</a>
+      </div>
       <a href="/download/" class="btn-nav-cta">Download</a>
 
       <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
@@ -953,7 +956,10 @@
       <a href="/games/" class="active">Games</a>
       <a href="/forums/">Forums</a>
       <a href="/changelog/">Changelog</a>
-      <a href="/register.html" class="btn-nav-register" style="text-align:center;margin-top:4px;">Sign up</a>
+      <div id="navAuthMobile">
+        <a href="/register?login=1" class="btn-nav-register" style="text-align:center;display:block;margin-bottom:4px;">Sign in</a>
+        <a href="/register.html" class="btn-nav-register" style="text-align:center;display:block;">Sign up</a>
+      </div>
       <a href="/download/" class="btn-nav-cta" style="text-align:center;margin-top:4px;">Download</a>
       <div style="display:flex;justify-content:center;gap:8px;margin-top:8px;">
         <button id="themeToggleMobile" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
@@ -1429,7 +1435,8 @@
     fetchGames();
   </script>
 
-  <!-- Shared UI effects (cursor + scroll progress) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="/js/auth-nav.js"></script>
   <script src="/js/ui-effects.js"></script>
 
 </body>

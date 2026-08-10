@@ -1306,7 +1306,10 @@
 
       if (state.user) {
         navUser.innerHTML = `
-          <a href="/dashboard" class="nav-username">Hi, ${escapeHtml(state.username)}</a>
+          <a href="/dashboard" style="display:flex;align-items:center;gap:8px;padding:6px 14px;border-radius:8px;border:1px solid rgba(126,200,160,0.3);background:rgba(126,200,160,0.08);text-decoration:none;">
+            <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#7EC8A0,#66c0f4);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:#0d1117;">${escapeHtml(state.username.charAt(0).toUpperCase())}</div>
+            <span style="font-size:0.85rem;font-weight:600;color:#7EC8A0;">${escapeHtml(state.username)}</span>
+          </a>
           <button class="btn-logout" id="btnLogout">Log out</button>
         `;
         navMobileUser.innerHTML = `
@@ -1318,8 +1321,8 @@
         document.getElementById('btnLogout').addEventListener('click', doLogout);
         document.getElementById('btnLogoutMobile').addEventListener('click', doLogout);
       } else {
-        navUser.innerHTML = `<a href="/register.html" class="btn-nav-register">Sign in</a>`;
-        navMobileUser.innerHTML = `<a href="/register.html" class="btn-nav-register" style="text-align:center;display:block;margin:4px 12px;">Sign in</a>`;
+        navUser.innerHTML = `<a href="/register?login=1" class="btn-nav-register">Sign in</a><a href="/register.html" class="btn-nav-register" style="margin-left:6px;">Sign up</a>`;
+        navMobileUser.innerHTML = `<a href="/register?login=1" class="btn-nav-register" style="text-align:center;display:block;margin:4px 12px;">Sign in</a><a href="/register.html" class="btn-nav-register" style="text-align:center;display:block;margin:4px 12px;">Sign up</a>`;
       }
     }
 

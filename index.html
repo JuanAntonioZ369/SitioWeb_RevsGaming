@@ -2375,13 +2375,12 @@
         </svg>
       </button>
 
-      <a href="/register.html" class="btn-nav-register" data-i18n="nav.signup">Sign up</a>
+      <div id="navAuthDesktop" style="display:flex;align-items:center;gap:8px;">
+        <a href="/register?login=1" class="btn-nav-register">Sign in</a>
+        <a href="/register.html" class="btn-nav-register" data-i18n="nav.signup">Sign up</a>
+      </div>
 
-      <a
-        class="btn-nav-cta"
-        href="/download/"
-        data-i18n="nav.download"
-      >Download</a>
+      <a class="btn-nav-cta" href="/download/" data-i18n="nav.download">Download</a>
 
       <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
         <span></span>
@@ -2397,13 +2396,11 @@
       <a href="/games/">Games</a>
       <a href="/forums/">Forums</a>
       <a href="/changelog/">Changelog</a>
-      <a href="/register.html" class="btn-nav-register" style="text-align:center;" data-i18n="nav.signup">Sign up</a>
-      <a
-        class="btn-nav-cta"
-        href="/download/"
-        style="text-align:center;"
-        data-i18n="nav.download"
-      >Download</a>
+      <div id="navAuthMobile">
+        <a href="/register?login=1" class="btn-nav-register" style="text-align:center;display:block;margin-bottom:4px;">Sign in</a>
+        <a href="/register.html" class="btn-nav-register" style="text-align:center;display:block;" data-i18n="nav.signup">Sign up</a>
+      </div>
+      <a class="btn-nav-cta" href="/download/" style="text-align:center;" data-i18n="nav.download">Download</a>
       <div style="display:flex;justify-content:center;gap:8px;margin-top:4px;">
         <button id="themeToggleMobile" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
           <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -3539,5 +3536,7 @@
     startAuto()
   })()
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="/js/auth-nav.js"></script>
 </body>
 </html>
