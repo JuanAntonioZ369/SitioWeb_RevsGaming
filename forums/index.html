@@ -1347,7 +1347,7 @@
        VIEW 1: CATEGORIES
     ============================================================ */
     async function loadCategories() {
-      const { data, error } = await supabase
+      const { data, error } = await db
         .from('forum_categories')
         .select('*')
         .order('sort_order', { ascending: true });
@@ -1365,7 +1365,7 @@
     async function getCategoryTopicCounts() {
       const ids = state.categories.map(c => c.id);
       if (!ids.length) return {};
-      const { data } = await supabase
+      const { data } = await db
         .from('forum_topics')
         .select('category_id')
         .in('category_id', ids);
@@ -1433,7 +1433,7 @@
     }
 
     async function loadTopics(append = false) {
-      const { data, error, count } = await supabase
+      const { data, error, count } = await db
         .from('forum_topics')
         .select('*', { count: 'exact' })
         .eq('category_id', state.currentCategory.id)
@@ -1533,7 +1533,7 @@
         .eq('id', topic.id)
         .then(() => {});
 
-      const { data: posts, error } = await supabase
+      const { data: posts, error } = await db
         .from('forum_posts')
         .select('*')
         .eq('topic_id', topic.id)
@@ -1675,7 +1675,7 @@
       document.getElementById('postsTopicMeta').textContent =
         `Started by ${updatedTopic.username} · ${formatDate(updatedTopic.created_at)} · ${updatedTopic.reply_count} replies`;
 
-      const { data: posts } = await supabase
+      const { data: posts } = await db
         .from('forum_posts')
         .select('*')
         .eq('topic_id', updatedTopic.id)
