@@ -1230,7 +1230,7 @@
     ============================================================ */
     const SUPABASE_URL = 'https://kyoyunuwfuujqdomdmlh.supabase.co';
     const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt5b3l1bnV3ZnV1anFkb21kbWxoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2MTY5MDksImV4cCI6MjA5NzE5MjkwOX0.AJfWxp7rcn9psHFZQpX9qmCw32rsYo9pYiIpxHfIX3I';
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+    const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
     /* ============================================================
        STATE
@@ -1291,7 +1291,7 @@
        AUTH
     ============================================================ */
     async function initAuth() {
-      const { data: { session } } = await supabase.auth.getSession();
+      const { data: { session } } = await db.auth.getSession();
       if (session) {
         state.user = session.user;
         const meta = session.user.user_metadata;
@@ -1324,7 +1324,7 @@
     }
 
     async function doLogout() {
-      await supabase.auth.signOut();
+      await db.auth.signOut();
       state.user = null;
       state.username = null;
       renderNavUser();
@@ -1528,7 +1528,7 @@
       updatePageHeader(topic.title, state.currentCategory.name);
 
       // Increment view count (fire and forget)
-      supabase.from('forum_topics')
+      db.from('forum_topics')
         .update({ views: (topic.views || 0) + 1 })
         .eq('id', topic.id)
         .then(() => {});
@@ -1650,7 +1650,7 @@
       btn.disabled = true;
       btn.textContent = 'Posting...';
 
-      const { error } = await supabase.from('forum_posts').insert({
+      const { error } = await db.from('forum_posts').insert({
         topic_id: state.currentTopic.id,
         user_id: state.user.id,
         username: state.username,
@@ -1728,7 +1728,7 @@
       btn.disabled = true;
       btn.textContent = 'Posting...';
 
-      const { data: inserted, error } = await supabase.from('forum_topics').insert({
+      const { data: inserted, error } = await db.from('forum_topics').insert({
         category_id: categoryId,
         user_id: state.user.id,
         username: state.username,
