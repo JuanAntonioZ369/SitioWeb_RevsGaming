@@ -1333,7 +1333,9 @@
 
     function requireAuth(actionLabel) {
       if (state.user) return true;
-      showToast(`Log in to ${actionLabel} → revsgaming.com/register`, 'info', 5000);
+      var redirect = encodeURIComponent(window.location.pathname)
+      showToast(`Sign in to ${actionLabel}`, 'info', 5000);
+      setTimeout(function() { window.location.href = '/register?login=1&redirect=' + redirect }, 1800);
       return false;
     }
 

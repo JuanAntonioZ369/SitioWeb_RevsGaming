@@ -988,6 +988,30 @@
     .pw-strength-fill { height: 100%; border-radius: 2px; transition: width 0.3s, background 0.3s; width: 0%; }
     .pw-strength-label { font-size: 0.75rem; color: var(--text-muted, #8f98a0); }
     html.light-mode .pw-strength-bar { background: rgba(0,0,0,0.08); }
+    .auth-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border, rgba(102,192,244,0.15));
+      margin-bottom: 24px;
+      gap: 0;
+    }
+    .auth-tab {
+      flex: 1;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 12px 0;
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      color: var(--text-muted, #8f98a0);
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+      margin-bottom: -1px;
+    }
+    .auth-tab.active {
+      color: var(--green, #7EC8A0);
+      border-bottom-color: var(--green, #7EC8A0);
+    }
   </style>
 </head>
 <body>
@@ -1061,6 +1085,12 @@
   <!-- ── MAIN ── -->
   <main class="main">
     <div class="form-card">
+
+      <!-- TABS Register / Login -->
+      <div class="auth-tabs" id="authTabs">
+        <button class="auth-tab active" id="tabRegister" onclick="switchTab('register')">Register</button>
+        <button class="auth-tab" id="tabLogin" onclick="switchTab('login')">Log in</button>
+      </div>
 
       <!-- Step indicator -->
       <div class="step-indicator" id="step-indicator">
@@ -1174,8 +1204,8 @@
         </form>
 
         <div class="form-footer-links" style="margin-top: 18px;">
-          <button type="button" onclick="openRevsGamingApp()" class="app-login-btn" data-i18n="reg.already">
-            Already have an account? Open the app
+          <button type="button" onclick="switchTab('login')" class="app-login-btn">
+            Already have an account? Log in
           </button>
         </div>
 
@@ -1184,6 +1214,38 @@
         <p class="form-footer-note">
           Already paid? The app will redirect you automatically once you register.
         </p>
+      </div>
+
+      <!-- PANEL LOGIN -->
+      <div class="form-panel" id="panel-login">
+        <p class="form-panel-title">Welcome back</p>
+        <p class="form-panel-sub">Log in to your RevsGaming account</p>
+        <div class="form-error" id="login-error"></div>
+        <form id="login-form" novalidate>
+          <div class="field">
+            <label for="login-email">Email address</label>
+            <input type="email" id="login-email" name="email" placeholder="tu@email.com" autocomplete="email" required />
+            <p class="field-error" id="login-email-error"></p>
+          </div>
+          <div class="field">
+            <label for="login-password">Password</label>
+            <div class="input-wrap">
+              <input type="password" id="login-password" name="password" placeholder="Your password" autocomplete="current-password" class="has-toggle" required />
+              <button type="button" class="toggle-btn" id="toggle-login-password" aria-label="Show password">
+                <svg id="eye-login" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                <svg id="eye-off-login" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>
+              </button>
+            </div>
+            <p class="field-error" id="login-password-error"></p>
+          </div>
+          <button type="submit" class="btn-primary" id="login-btn">
+            <div class="spinner"></div>
+            <span class="btn-label">Log in →</span>
+          </button>
+        </form>
+        <div class="form-footer-links" style="margin-top:18px;">
+          <a href="/forgot-password.html" style="font-size:0.82rem;color:var(--text-muted);">Forgot your password?</a>
+        </div>
       </div>
 
       <!-- ── PANEL 2: TRIAL ── -->
@@ -1680,6 +1742,74 @@
         showFormError('payment-error', Culqi.error.user_message || 'Error al procesar el pago.')
       }
     }
+
+    /* ================================================================
+       TABS: Register / Login
+    ================================================================ */
+    function switchTab(tab) {
+      var isLogin = tab === 'login'
+      document.getElementById('tabRegister').classList.toggle('active', !isLogin)
+      document.getElementById('tabLogin').classList.toggle('active', isLogin)
+      document.getElementById('panel-register').classList.toggle('active', !isLogin)
+      document.getElementById('panel-login').classList.toggle('active', isLogin)
+      // Ocultar step indicator en login
+      document.getElementById('step-indicator').style.display = isLogin ? 'none' : ''
+    }
+
+    // Auto-switch si URL tiene ?login=1 o ?tab=login
+    ;(function() {
+      var params = new URLSearchParams(window.location.search)
+      if (params.get('login') === '1' || params.get('tab') === 'login') {
+        switchTab('login')
+      }
+    })()
+
+    /* ================================================================
+       LOGIN FORM
+    ================================================================ */
+    document.getElementById('login-form').addEventListener('submit', async function(e) {
+      e.preventDefault()
+      var email = document.getElementById('login-email').value.trim()
+      var password = document.getElementById('login-password').value
+      var errorEl = document.getElementById('login-error')
+      errorEl.style.display = 'none'
+      errorEl.textContent = ''
+
+      if (!email || !password) {
+        errorEl.textContent = 'Please fill in all fields.'
+        errorEl.style.display = 'block'
+        return
+      }
+
+      setButtonLoading('login-btn', true)
+      try {
+        var result = await supabaseClient.auth.signInWithPassword({ email, password })
+        if (result.error) {
+          errorEl.textContent = result.error.message.includes('Invalid')
+            ? 'Incorrect email or password.'
+            : result.error.message
+          errorEl.style.display = 'block'
+          setButtonLoading('login-btn', false)
+          return
+        }
+        // Redirigir a la página anterior o a /forums/
+        var redirect = new URLSearchParams(window.location.search).get('redirect') || '/forums/'
+        window.location.href = redirect
+      } catch(err) {
+        errorEl.textContent = 'Connection error. Please try again.'
+        errorEl.style.display = 'block'
+        setButtonLoading('login-btn', false)
+      }
+    })
+
+    // Toggle password visibility en login
+    document.getElementById('toggle-login-password').addEventListener('click', function() {
+      var input = document.getElementById('login-password')
+      var isText = input.type === 'text'
+      input.type = isText ? 'password' : 'text'
+      document.getElementById('eye-login').style.display = isText ? '' : 'none'
+      document.getElementById('eye-off-login').style.display = isText ? 'none' : ''
+    })
 
   </script>
 
