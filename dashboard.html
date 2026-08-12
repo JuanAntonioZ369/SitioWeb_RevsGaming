@@ -378,6 +378,17 @@
 
       const user = session.user
 
+      // Traer username actual desde profiles (puede haber cambiado desde el registro)
+      const { data: profile } = await db
+        .from('profiles')
+        .select('username')
+        .eq('id', user.id)
+        .single()
+
+      if (profile?.username) {
+        user.user_metadata = { ...user.user_metadata, username: profile.username }
+      }
+
       // Traer suscripción
       const { data: subs } = await db
         .from('subscriptions')
