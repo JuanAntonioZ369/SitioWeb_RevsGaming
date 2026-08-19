@@ -494,6 +494,9 @@
     <!-- Latest version — injected dynamically from GitHub API -->
     <div id="latestVersionCard"></div>
 
+    <!-- Intermediate versions not hardcoded — injected dynamically from GitHub API -->
+    <div id="dynamicVersionCards"></div>
+
     <!-- v0.8.4 -->
     <article class="version-card" data-version="0.8.4" id="card-084">
       <div class="timeline-dot" aria-hidden="true"></div>
@@ -501,7 +504,6 @@
         <div class="card-header">
           <span class="version-num">v0.8.4</span>
           <span class="version-date" data-i18n="date.jun2026">June 2026</span>
-          <span class="badge-actual" data-i18n="badge.current">CURRENT</span>
         </div>
         <div class="card-body">
           <ul class="change-list">
@@ -772,6 +774,60 @@
           '</div></article>';
 
         // Re-run active filter if any
+        const activeFilter = document.querySelector('.filter-btn.active');
+        if (activeFilter && activeFilter.dataset.filter !== 'TODOS') {
+          activeFilter.click();
+        }
+      })
+      .catch(() => {});
+
+    /* ── Intermediate releases (between latest and hardcoded cards) ── */
+    fetch('/api/releases?type=all')
+      .then(r => r.json())
+      .then(releases => {
+        if (!Array.isArray(releases) || releases.length < 2) return;
+
+        // Skip index 0 (latest, already shown)
+        const rest = releases.slice(1);
+        const container = document.getElementById('dynamicVersionCards');
+        if (!container) return;
+
+        const cards = rest
+          .filter(rel => {
+            const verClean = rel.tag_name.replace(/^v/, '');
+            // Only inject if no static card exists for this version
+            return !document.querySelector('[data-version="' + verClean + '"]');
+          })
+          .map(rel => {
+            const ver = rel.tag_name;
+            const verClean = ver.replace(/^v/, '');
+            const date = rel.published_at
+              ? new Date(rel.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })
+              : '';
+            const items = parseReleaseBody(rel.body);
+            const itemsHtml = items.length > 0
+              ? items.map(i =>
+                  '<li class="change-item" data-type="' + i.dataType + '">' +
+                  '<span class="tag ' + i.cssClass + '">' + i.label + '</span>' +
+                  '<span>' + i.text.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</span>' +
+                  '</li>'
+                ).join('')
+              : '<li class="change-item" data-type="NUEVO"><span class="tag tag-nuevo">NEW</span><span>See GitHub release notes for details.</span></li>';
+
+            return '<article class="version-card" data-version="' + verClean + '">' +
+              '<div class="timeline-dot" aria-hidden="true"></div>' +
+              '<div class="card-inner">' +
+              '<div class="card-header">' +
+              '<span class="version-num">' + ver + '</span>' +
+              (date ? '<span class="version-date">' + date + '</span>' : '') +
+              '</div>' +
+              '<div class="card-body"><ul class="change-list">' + itemsHtml + '</ul></div>' +
+              '</div></article>';
+          });
+
+        container.innerHTML = cards.join('');
+
+        // Re-run active filter
         const activeFilter = document.querySelector('.filter-btn.active');
         if (activeFilter && activeFilter.dataset.filter !== 'TODOS') {
           activeFilter.click();
