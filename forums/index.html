@@ -1036,6 +1036,11 @@
 
       .topics-table-header .col-replies,
       .topic-row .topic-replies { display: none; }
+
+      .topics-table-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
     }
   </style>
 </head>
@@ -1149,14 +1154,16 @@
           </div>
         </div>
 
-        <div class="topics-table">
-          <div class="topics-table-header">
-            <div>Topic</div>
-            <div class="col-replies" style="text-align:center;">Replies</div>
-            <div class="col-views" style="text-align:center;">Views</div>
-            <div style="text-align:right;">Last Activity</div>
+        <div class="topics-table-wrap">
+          <div class="topics-table">
+            <div class="topics-table-header">
+              <div>Topic</div>
+              <div class="col-replies" style="text-align:center;">Replies</div>
+              <div class="col-views" style="text-align:center;">Views</div>
+              <div style="text-align:right;">Last Activity</div>
+            </div>
+            <div id="topicList"></div>
           </div>
-          <div id="topicList"></div>
         </div>
 
         <div class="load-more-wrap" id="loadMoreWrap" style="display:none;">
