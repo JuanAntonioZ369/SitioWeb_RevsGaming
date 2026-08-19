@@ -6,7 +6,7 @@
     "api/reclamacion.js":    { "maxDuration": 10, "memory": 128 },
     "api/releases.js":       { "maxDuration": 10, "memory": 128 },
     "api/notify-expiry.js":   { "maxDuration": 10, "memory": 128 },
-    "api/archive-games.js":   { "maxDuration": 10, "memory": 128 },
+    "api/archive-games.js":   { "maxDuration": 30, "memory": 128 },
     "api/config.js":          { "maxDuration": 5,  "memory": 128 }
   },
   "headers": [
@@ -26,7 +26,7 @@
         { "key": "Permissions-Policy",       "value": "camera=(), microphone=(), geolocation=()" },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://checkout.culqi.com https://fonts.googleapis.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://archive.org https://*.archive.org; connect-src 'self' https://api.culqi.com https://checkout.culqi.com https://kyoyunuwfuujqdomdmlh.supabase.co https://api.github.com https://archive.org; frame-src https://checkout.culqi.com; object-src 'none'; base-uri 'self';"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.paypal.com https://www.paypalobjects.com https://fonts.googleapis.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://www.paypalobjects.com; font-src https://fonts.gstatic.com https://www.paypalobjects.com; img-src 'self' data: https://archive.org https://*.archive.org https://www.paypalobjects.com https://*.paypal.com; connect-src 'self' https://api-m.paypal.com https://api-m.sandbox.paypal.com https://www.paypal.com https://kyoyunuwfuujqdomdmlh.supabase.co https://api.github.com https://archive.org; frame-src https://www.paypal.com https://www.sandbox.paypal.com; object-src 'none'; base-uri 'self';"
         }
       ]
     }

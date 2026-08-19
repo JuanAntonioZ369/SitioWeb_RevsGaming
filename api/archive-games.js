@@ -43,35 +43,60 @@ function detectSystem (identifier) {
   return 'other'
 }
 
-/** Lee los identifiers desde app_config en Supabase */
+// Fallback hardcodeado — se usa si Supabase no responde
+const FALLBACK_IDS = ['ps1-1jugador', 'ps1-multijugador', 'SNES-ROMs-Multijugador']
+
+/** Lee los identifiers desde app_config en Supabase, con fallback hardcodeado */
 async function getIdentifiersFromSupabase () {
   const supabaseUrl = process.env.SUPABASE_URL
   const supabaseKey = process.env.SUPABASE_SERVICE_KEY
 
-  if (!supabaseUrl || !supabaseKey) throw new Error('Supabase env vars not set')
+  if (!supabaseUrl || !supabaseKey) {
+    console.warn('[archive-games] Supabase env vars not set, using fallback IDs')
+    return FALLBACK_IDS
+  }
 
-  const r = await fetch(
-    `${supabaseUrl}/rest/v1/app_config?key=in.(games_solo_id,games_multi_id)&select=key,value`,
-    {
-      headers: {
-        'apikey': supabaseKey,
-        'Authorization': `Bearer ${supabaseKey}`,
-        'Accept': 'application/json'
+  try {
+    const r = await fetch(
+      `${supabaseUrl}/rest/v1/app_config?select=key,value`,
+      {
+        headers: {
+          'apikey': supabaseKey,
+          'Authorization': `Bearer ${supabaseKey}`,
+          'Accept': 'application/json'
+        },
+        signal: AbortSignal.timeout(5000)
+      }
+    )
+    if (!r.ok) {
+      console.warn('[archive-games] Supabase returned', r.status, '— using fallback IDs')
+      return FALLBACK_IDS
+    }
+    const rows = await r.json()
+
+    // Filtrar solo las filas de games
+    const gameRows = rows.filter(row =>
+      row.key === 'games_solo_id' || row.key === 'games_multi_id'
+    )
+
+    if (gameRows.length === 0) {
+      console.warn('[archive-games] No game rows found in app_config — using fallback IDs')
+      return FALLBACK_IDS
+    }
+
+    const identifiers = []
+    for (const row of gameRows) {
+      const urls = (row.value || '').split(',')
+      for (const url of urls) {
+        const id = extractIdentifier(url)
+        if (id) identifiers.push(id)
       }
     }
-  )
-  if (!r.ok) throw new Error(`Supabase error: ${r.status}`)
-  const rows = await r.json()
-
-  const identifiers = []
-  for (const row of rows) {
-    const urls = row.value.split(',')
-    for (const url of urls) {
-      const id = extractIdentifier(url)
-      if (id) identifiers.push(id)
-    }
+    return identifiers.length > 0 ? identifiers : FALLBACK_IDS
+  } catch (e) {
+    console.warn('[archive-games] Supabase fetch error:', e.message, '— using fallback IDs')
+    return FALLBACK_IDS
   }
-  return identifiers
 }
 
 /** Obtiene los archivos ROM de un identifier de archive.org */
