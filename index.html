@@ -2430,7 +2430,7 @@
       <div class="hero-badge fade-in">
         <span class="badge">
           <span class="dot"></span>
-          LIVE &nbsp;·&nbsp; v1.0.0
+          LIVE &nbsp;·&nbsp; <span id="heroBadgeVersion">v1.0.0</span>
         </span>
       </div>
 
@@ -2479,7 +2479,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
           </svg>
-          v1.0.0 Stable
+          <span id="heroStatVersion">v1.0.0</span> Stable
         </div>
       </div>
     </div>
@@ -3005,7 +3005,7 @@
   <section class="download-cta" id="download">
     <div class="container">
       <div class="download-cta-content fade-in">
-        <div class="download-cta-badge">v1.0.0 Stable</div>
+        <div class="download-cta-badge"><span id="ctaBadgeVersion">v1.0.0</span> Stable</div>
         <h2 class="download-cta-title" data-i18n="section.download.title">Download RevsGaming</h2>
 
         <a
@@ -3545,5 +3545,21 @@
   </script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="/js/auth-nav.js"></script>
+  <script>
+    // Update version numbers dynamically from latest GitHub release
+    fetch('/api/releases?type=latest')
+      .then(r => r.json())
+      .then(rel => {
+        if (!rel || !rel.tag_name) return;
+        const ver = rel.tag_name;
+        const el1 = document.getElementById('heroBadgeVersion');
+        const el2 = document.getElementById('heroStatVersion');
+        const el3 = document.getElementById('ctaBadgeVersion');
+        if (el1) el1.textContent = ver;
+        if (el2) el2.textContent = ver;
+        if (el3) el3.textContent = ver;
+      })
+      .catch(() => {});
+  </script>
 </body>
 </html>

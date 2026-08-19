@@ -262,7 +262,9 @@
       padding-left: 56px;
       margin-bottom: 40px;
     }
-    .version-card:last-child { margin-bottom: 0; }
+    /* Only the truly last card in the whole timeline has no bottom margin */
+    #timeline > .version-card:last-child { margin-bottom: 0; }
+    #dynamicVersionCards .version-card:last-child { margin-bottom: 40px; }
 
     .timeline-dot {
       position: absolute;
@@ -276,7 +278,9 @@
       box-shadow: 0 0 0 2px var(--green);
       transition: border-color 0.25s;
     }
-    .version-card:not(:first-child) .timeline-dot {
+    .version-card:not(:first-child) .timeline-dot,
+    #dynamicVersionCards .timeline-dot,
+    #timeline > div:not(#latestVersionCard) .timeline-dot {
       background: var(--bg-panel);
       box-shadow: 0 0 0 2px var(--text-muted);
     }
@@ -495,7 +499,7 @@
     <div id="latestVersionCard"></div>
 
     <!-- Intermediate versions not hardcoded — injected dynamically from GitHub API -->
-    <div id="dynamicVersionCards"></div>
+    <div id="dynamicVersionCards" style="margin-bottom:0;"></div>
 
     <!-- v0.8.4 -->
     <article class="version-card" data-version="0.8.4" id="card-084">
