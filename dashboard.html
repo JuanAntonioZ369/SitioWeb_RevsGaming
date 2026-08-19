@@ -204,6 +204,11 @@
       background: var(--green); color: #0d1117;
     }
     .btn-download:hover { background: var(--green-light); }
+    .btn-launch {
+      background: transparent; color: var(--green);
+      border: 1px solid rgba(126,200,160,0.35);
+    }
+    .btn-launch:hover { background: rgba(126,200,160,0.1); border-color: var(--green); }
     .btn-upgrade {
       background: transparent; color: var(--accent);
       border: 1px solid rgba(102,192,244,0.3);
@@ -353,6 +358,10 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Download RevsGaming
           </a>
+          <button class="btn-action btn-launch" onclick="launchApp()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Open App
+          </button>
           ${upgradeBtn}
           <button class="btn-action btn-logout" id="btnLogout">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
@@ -365,6 +374,10 @@
         await db.auth.signOut()
         window.location.href = '/'
       })
+    }
+
+    function launchApp() {
+      window.location.href = 'revsgaming://launch'
     }
 
     function escHtml(s) {
