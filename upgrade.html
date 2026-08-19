@@ -14,7 +14,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <script src="https://checkout.culqi.com/js/v4"></script>
   <script src="/js/i18n.js"></script>
 
   <style>
@@ -630,18 +629,20 @@
       <!-- Error alert -->
       <div id="alert-error" role="alert" aria-live="polite"></div>
 
-      <!-- Pay button -->
-      <button type="button" id="btnPay" class="btn-pay">
+      <!-- Continue button — validates email then shows PayPal buttons -->
+      <button type="button" id="btnContinue" class="btn-pay" onclick="showPayPalButtons()">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
-          <line x1="1" y1="10" x2="23" y2="10"/>
+          <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
         </svg>
-        <span id="btnPayLabel">Pay $29.99 — Annual</span>
+        <span id="btnPayLabel">Continue to PayPal</span>
       </button>
+
+      <!-- PayPal Smart Buttons — hidden until email is validated -->
+      <div id="paypal-button-container" style="display:none; margin-top:12px;"></div>
 
       <!-- Secure note -->
       <p class="secure-note">
-        🔒 Secure payment via Culqi &middot; SSL &middot; No recurring charges without consent
+        🔒 Secure payment via PayPal &middot; SSL &middot; No recurring charges without consent
       </p>
 
       <hr class="divider" />
@@ -664,14 +665,17 @@
 
   <script>
     /* ================================================================
-       CONFIG
+       CONFIG — Load PayPal Client ID and inject SDK
     ================================================================ */
-    let CULQI_PUBLIC_KEY = ''
-
-    // Load Culqi public key from server-side env var
     fetch('/api/config')
       .then(r => r.json())
-      .then(cfg => { if (cfg.culqiKey) CULQI_PUBLIC_KEY = cfg.culqiKey })
+      .then(cfg => {
+        if (!cfg.paypalClientId) return
+        const script = document.createElement('script')
+        script.src = `https://www.paypal.com/sdk/js?client-id=${cfg.paypalClientId}&currency=USD`
+        script.onload = () => { window._paypalReady = true }
+        document.head.appendChild(script)
+      })
       .catch(() => {})
 
     const planAmounts = { monthly: 299, annual: 2999 }
@@ -752,12 +756,23 @@
       return document.getElementById('upgradeEmail').value.trim()
     }
 
-    /* ================================================================
-       PAY BUTTON CLICK
-    ================================================================ */
-    document.getElementById('btnPay').addEventListener('click', () => {
+    document.getElementById('upgradeEmail').addEventListener('input', () => {
       clearError()
+      document.getElementById('upgradeEmail').classList.remove('error-input')
+      // Hide PayPal buttons if email changes after they were shown
+      const container = document.getElementById('paypal-button-container')
+      container.style.display = 'none'
+      container.innerHTML = ''
+      document.getElementById('btnContinue').style.display = ''
+    })
 
+    /* ================================================================
+       PAYPAL INTEGRATION
+    ================================================================ */
+    let paypalButtonsRendered = false
+
+    function showPayPalButtons() {
+      clearError()
       const email = getEmail()
       const emailInput = document.getElementById('upgradeEmail')
 
@@ -769,92 +784,85 @@
       }
       emailInput.classList.remove('error-input')
 
-      openCulqi(email)
-    })
-
-    document.getElementById('upgradeEmail').addEventListener('input', () => {
-      clearError()
-      document.getElementById('upgradeEmail').classList.remove('error-input')
-    })
-
-    /* ================================================================
-       CULQI INTEGRATION
-    ================================================================ */
-    function openCulqi(email) {
-      if (!CULQI_PUBLIC_KEY) {
-        alert('Payment system is still loading. Please wait a moment and try again.')
+      if (!window._paypalReady || !window.paypal) {
+        showError('PayPal is still loading. Please wait a moment and try again.')
         return
       }
 
-      Culqi.publicKey = CULQI_PUBLIC_KEY
+      if (paypalButtonsRendered) return
 
-      Culqi.settings({
-        title: 'RevsGaming',
-        currency: 'USD',
-        description: selectedPlan === 'annual'
-          ? 'Annual Access — RevsGaming'
-          : 'Monthly Access — RevsGaming',
-        amount: planAmounts[selectedPlan],
-        order: null
-      })
+      const container = document.getElementById('paypal-button-container')
+      container.innerHTML = ''
+      container.style.display = 'block'
+      document.getElementById('btnContinue').style.display = 'none'
+      paypalButtonsRendered = true
 
-      Culqi.options({
-        lang: 'en',
-        installments: false,
-        customButton: '',
+      paypal.Buttons({
         style: {
-          logo: window.location.origin + '/logoPrimary.png',
-          maincolor: '#7EC8A0',
-          buttontext: '#0d1117',
-          maintext: '#c6d4df',
-          desctext: '#8f98a0'
-        }
-      })
+          layout: 'vertical',
+          color:  'gold',
+          shape:  'rect',
+          label:  'pay'
+        },
 
-      Culqi.open()
-    }
-
-    // Global Culqi callback — fires when the user completes the payment form
-    window.culqi = async function () {
-      if (Culqi.token) {
-        const token = Culqi.token
-        Culqi.close()
-
-        const btnPay = document.getElementById('btnPay')
-        btnPay.disabled = true
-        btnPay.style.opacity = '0.6'
-
-        const email = getEmail()
-
-        try {
-          const response = await fetch('/api/payment', {
+        // Step 1: Create order server-side
+        createOrder: async () => {
+          const res = await fetch('/api/payment', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              token: token.id,
-              email,
-              plan: selectedPlan
-            })
+            body: JSON.stringify({ action: 'create-order', plan: selectedPlan })
           })
+          const data = await res.json()
+          if (!res.ok || !data.orderID) throw new Error(data.error || 'Could not create order')
+          return data.orderID
+        },
 
-          if (response.ok) {
-            window.location.href = '/success.html'
-          } else {
-            const body = await response.json().catch(() => ({}))
-            showError(body.message || 'Payment could not be processed. Please try again.')
-            btnPay.disabled = false
-            btnPay.style.opacity = ''
+        // Step 2: Capture order after user approves
+        onApprove: async (data) => {
+          try {
+            const res = await fetch('/api/payment', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                action:  'capture-order',
+                orderID: data.orderID,
+                email:   getEmail(),
+                plan:    selectedPlan
+              })
+            })
+            const body = await res.json()
+            if (res.ok && body.success) {
+              window.location.href = '/success.html'
+            } else {
+              showError(body.error || 'Payment could not be processed. Please try again.')
+              resetPayPalButtons()
+            }
+          } catch (err) {
+            console.error(err)
+            showError('Connection error while processing payment. Please try again.')
+            resetPayPalButtons()
           }
-        } catch (err) {
-          console.error(err)
-          showError('Connection error while processing payment. Please try again.')
-          btnPay.disabled = false
-          btnPay.style.opacity = ''
+        },
+
+        onError: (err) => {
+          console.error('PayPal error:', err)
+          showError('An error occurred with PayPal. Please try again.')
+          resetPayPalButtons()
+        },
+
+        onCancel: () => {
+          resetPayPalButtons()
         }
 
-      } else if (Culqi.error) {
-        showError(Culqi.error.user_message || 'An error occurred while processing your payment.')
-      }
+      }).render('#paypal-button-container')
+    }
+
+    function resetPayPalButtons() {
+      paypalButtonsRendered = false
+      const container = document.getElementById('paypal-button-container')
+      container.style.display = 'none'
+      container.innerHTML = ''
+      document.getElementById('btnContinue').style.display = ''
     }
 
     /* Apply plan from URL on load */

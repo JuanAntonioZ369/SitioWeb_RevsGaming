@@ -2,59 +2,36 @@
  * RevsGaming — Payment API (Vercel Serverless Function)
  * Endpoint: POST /api/payment
  *
- * Planes disponibles:
- *   monthly — S/14.90 PEN (30 días)
- *   annual  — S/135.60 PEN (365 días)
+ * Planes:
+ *   monthly — $2.99 USD (30 días)
+ *   annual  — $29.99 USD (365 días)
  *
- * Flujo completo:
- *   1. Valida el token de Culqi generado por el checkout del frontend
- *   2. Cobra el monto del plan usando la clave secreta de Culqi (server-side)
- *   3. Busca al usuario en Supabase por email
- *      a. Si existe → activa su suscripción (status = 'active')
- *      b. Si no existe → guarda en pending_payments; el trigger de Supabase
- *         la activará automáticamente cuando el usuario se registre en la app
+ * Flujo PayPal:
+ *   action=create-order → crea una orden en PayPal, devuelve { orderID }
+ *   action=capture-order → captura y verifica el pago, activa suscripción en Supabase
  *
  * Variables de entorno requeridas en Vercel:
- *   CULQI_SECRET_KEY      → sk_live_XXXX (panel de Culqi → API Keys)
- *   SUPABASE_URL          → https://kyoyunuwfuujqdomdmlh.supabase.co
- *   SUPABASE_SERVICE_KEY  → service_role key (Supabase → Settings → API)
- *
- * Capas de seguridad:
- *   • CORS whitelist (solo revsgaming.com)
- *   • Solo POST permitido
- *   • Rate limiting por IP (5 intentos/minuto)
- *   • Validación de formato de token Culqi y email
- *   • Plan validado server-side (cliente nunca controla el precio)
- *   • Monto hardcodeado por plan (cliente no puede enviar el monto)
- *   • Validación del resultado del cargo (outcome.type = venta_exitosa)
- *   • Errores sanitizados (no se filtran detalles internos al cliente)
- *   • Timeout de 9s a APIs externas
+ *   PAYPAL_CLIENT_ID     → Client ID de tu app PayPal
+ *   PAYPAL_SECRET        → Secret de tu app PayPal
+ *   PAYPAL_MODE          → "sandbox" | "live" (default: live)
+ *   SUPABASE_URL         → https://xxxx.supabase.co
+ *   SUPABASE_SERVICE_KEY → service_role key
  */
 
 // ---------------------------------------------------------------------------
-// Planes — hardcodeados en el servidor (el cliente NUNCA controla el precio)
+// Planes — hardcodeados server-side (el cliente NUNCA controla el precio)
 // ---------------------------------------------------------------------------
 const PLANS = {
-  monthly: {
-    amount:      299,                                  // $2.99 USD
-    days:        30,
-    description: 'RevsGaming — Monthly Access',
-    label:       'monthly'
-  },
-  annual: {
-    amount:      2999,                                 // $29.99 USD
-    days:        365,
-    description: 'RevsGaming — Annual Access',
-    label:       'annual'
-  }
+  monthly: { amount: '2.99',  currency: 'USD', days: 30,  label: 'monthly', description: 'RevsGaming — Monthly Access' },
+  annual:  { amount: '29.99', currency: 'USD', days: 365, label: 'annual',  description: 'RevsGaming — Annual Access'  }
 }
 
 // ---------------------------------------------------------------------------
-// Rate limiter — sliding window en memoria
+// Rate limiter
 // ---------------------------------------------------------------------------
 const rateLimitStore = new Map()
 const RATE_LIMIT_WINDOW_MS = 60_000
-const RATE_LIMIT_MAX       = 5
+const RATE_LIMIT_MAX = 5
 
 function isRateLimited(ip) {
   const now  = Date.now()
@@ -69,16 +46,7 @@ function isRateLimited(ip) {
 }
 
 // ---------------------------------------------------------------------------
-// Validadores de entrada
-// ---------------------------------------------------------------------------
-const EMAIL_RE = /^[^\s@]{1,64}@[^\s@]{1,253}\.[^\s@]{2,}$/
-const TOKEN_RE = /^tkn_[a-zA-Z0-9_]{10,80}$/
-
-const isValidEmail = v => typeof v === 'string' && EMAIL_RE.test(v) && v.length <= 320
-const isValidToken = v => typeof v === 'string' && TOKEN_RE.test(v)
-
-// ---------------------------------------------------------------------------
-// Orígenes permitidos (CORS)
+// CORS
 // ---------------------------------------------------------------------------
 const ALLOWED_ORIGINS = new Set([
   'https://revsgaming.com',
@@ -97,21 +65,94 @@ function applySecurityHeaders(res, origin) {
   res.setHeader('Access-Control-Max-Age', '86400')
   res.setHeader('X-Content-Type-Options', 'nosniff')
   res.setHeader('X-Frame-Options', 'DENY')
-  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin')
   res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate')
 }
 
 // ---------------------------------------------------------------------------
-// Supabase — activa la suscripción usando service_role (bypasea RLS)
+// PayPal helpers
 // ---------------------------------------------------------------------------
-async function activateSubscription(email, chargeId, plan, supabaseUrl, serviceKey) {
+function getPayPalBase() {
+  const mode = process.env.PAYPAL_MODE || 'live'
+  return mode === 'sandbox'
+    ? 'https://api-m.sandbox.paypal.com'
+    : 'https://api-m.paypal.com'
+}
+
+async function getPayPalToken() {
+  const clientId = process.env.PAYPAL_CLIENT_ID
+  const secret   = process.env.PAYPAL_SECRET
+  if (!clientId || !secret) throw new Error('PayPal credentials not configured')
+
+  const res = await fetch(`${getPayPalBase()}/v1/oauth2/token`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Accept-Language': 'en_US',
+      'Authorization': 'Basic ' + Buffer.from(`${clientId}:${secret}`).toString('base64'),
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: 'grant_type=client_credentials',
+    signal: AbortSignal.timeout(8000)
+  })
+
+  if (!res.ok) throw new Error(`PayPal auth failed: ${res.status}`)
+  const data = await res.json()
+  return data.access_token
+}
+
+async function createPayPalOrder(plan, token) {
+  const res = await fetch(`${getPayPalBase()}/v2/checkout/orders`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+      'PayPal-Request-Id': `revsgaming-${Date.now()}`
+    },
+    body: JSON.stringify({
+      intent: 'CAPTURE',
+      purchase_units: [{
+        amount: { currency_code: plan.currency, value: plan.amount },
+        description: plan.description
+      }]
+    }),
+    signal: AbortSignal.timeout(8000)
+  })
+
+  if (!res.ok) {
+    const err = await res.text()
+    throw new Error(`PayPal create order failed: ${err}`)
+  }
+  return res.json()
+}
+
+async function capturePayPalOrder(orderID, token) {
+  const res = await fetch(`${getPayPalBase()}/v2/checkout/orders/${orderID}/capture`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    signal: AbortSignal.timeout(8000)
+  })
+
+  if (!res.ok) {
+    const err = await res.text()
+    throw new Error(`PayPal capture failed: ${err}`)
+  }
+  return res.json()
+}
+
+// ---------------------------------------------------------------------------
+// Supabase — activa la suscripción
+// ---------------------------------------------------------------------------
+async function activateSubscription(email, paypalOrderId, plan, supabaseUrl, serviceKey) {
   const adminHeaders = {
     'apikey': serviceKey,
     'Authorization': `Bearer ${serviceKey}`,
     'Content-Type': 'application/json'
   }
 
-  // Paso 1: buscar usuario por email en auth.users
+  // Buscar usuario por email
   let userId = null
   try {
     const res = await fetch(
@@ -124,182 +165,137 @@ async function activateSubscription(email, chargeId, plan, supabaseUrl, serviceK
       if (users.length > 0) userId = users[0].id
     }
   } catch (e) {
-    console.warn('[payment] Could not query Supabase admin users:', e.message)
+    console.warn('[payment] Could not query Supabase users:', e.message)
   }
 
-  // Fecha de expiración según el plan
   const expiresAt = new Date(Date.now() + plan.days * 24 * 60 * 60 * 1000).toISOString()
 
   if (userId) {
-    // Paso 2a: usuario existe → activar o renovar suscripción
-    // Si ya tenía suscripción activa, extiende desde HOY (no acumula desde la fecha anterior)
     const subRes = await fetch(`${supabaseUrl}/rest/v1/subscriptions`, {
       method: 'POST',
-      headers: {
-        ...adminHeaders,
-        'Prefer': 'resolution=merge-duplicates,return=minimal'
-      },
+      headers: { ...adminHeaders, 'Prefer': 'resolution=merge-duplicates,return=minimal' },
       body: JSON.stringify({
         user_id:       userId,
         status:        'active',
         plan:          plan.label,
         expires_at:    expiresAt,
-        stripe_sub_id: chargeId   // reutilizamos la columna para el ID de Culqi
+        stripe_sub_id: paypalOrderId   // reutilizamos columna para el ID de PayPal
       }),
       signal: AbortSignal.timeout(6000)
     })
-
-    if (!subRes.ok) {
-      const text = await subRes.text()
-      console.error('[payment] Supabase subscription upsert failed:', text)
-    } else {
-      console.info('[payment] Subscription activated — user:', userId, '| plan:', plan.label)
-    }
+    if (!subRes.ok) console.error('[payment] Subscription upsert failed:', await subRes.text())
+    else console.info('[payment] Subscription activated — user:', userId, '| plan:', plan.label)
 
   } else {
-    // Paso 2b: usuario no existe aún → guardar en pending_payments
+    // Usuario no registrado aún — guardar en pending
     const ppRes = await fetch(`${supabaseUrl}/rest/v1/pending_payments`, {
       method: 'POST',
-      headers: {
-        ...adminHeaders,
-        'Prefer': 'resolution=merge-duplicates,return=minimal'
-      },
+      headers: { ...adminHeaders, 'Prefer': 'resolution=merge-duplicates,return=minimal' },
       body: JSON.stringify({
         email,
-        culqi_charge_id: chargeId,
+        culqi_charge_id: paypalOrderId,
         paid_at:    new Date().toISOString(),
         expires_at: expiresAt
       }),
       signal: AbortSignal.timeout(6000)
     })
-
-    if (!ppRes.ok) {
-      const text = await ppRes.text()
-      console.error('[payment] Supabase pending_payments insert failed:', text)
-    } else {
-      console.info('[payment] Pending payment stored — email:', email, '| plan:', plan.label)
-    }
+    if (!ppRes.ok) console.error('[payment] Pending payment insert failed:', await ppRes.text())
+    else console.info('[payment] Pending payment stored — email:', email)
   }
 }
 
 // ---------------------------------------------------------------------------
 // Handler principal
 // ---------------------------------------------------------------------------
+const EMAIL_RE = /^[^\s@]{1,64}@[^\s@]{1,253}\.[^\s@]{2,}$/
+
 export default async function handler(req, res) {
   const origin = req.headers['origin'] || ''
   applySecurityHeaders(res, origin)
 
-  // Preflight CORS
   if (req.method === 'OPTIONS') return res.status(204).end()
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
 
-  // Solo POST
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Método no permitido' })
-  }
-
-  // Content-Type
   const contentType = req.headers['content-type'] || ''
   if (!contentType.includes('application/json')) {
-    return res.status(415).json({ error: 'Content-Type debe ser application/json' })
+    return res.status(415).json({ error: 'Content-Type must be application/json' })
   }
 
-  // IP para rate limiting
-  const ip =
-    (req.headers['x-forwarded-for'] || '').split(',')[0].trim() ||
-    req.socket?.remoteAddress ||
-    'unknown'
+  const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.socket?.remoteAddress || 'unknown'
+  if (isRateLimited(ip)) return res.status(429).json({ error: 'Too many requests. Wait a moment and try again.' })
 
-  if (isRateLimited(ip)) {
-    return res.status(429).json({
-      error: 'Demasiados intentos. Espera un momento e inténtalo de nuevo.'
-    })
-  }
-
-  // Extraer body
   const body = req.body
-  if (!body || typeof body !== 'object' || Array.isArray(body)) {
-    return res.status(400).json({ error: 'Cuerpo de solicitud inválido' })
-  }
+  if (!body || typeof body !== 'object') return res.status(400).json({ error: 'Invalid request body' })
 
-  const { token, email, plan: planKey } = body
-
-  // Validaciones básicas
-  if (!token || !email) return res.status(400).json({ error: 'Faltan datos requeridos' })
-  if (!isValidToken(token))  return res.status(400).json({ error: 'Token de pago inválido' })
-  if (!isValidEmail(email))  return res.status(400).json({ error: 'Email inválido' })
-
-  // Validar plan — hardcodeado: cliente nunca decide el precio
-  const plan = PLANS[planKey]
-  if (!plan) {
-    return res.status(400).json({ error: 'Plan no válido. Usa "monthly" o "annual".' })
-  }
-
-  // Verificar variables de entorno
-  const culqiSecret     = process.env.CULQI_SECRET_KEY
   const supabaseUrl     = process.env.SUPABASE_URL
   const supabaseService = process.env.SUPABASE_SERVICE_KEY
-
-  if (!culqiSecret || !culqiSecret.startsWith('sk_live_')) {
-    console.error('[payment] CULQI_SECRET_KEY missing or not a live key')
-    return res.status(503).json({ error: 'Servicio de pagos temporalmente no disponible' })
-  }
   if (!supabaseUrl || !supabaseService) {
-    console.error('[payment] SUPABASE_URL or SUPABASE_SERVICE_KEY missing')
-    return res.status(503).json({ error: 'Error de configuración del servidor' })
+    return res.status(503).json({ error: 'Server configuration error' })
   }
 
-  // ── Cobrar via Culqi ──────────────────────────────────────────────────────
-  let culqiResponse
+  let token
   try {
-    culqiResponse = await fetch('https://api.culqi.com/v2/charges', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${culqiSecret}`
-      },
-      body: JSON.stringify({
-        amount:        plan.amount,        // hardcodeado según plan — NUNCA del cliente
-        currency_code: 'USD',
-        email,
-        source_id:     token,
-        capture:       true,
-        description:   plan.description
-      }),
-      signal: AbortSignal.timeout(9000)
-    })
+    token = await getPayPalToken()
   } catch (e) {
-    console.error('[payment] Network error contacting Culqi:', e.message)
-    return res.status(502).json({ error: 'No se pudo conectar con el procesador de pagos. Intenta de nuevo.' })
+    console.error('[payment] PayPal auth error:', e.message)
+    return res.status(503).json({ error: 'Payment service temporarily unavailable' })
   }
 
-  let chargeData
-  try {
-    chargeData = await culqiResponse.json()
-  } catch {
-    return res.status(502).json({ error: 'Respuesta inesperada del procesador de pagos' })
+  const { action, plan: planKey, orderID, email } = body
+
+  // ── ACTION: create-order ──────────────────────────────────────────────────
+  if (action === 'create-order') {
+    const plan = PLANS[planKey]
+    if (!plan) return res.status(400).json({ error: 'Invalid plan. Use "monthly" or "annual".' })
+
+    try {
+      const order = await createPayPalOrder(plan, token)
+      return res.status(200).json({ orderID: order.id })
+    } catch (e) {
+      console.error('[payment] create-order error:', e.message)
+      return res.status(502).json({ error: 'Could not create payment order. Try again.' })
+    }
   }
 
-  // Validar resultado real del cargo
-  if (!culqiResponse.ok || chargeData?.outcome?.type !== 'venta_exitosa') {
-    const userMessage =
-      chargeData?.user_message ||
-      chargeData?.merchant_message ||
-      'El pago no pudo procesarse. Verifica tu tarjeta e intenta nuevamente.'
-    console.error('[payment] Charge failed:', chargeData?.code, chargeData?.decline_code)
-    return res.status(402).json({ error: userMessage })
+  // ── ACTION: capture-order ─────────────────────────────────────────────────
+  if (action === 'capture-order') {
+    if (!orderID || typeof orderID !== 'string') return res.status(400).json({ error: 'Missing orderID' })
+    if (!email || !EMAIL_RE.test(email))         return res.status(400).json({ error: 'Invalid email' })
+
+    const plan = PLANS[planKey]
+    if (!plan) return res.status(400).json({ error: 'Invalid plan' })
+
+    let captured
+    try {
+      captured = await capturePayPalOrder(orderID, token)
+    } catch (e) {
+      console.error('[payment] capture error:', e.message)
+      return res.status(502).json({ error: 'Payment capture failed. Contact support if charged.' })
+    }
+
+    // Verificar que el pago realmente completó
+    if (captured.status !== 'COMPLETED') {
+      console.error('[payment] PayPal order not completed:', captured.status, orderID)
+      return res.status(402).json({ error: `Payment not completed (status: ${captured.status})` })
+    }
+
+    // Verificar monto cobrado server-side
+    const capture = captured.purchase_units?.[0]?.payments?.captures?.[0]
+    const paidAmount = capture?.amount?.value
+    if (paidAmount !== plan.amount) {
+      console.error('[payment] Amount mismatch — expected:', plan.amount, 'got:', paidAmount)
+      return res.status(402).json({ error: 'Payment amount mismatch. Contact support.' })
+    }
+
+    console.info('[payment] PayPal capture OK — orderID:', orderID, '| email:', email, '| plan:', plan.label)
+
+    // Activar suscripción (no bloquea la respuesta)
+    activateSubscription(email, orderID, plan, supabaseUrl, supabaseService).catch(err => {
+      console.error('[payment] activateSubscription error (non-fatal):', err.message)
+    })
+
+    return res.status(200).json({ success: true, orderID, plan: plan.label })
   }
 
-  console.info('[payment] Charge OK — id:', chargeData.id, '| email:', email, '| plan:', plan.label)
-
-  // ── Activar suscripción en Supabase ──────────────────────────────────────
-  // No bloqueamos la respuesta al usuario si Supabase falla — el cobro ya se hizo.
-  activateSubscription(email, chargeData.id, plan, supabaseUrl, supabaseService).catch(err => {
-    console.error('[payment] activateSubscription error (non-fatal):', err.message)
-  })
-
-  return res.status(200).json({
-    success:  true,
-    chargeId: chargeData.id,
-    plan:     plan.label
-  })
+  return res.status(400).json({ error: 'Unknown action. Use "create-order" or "capture-order".' })
 }
