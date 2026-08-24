@@ -137,7 +137,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <script src="https://checkout.culqi.com/js/v4"></script>
 
   <style>
     /* ============================================================
@@ -2993,7 +2992,7 @@
         </button>
 
         <div class="support-fine" data-i18n="pricing.secure">
-          Secure payment via Culqi &middot; SSL
+          Secure payment via PayPal &middot; SSL
         </div>
       </div>
     </div>
@@ -3203,7 +3202,7 @@
     ---------------------------------------------------------- */
     document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('btnCulqi').addEventListener('click', function() {
-        window.location.href = '/register.html?plan=' + selectedPlan;
+        window.location.href = '/upgrade?plan=' + selectedPlan;
       });
     });
   </script>
