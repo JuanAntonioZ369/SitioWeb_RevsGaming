@@ -1302,7 +1302,7 @@
       if (session) {
         state.user = session.user;
         const meta = session.user.user_metadata;
-        state.username = meta?.username || meta?.full_name || session.user.email?.split('@')[0] || 'User';
+        state.username = meta?.full_name || meta?.username || session.user.email?.split('@')[0] || 'User';
       }
       renderNavUser();
     }
