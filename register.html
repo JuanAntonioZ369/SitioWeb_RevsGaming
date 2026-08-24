@@ -22,7 +22,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script src="https://checkout.culqi.com/js/v4"></script>
   <script src="/js/config.js"></script>
   <script src="/js/i18n.js"></script>
   <script src="/js/app-link.js" defer></script>
@@ -1295,7 +1294,7 @@
               <button id="reg-tab-monthly" class="plan-tab" onclick="regSelectPlan('monthly')">Monthly · $2.99</button>
               <button id="reg-tab-annual" class="plan-tab active" onclick="regSelectPlan('annual')">Annual · $29.99 <span class="badge-rec">2 months free</span></button>
             </div>
-            <button class="btn-pay-upgrade" id="btnRegPay" onclick="openCulqi()">
+            <button class="btn-pay-upgrade" id="btnRegPay" onclick="goToUpgrade()">
               <span id="reg-pay-label">Activate annual plan — $29.99</span>
             </button>
             <p class="trial-skip">Or continue with the free trial for now. Your access is already active.</p>
@@ -1325,15 +1324,7 @@
     const SUPABASE_URL = 'https://kyoyunuwfuujqdomdmlh.supabase.co'
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt5b3l1bnV3ZnV1anFkb21kbWxoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2MTY5MDksImV4cCI6MjA5NzE5MjkwOX0.AJfWxp7rcn9psHFZQpX9qmCw32rsYo9pYiIpxHfIX3I'
 
-    let CULQI_PUBLIC_KEY = ''
-
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-
-    // Load Culqi public key from server-side env var
-    fetch('/api/config')
-      .then(r => r.json())
-      .then(cfg => { if (cfg.culqiKey) CULQI_PUBLIC_KEY = cfg.culqiKey })
-      .catch(() => {})
 
     let registeredEmail = ''
     let registeredUserId = ''
@@ -1674,80 +1665,10 @@
     }
 
     /* ================================================================
-       PASO 2 — PAGO CON CULQI
+       PASO 2 — PAGO CON PAYPAL
     ================================================================ */
-    function openCulqi() {
-      clearFormError('payment-error')
-
-      if (!CULQI_PUBLIC_KEY) {
-        showFormError('payment-error', 'Payment system is still loading. Please wait a moment and try again.')
-        return
-      }
-
-      Culqi.publicKey = CULQI_PUBLIC_KEY
-
-      Culqi.settings({
-        title: 'RevsGaming',
-        currency: 'USD',
-        description: selectedPlan === 'annual' ? 'Annual Access — RevsGaming' : 'Monthly Access — RevsGaming',
-        amount: planAmounts[selectedPlan],
-        order: null
-      })
-
-      Culqi.options({
-        lang: 'en',
-        installments: false,
-        customButton: '',
-        style: {
-          logo: window.location.origin + '/logoPrimary.png',
-          maincolor: '#7EC8A0',
-          buttontext: '#0d1117',
-          maintext: '#c6d4df',
-          desctext: '#8f98a0'
-        }
-      })
-
-      Culqi.open()
-    }
-
-    // Callback global de Culqi — se ejecuta cuando el usuario completa el formulario de pago
-    window.culqi = async function () {
-      if (Culqi.token) {
-        const token = Culqi.token
-        Culqi.close()
-
-        const payBtn = document.getElementById('btnRegPay')
-        if (payBtn) { payBtn.disabled = true; payBtn.style.opacity = '0.6' }
-
-        try {
-          const response = await fetch('/api/payment', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              token: token.id,
-              email: registeredEmail,
-              userId: registeredUserId,
-              plan: selectedPlan,
-              currency: 'USD'
-            })
-          })
-
-          if (response.ok) {
-            window.location.href = '/success.html'
-          } else {
-            const body = await response.json().catch(() => ({}))
-            showFormError('payment-error', body.message || 'Payment could not be processed. Please try again.')
-            if (payBtn) { payBtn.disabled = false; payBtn.style.opacity = '' }
-          }
-        } catch (err) {
-          console.error(err)
-          showFormError('payment-error', 'Connection error while processing payment. Please try again.')
-          if (payBtn) { payBtn.disabled = false; payBtn.style.opacity = '' }
-        }
-
-      } else if (Culqi.error) {
-        showFormError('payment-error', Culqi.error.user_message || 'Error al procesar el pago.')
-      }
+    function goToUpgrade() {
+      window.location.href = '/upgrade?plan=' + selectedPlan
     }
 
     /* ================================================================
