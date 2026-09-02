@@ -1300,10 +1300,14 @@
     async function initAuth() {
       const { data: { session } } = await db.auth.getSession();
       if (session) {
-        const { data: { user } } = await db.auth.getUser();
-        const meta = user?.user_metadata || session.user.user_metadata;
-        state.user = user || session.user;
-        state.username = meta?.full_name || meta?.username || session.user.email?.split('@')[0] || 'User';
+        state.user = session.user;
+        const { data: profile } = await db
+          .from('profiles')
+          .select('username')
+          .eq('id', session.user.id)
+          .single();
+        const meta = session.user.user_metadata;
+        state.username = profile?.username || meta?.full_name || meta?.username || session.user.email?.split('@')[0] || 'User';
       }
       renderNavUser();
     }
